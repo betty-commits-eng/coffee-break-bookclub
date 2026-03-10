@@ -1343,7 +1343,7 @@ function startListening() {
     const user = auth.currentUser;
     if (!user) return;
     user.getIdToken().then(token => {
-      fetch('https://spine-001-default-rtdb.firebaseio.com/books.json?auth=' + token)
+      fetch('https://cbbc-001-default-rtdb.firebaseio.com/books.json?auth=' + token)
         .then(r => r.json())
         .then(data => {
           const newHash = hashData(data);
