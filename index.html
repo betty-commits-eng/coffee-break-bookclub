@@ -1100,7 +1100,15 @@
     .bli-call { min-width: 44px; font-size: 0.85rem; }
   }
 
-  /* Hide scrollbars on tab row but keep scrolling */
+  /* Star rating picker */
+  .star-picker { display: flex; gap: 4px; margin-bottom: 10px; }
+  .star-picker .star { font-size: 1.8rem; color: #ccc; cursor: pointer; transition: color 0.15s; line-height: 1; }
+  .star-picker .star.lit { color: #c8960c; }
+  .star-picker .star:hover { color: #e6b820; }
+  /* Star display on book card */
+  .bc-stars { color: #c8960c; font-size: 0.85rem; letter-spacing: 1px; margin-top: 2px; }
+  .bc-stars .dim { color: #ccc; }
+
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
@@ -1267,6 +1275,15 @@
     </select>
     <label>Publication Year</label>
     <input type="number" id="edit-year" min="1000" max="2099">
+    <label>Your Rating</label>
+    <div class="star-picker" id="edit-stars">
+      <span class="star" data-val="1">★</span>
+      <span class="star" data-val="2">★</span>
+      <span class="star" data-val="3">★</span>
+      <span class="star" data-val="4">★</span>
+      <span class="star" data-val="5">★</span>
+    </div>
+    <input type="hidden" id="edit-rating" value="0">
     <label>Notes</label>
     <textarea id="edit-notes" rows="3" placeholder="Personal notes..."></textarea>
     <div class="modal-actions">
@@ -1425,6 +1442,12 @@ function openEdit(key) {
   document.getElementById('edit-status').value = b.status;
   document.getElementById('edit-year').value   = b.year || '';
   document.getElementById('edit-notes').value  = b.notes || '';
+  // Set star rating
+  const rating = b.rating || 0;
+  document.getElementById('edit-rating').value = rating;
+  document.querySelectorAll('#edit-stars .star').forEach(s => {
+    s.classList.toggle('lit', parseInt(s.dataset.val) <= rating);
+  });
   document.getElementById('modal').classList.add('open');
 }
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
@@ -1437,6 +1460,7 @@ function saveEdit() {
     status: document.getElementById('edit-status').value,
     year:   document.getElementById('edit-year').value ? parseInt(document.getElementById('edit-year').value) : null,
     notes:  document.getElementById('edit-notes').value,
+    rating: parseInt(document.getElementById('edit-rating').value) || 0,
   });
   closeModal();
 }
@@ -1538,6 +1562,7 @@ function renderAll() {
           <div class="bc-meta">Dewey: ${b.dewey} · ${b.year || 'n.d.'}</div>
           <div class="bc-meta bc-owner">${b.addedBy === 'bettykwale@gmail.com' ? '❧ Betty' : b.addedBy === 'nirmalavisvanathan6@gmail.com' ? '❧ Nirmala' : ''}</div>
           <div class="bc-meta"><span style="background:${statusColor(b.status)};color:#fff;font-size:0.68rem;padding:2px 8px;letter-spacing:0.06em;text-transform:uppercase;">${statusLabel(b.status)}</span></div>
+          ${b.rating ? `<div class="bc-stars">${'★'.repeat(b.rating)}<span class="dim">${'★'.repeat(5 - b.rating)}</span></div>` : ''}
           ${b.notes ? `<div class="bc-meta" style="font-style:italic;margin-top:6px;">"${b.notes.substring(0,80)}${b.notes.length>80?'...':''}"</div>` : ''}
           <div class="bc-actions">
             <button onclick="event.stopPropagation();window._openEdit('${b._key}')">Edit</button>
@@ -1581,6 +1606,31 @@ function setView(mode) {
   document.getElementById('btn-list').classList.toggle('active',  mode==='list');
   renderAll();
 }
+// ── Star rating picker interaction ────────────────────────────────────────────
+document.querySelectorAll('#edit-stars .star').forEach(star => {
+  star.addEventListener('click', () => {
+    const val = parseInt(star.dataset.val);
+    const current = parseInt(document.getElementById('edit-rating').value) || 0;
+    // Click same star again to clear rating
+    const newVal = current === val ? 0 : val;
+    document.getElementById('edit-rating').value = newVal;
+    document.querySelectorAll('#edit-stars .star').forEach(s => {
+      s.classList.toggle('lit', parseInt(s.dataset.val) <= newVal);
+    });
+  });
+  star.addEventListener('mouseover', () => {
+    const val = parseInt(star.dataset.val);
+    document.querySelectorAll('#edit-stars .star').forEach(s => {
+      s.classList.toggle('lit', parseInt(s.dataset.val) <= val);
+    });
+  });
+  star.addEventListener('mouseout', () => {
+    const current = parseInt(document.getElementById('edit-rating').value) || 0;
+    document.querySelectorAll('#edit-stars .star').forEach(s => {
+      s.classList.toggle('lit', parseInt(s.dataset.val) <= current);
+    });
+  });
+});
 // ── Expose to inline handlers ─────────────────────────────────────────────────
 window.signInWithGoogle = signInWithGoogle;
 window.signOut          = signOut;
