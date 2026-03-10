@@ -1100,6 +1100,20 @@
     .bli-call { min-width: 44px; font-size: 0.85rem; }
   }
 
+  /* Stars on spine */
+  .spine-stars { 
+    font-size: 0.45rem; 
+    color: #f5d87a; 
+    text-shadow: 0 0 3px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    white-space: nowrap;
+  }
   /* Star rating picker */
   .star-picker { display: flex; gap: 4px; margin-bottom: 10px; }
   .star-picker .star { font-size: 1.8rem; color: #ccc; cursor: pointer; transition: color 0.15s; line-height: 1; }
@@ -1553,6 +1567,7 @@ function renderAll() {
           <div class="book-band-top"></div>
           <div class="book-label">${b.dewey}<br>${(b.author||'').split(' ').pop().substring(0,3).toUpperCase()||'—'}</div>
           <div class="book-title-spine">${b.title}</div>
+          ${b.rating ? `<div class="spine-stars">${'★'.repeat(b.rating)}</div>` : ''}
           <div class="book-status-dot" style="background:${statusColor(b.status)};"></div>
           <div class="book-band-bottom"></div>
         </div>
