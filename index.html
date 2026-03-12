@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spine</title>
+<title>Coffee Break Book Club</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#3d2314">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Spine">
+<meta name="apple-mobile-web-app-title" content="Coffee Break Book Club">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -710,7 +710,7 @@
   .book-card {
     display: none;
     position: absolute;
-    bottom: calc(100% + 4px); /* reduced gap */
+    bottom: calc(100% + 4px);
     left: 50%;
     transform: translateX(-50%);
     background: #f5edd8;
@@ -785,175 +785,6 @@
   .bc-actions button:hover { background: var(--brown); color: var(--cream); }
   .bc-actions button.delete { border-color: var(--red); color: var(--red); }
   .bc-actions button.delete:hover { background: var(--red); color: var(--cream); }
-  /* Reading goal bar */
-  .goal-bar {
-    background: linear-gradient(180deg, #d4c090, #c4b080);
-    border: 2px solid #8a6530;
-    border-top: 4px solid #a07840;
-    padding: 14px 18px;
-    margin-bottom: 28px;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
-  }
-  .goal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .goal-label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--brown);
-  }
-  .goal-fraction {
-    font-family: 'Special Elite', cursive;
-    font-size: 0.9rem;
-    color: var(--dark-brown);
-  }
-  .goal-track {
-    background: #e8d8b0;
-    border: 1px solid #c4a060;
-    height: 12px;
-    border-radius: 1px;
-    overflow: hidden;
-  }
-  .goal-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #2d5a27, #3a7a3a);
-    transition: width 0.5s ease;
-    min-width: 2px;
-  }
-  .goal-fill.complete { background: linear-gradient(90deg, #c8960c, #e6b820); }
-  .goal-edit {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .goal-edit input {
-    width: 70px;
-    padding: 3px 6px;
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.8rem;
-    border: 1px solid #c4a060;
-    background: #f5edd8;
-    color: var(--dark-brown);
-    text-align: center;
-  }
-  .goal-edit button {
-    padding: 3px 10px;
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border: 1px solid var(--brown);
-    background: var(--parchment);
-    color: var(--brown);
-    cursor: pointer;
-  }
-  .goal-edit button:hover { background: var(--brown); color: var(--cream); }
-  .goal-congrats {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 0.8rem;
-    color: #c8960c;
-    margin-top: 6px;
-  }
-  /* Book search autocomplete */
-  .book-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0; right: 0;
-    background: #f5edd8;
-    border: 1px solid #c4a060;
-    border-top: none;
-    z-index: 100;
-    max-height: 280px;
-    overflow-y: auto;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
-  }
-  .book-suggestion {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-bottom: 1px solid #e8d8b0;
-    font-family: 'Libre Baskerville', serif;
-    font-size: 0.82rem;
-  }
-  .book-suggestion:hover { background: #ede0c4; }
-  .book-suggestion .sug-title { font-weight: bold; color: var(--dark-brown); }
-  .book-suggestion .sug-author { color: var(--brown); font-size: 0.75rem; font-style: italic; }
-  .book-suggestion .sug-year { color: #888; font-size: 0.72rem; }
-  /* Library dropdown */
-  .library-dropdown { position: relative; margin-top: 4px; }
-  .library-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 5px;
-    background: #f5edd8;
-    border: 1px solid #1a3a5c;
-    color: #1a3a5c;
-    font-size: 0.72rem;
-    font-family: 'Libre Baskerville', serif;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .library-btn:hover { background: #1a3a5c; color: #fff; }
-  .library-menu {
-    display: none;
-    position: absolute;
-    bottom: 100%;
-    left: 0; right: 0;
-    background: #f5edd8;
-    border: 1px solid #1a3a5c;
-    z-index: 50;
-    box-shadow: 0 -3px 8px rgba(0,0,0,0.15);
-  }
-  .library-menu.open { display: block; }
-  .library-menu a {
-    display: block;
-    padding: 7px 10px;
-    font-size: 0.75rem;
-    font-family: 'Libre Baskerville', serif;
-    color: #1a3a5c;
-    text-decoration: none;
-    border-bottom: 1px solid #e8d8b0;
-  }
-  .library-menu a:hover { background: #1a3a5c; color: #fff; }
-  /* Review text on card */
-  .bc-review {
-    font-style: italic;
-    font-size: 0.78rem;
-    color: var(--dark-brown);
-    margin: 6px 0 4px;
-    line-height: 1.5;
-    border-left: 2px solid var(--tan);
-    padding-left: 8px;
-  }
-  /* Amazon button */
-  .bc-amazon {
-    display: block;
-    text-align: center;
-    margin-top: 8px;
-    padding: 5px;
-    background: #f5edd8;
-    border: 1px solid #c8960c;
-    color: #c8960c;
-    font-size: 0.72rem;
-    font-family: 'Libre Baskerville', serif;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    transition: background 0.15s;
-  }
-  .bc-amazon:hover { background: #c8960c; color: #fff; }
-  /* Star rating picker */
-  .star-picker { display: flex; gap: 4px; margin-bottom: 10px; }
-  .star-picker .star { font-size: 1.8rem; color: #ccc; cursor: pointer; transition: color 0.15s; line-height: 1; }
-  .star-picker .star.lit { color: #c8960c; }
-  .star-picker .star:hover { color: #e6b820; }
   /* Status colors */
   .status-read { background: #2d8a2d; }
   .status-reading { background: #e6a020; }
@@ -1271,7 +1102,89 @@
     .bli-call { min-width: 44px; font-size: 0.85rem; }
   }
 
-  /* Hide scrollbars on tab row but keep scrolling */
+  /* Stars on spine */
+  .spine-stars {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 7px;
+    color: #f5d87a;
+    text-shadow: 0 0 4px rgba(0,0,0,0.7);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    z-index: 2;
+    position: relative;
+    padding: 2px 0;
+  }
+  /* Reading goal bar */
+  .goal-bar {
+    background: linear-gradient(180deg, #d4c090, #c4b080);
+    border: 2px solid #8a6530;
+    border-top: 4px solid #a07840;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+  }
+  .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .goal-label { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); }
+  .goal-fraction { font-family: 'Special Elite', cursive; font-size: 0.9rem; color: var(--dark-brown); }
+  .goal-track { background: #e8d8b0; border: 1px solid #c4a060; height: 12px; border-radius: 1px; overflow: hidden; }
+  .goal-fill { height: 100%; background: linear-gradient(90deg, #2d5a27, #3a7a3a); transition: width 0.5s ease; min-width: 2px; }
+  .goal-fill.complete { background: linear-gradient(90deg, #c8960c, #e6b820); }
+  .goal-edit { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .goal-edit input { width: 70px; padding: 3px 6px; font-family: 'Courier Prime', monospace; font-size: 0.8rem; border: 1px solid #c4a060; background: #f5edd8; color: var(--dark-brown); text-align: center; }
+  .goal-edit button { padding: 3px 10px; font-family: 'Courier Prime', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--brown); background: var(--parchment); color: var(--brown); cursor: pointer; }
+  .goal-edit button:hover { background: var(--brown); color: var(--cream); }
+  .goal-congrats { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: #c8960c; margin-top: 6px; }
+  /* Book search autocomplete */
+  .book-suggestions { position: absolute; top: 100%; left: 0; right: 0; background: #f5edd8; border: 1px solid #c4a060; border-top: none; z-index: 100; max-height: 280px; overflow-y: auto; box-shadow: 3px 3px 8px rgba(0,0,0,0.2); }
+  .book-suggestion { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #e8d8b0; font-family: 'Libre Baskerville', serif; font-size: 0.82rem; }
+  .book-suggestion:hover { background: #ede0c4; }
+  .book-suggestion .sug-title { font-weight: bold; color: var(--dark-brown); }
+  .book-suggestion .sug-author { color: var(--brown); font-size: 0.75rem; font-style: italic; }
+  .book-suggestion .sug-year { color: #888; font-size: 0.72rem; }
+  /* Library dropdown */
+  .library-dropdown { position: relative; margin-top: 4px; }
+  .library-btn { display: block; width: 100%; text-align: center; padding: 5px; background: #f5edd8; border: 1px solid #1a3a5c; color: #1a3a5c; font-size: 0.72rem; font-family: 'Libre Baskerville', serif; letter-spacing: 0.05em; cursor: pointer; transition: background 0.15s; }
+  .library-btn:hover { background: #1a3a5c; color: #fff; }
+  .library-menu { display: none; position: absolute; bottom: 100%; left: 0; right: 0; background: #f5edd8; border: 1px solid #1a3a5c; z-index: 50; box-shadow: 0 -3px 8px rgba(0,0,0,0.15); }
+  .library-menu.open { display: block; }
+  .library-menu a { display: block; padding: 7px 10px; font-size: 0.75rem; font-family: 'Libre Baskerville', serif; color: #1a3a5c; text-decoration: none; border-bottom: 1px solid #e8d8b0; }
+  .library-menu a:hover { background: #1a3a5c; color: #fff; }
+  /* Review text on card */
+  .bc-review {
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--dark-brown);
+    margin: 6px 0 4px;
+    line-height: 1.5;
+    border-left: 2px solid var(--tan);
+    padding-left: 8px;
+  }
+  /* Amazon button */
+  .bc-amazon {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    padding: 5px;
+    background: #f5edd8;
+    border: 1px solid #c8960c;
+    color: #c8960c;
+    font-size: 0.72rem;
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .bc-amazon:hover { background: #c8960c; color: #fff; }
+  /* Star rating picker */
+  .star-picker { display: flex; gap: 4px; margin-bottom: 10px; }
+  .star-picker .star { font-size: 1.8rem; color: #ccc; cursor: pointer; transition: color 0.15s; line-height: 1; }
+  .star-picker .star.lit { color: #c8960c; }
+  .star-picker .star:hover { color: #e6b820; }
+  /* Star display on book card */
+  .bc-stars { color: #c8960c; font-size: 0.85rem; letter-spacing: 1px; margin-top: 2px; }
+  .bc-stars .dim { color: #ccc; }
+
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
@@ -1282,7 +1195,7 @@
   <div class="login-card">
     <span class="login-ornament">❧</span>
     <h2>Spine</h2>
-    <p>Your personal book collection</p>
+    <p>Coffee Break Book Club</p>
     <button class="google-btn" onclick="signInWithGoogle()">
       <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
       Sign in with Google
@@ -1292,14 +1205,14 @@
 </div>
 <header>
   <div class="header-label-strip">
-    <span>Public Library Collection</span>
+    <span>Coffee Break Book Club</span>
     <span>Catalogue No. 001</span>
     <span>Est. 2026</span>
   </div>
   <div class="header-inner">
-    <div class="catalogue-plate">Family Library System</div>
+    <div class="catalogue-plate">Coffee Break Book Club</div>
     <h1>Spine</h1>
-    <div class="subtitle">A Shared Book Catalogue</div>
+    <div class="subtitle">Book Club Shared Catalogue</div>
     <div class="catalogue-tabs-strip">
       <div class="catalogue-tab-chip">A–D</div>
       <div class="catalogue-tab-chip">E–H</div>
@@ -1310,10 +1223,10 @@
     </div>
     <div id="sync-status" class="sync connecting" style="margin-top:12px;">⟳ Connecting…</div>
     <div class="library-stamp">
-      <div class="stamp-text-large">Property</div>
-      <div>of the</div>
-      <div class="stamp-text-large">Family</div>
-      <div>Library</div>
+      <div class="stamp-text-large">Coffee</div>
+      <div>Break</div>
+      <div class="stamp-text-large">Book</div>
+      <div>Club</div>
     </div>
     <div class="user-bar" id="user-bar" style="display:none;">
       <img class="user-avatar" id="user-avatar" src="" alt="">
@@ -1364,13 +1277,6 @@
       <input type="number" id="inp-year" placeholder="e.g. 1984" min="1000" max="2099">
     </div>
     <button class="add-btn" onclick="addBook()">+ Add to Collection</button>
-    <div class="adding-for-row" id="adding-for-row">
-      <label>Adding for</label>
-      <select id="inp-adding-for" style="background:var(--cream);border:1px solid var(--tan);padding:8px 12px;font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink);outline:none;">
-        <option value="chelsey">Chelsey</option>
-        <option value="ava">Ava</option>
-      </select>
-    </div>
   </div>
   <!-- Stats -->
   <div class="stats-bar" id="stats-bar"></div>
@@ -1378,19 +1284,13 @@
   <!-- Owner Filter Tabs -->
   <div class="owner-tabs">
     <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')">
-      <span class="tab-icon">⊞</span> Main Library
+      <span class="tab-icon">⊞</span> All Members
     </button>
     <button class="owner-tab" id="tab-betty" onclick="setOwnerFilter('betty')">
       <span class="tab-icon">❧</span> Betty's Library
     </button>
-    <button class="owner-tab" id="tab-chelsey" onclick="setOwnerFilter('chelsey')">
-      <span class="tab-icon">❧</span> Chelsey's Library
-    </button>
-    <button class="owner-tab" id="tab-peter" onclick="setOwnerFilter('peter')">
-      <span class="tab-icon">❧</span> Peter's Library
-    </button>
-    <button class="owner-tab" id="tab-ava" onclick="setOwnerFilter('ava')">
-      <span class="tab-icon">❧</span> Ava's Library
+    <button class="owner-tab" id="tab-nirmala" onclick="setOwnerFilter('nirmala')">
+      <span class="tab-icon">❧</span> Nirmala's Library
     </button>
   </div>
   <!-- View Toggle -->
@@ -1451,10 +1351,14 @@
       <option value="read">Read</option>
       <option value="wishlist">Wishlist</option>
     </select>
+    <label id="edit-readdate-label" style="display:none;">Date Read</label>
+    <input type="date" id="edit-readdate" style="display:none;">
+    <label>Book Cover</label>
+    <div id="edit-cover-preview" style="margin-bottom:6px;"></div>
+    <button type="button" onclick="window.findCover()" style="width:100%;padding:5px;background:#f5edd8;border:1px solid var(--brown);color:var(--brown);font-family:'Libre Baskerville',serif;font-size:0.75rem;cursor:pointer;letter-spacing:0.05em;">🔍 Find Cover Image</button>
+    <input type="hidden" id="edit-cover" value="">
     <label>Publication Year</label>
     <input type="number" id="edit-year" min="1000" max="2099">
-    <label>Notes</label>
-    <textarea id="edit-notes" rows="3" placeholder="Personal notes..."></textarea>
     <label>Your Rating</label>
     <div class="star-picker" id="edit-stars">
       <span class="star" data-val="1">★</span>
@@ -1464,12 +1368,8 @@
       <span class="star" data-val="5">★</span>
     </div>
     <input type="hidden" id="edit-rating" value="0">
-    <label id="edit-readdate-label" style="display:none;">Date Read</label>
-    <input type="date" id="edit-readdate" style="display:none;">
-    <label>Book Cover</label>
-    <div id="edit-cover-preview" style="margin-bottom:6px;"></div>
-    <button type="button" onclick="window.findCover()" style="width:100%;padding:5px;background:#f5edd8;border:1px solid var(--brown);color:var(--brown);font-family:'Libre Baskerville',serif;font-size:0.75rem;cursor:pointer;letter-spacing:0.05em;">🔍 Find Cover Image</button>
-    <input type="hidden" id="edit-cover" value="">
+    <label>Notes</label>
+    <textarea id="edit-notes" rows="3" placeholder="Personal notes..."></textarea>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-save" onclick="saveEdit()">Save Changes</button>
@@ -1485,19 +1385,18 @@ import { getDatabase, ref, push, remove, onValue, update }
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 const firebaseConfig = {
-  apiKey: "AIzaSyCtjswyv_p66BrRV-HmNOn1vPF8PhC9KFc",
-  authDomain: "spine-001.firebaseapp.com",
-  databaseURL: "https://spine-001-default-rtdb.firebaseio.com",
-  projectId: "spine-001",
-  storageBucket: "spine-001.firebasestorage.app",
-  messagingSenderId: "1058346929766",
-  appId: "1:1058346929766:web:6704800343c22e34cae7a7"
+  apiKey: "AIzaSyAHWkIIAY_Fns3Ow6QnZOHGBAJa-sSNT6U",
+  authDomain: "cbbc-001.firebaseapp.com",
+  databaseURL: "https://cbbc-001-default-rtdb.firebaseio.com",
+  projectId: "cbbc-001",
+  storageBucket: "cbbc-001.firebasestorage.app",
+  messagingSenderId: "262547572773",
+  appId: "1:262547572773:web:3fe12d78536c8f1cba57cc"
 };
 // ── ALLOWED EMAILS ────────────────────────────────────────────────────────────
 const ALLOWED_EMAILS = [
   "bettykwale@gmail.com",
-  "chelseymcrory@gmail.com",
-  "petersmcrory@gmail.com",
+  "nirmalavisvanathan6@gmail.com",
 ];
 const fbApp    = initializeApp(firebaseConfig);
 const db       = getDatabase(fbApp);
@@ -1518,10 +1417,6 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('user-bar').style.display = 'flex';
     document.getElementById('user-name').textContent = user.displayName || user.email;
     if (user.photoURL) document.getElementById('user-avatar').src = user.photoURL;
-    // Show "Adding for" dropdown only for Chelsey
-    if (user.email === 'chelseymcrory@gmail.com') {
-      document.getElementById('adding-for-row').classList.add('show');
-    }
     if (!dbUnsubscribe) startListening();
   } else if (user) {
     fbSignOut(auth);
@@ -1549,7 +1444,7 @@ function startListening() {
     const user = auth.currentUser;
     if (!user) return;
     user.getIdToken().then(token => {
-      fetch('https://spine-001-default-rtdb.firebaseio.com/books.json?auth=' + token)
+      fetch('https://cbbc-001-default-rtdb.firebaseio.com/books.json?auth=' + token)
         .then(r => r.json())
         .then(data => {
           const newHash = hashData(data);
@@ -1613,12 +1508,7 @@ function addBook() {
   const year   = document.getElementById('inp-year').value;
   if (!title || !dewey) { alert('Please enter a title and select a Dewey class.'); return; }
   const currentUser = auth.currentUser;
-  // Determine who this book is being added for
-  const addingForEl = document.getElementById('inp-adding-for');
-  let addedBy = currentUser ? currentUser.email : '';
-  if (addingForEl && addingForEl.closest('.adding-for-row').classList.contains('show')) {
-    if (addingForEl.value === 'ava') addedBy = 'ava';
-  }
+  const addedBy = currentUser ? currentUser.email : '';
   fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, notes: '', addedBy, coverImage: window._pendingCover || null });
   window._pendingCover = null;
   document.getElementById('inp-title').value  = '';
@@ -1640,13 +1530,14 @@ function openEdit(key) {
   document.getElementById('edit-status').value = b.status;
   document.getElementById('edit-year').value   = b.year || '';
   document.getElementById('edit-notes').value  = b.notes || '';
+  // Set star rating
   const rating = b.rating || 0;
   document.getElementById('edit-rating').value = rating;
   document.querySelectorAll('#edit-stars .star').forEach(s => {
     s.classList.toggle('lit', parseInt(s.dataset.val) <= rating);
   });
   toggleReadDate(b.status);
-  document.getElementById('edit-readdate').value = b.readDate ? b.readDate.substring(0, 10) : new Date().toISOString().substring(0, 10);
+  document.getElementById('edit-readdate').value = b.readDate ? b.readDate.substring(0, 10) : '';
   document.getElementById('edit-cover').value = b.coverImage || '';
   const preview = document.getElementById('edit-cover-preview');
   preview.innerHTML = b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="height:80px;border:1px solid #c8a96e;">` : '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover image</span>';
@@ -1655,15 +1546,16 @@ function openEdit(key) {
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
 function saveEdit() {
   const key = document.getElementById('edit-id').value;
+  const status = document.getElementById('edit-status').value;
   fbUpdate(key, {
     title:  document.getElementById('edit-title').value.trim(),
     author: document.getElementById('edit-author').value.trim(),
     dewey:  document.getElementById('edit-dewey').value,
-    status: document.getElementById('edit-status').value,
+    status,
     year:   document.getElementById('edit-year').value ? parseInt(document.getElementById('edit-year').value) : null,
     notes:  document.getElementById('edit-notes').value,
     rating: parseInt(document.getElementById('edit-rating').value) || 0,
-    readDate: document.getElementById('edit-status').value === 'read'
+    readDate: status === 'read'
       ? (document.getElementById('edit-readdate').value ? new Date(document.getElementById('edit-readdate').value).toISOString() : new Date().toISOString())
       : null,
     coverImage: document.getElementById('edit-cover').value || null,
@@ -1681,9 +1573,7 @@ function ownerFilteredBooks() {
   return books.filter(b => {
     return ownerFilter === 'all' ||
            (ownerFilter === 'betty'   && b.addedBy === 'bettykwale@gmail.com') ||
-           (ownerFilter === 'chelsey' && b.addedBy === 'chelseymcrory@gmail.com') ||
-           (ownerFilter === 'peter'   && b.addedBy === 'petersmcrory@gmail.com') ||
-           (ownerFilter === 'ava'     && b.addedBy === 'ava');
+           (ownerFilter === 'nirmala' && b.addedBy === 'nirmalavisvanathan6@gmail.com');
   });
 }
 function filteredBooks() {
@@ -1694,9 +1584,7 @@ function filteredBooks() {
     const mS = !fs || b.status === fs;
     const mO = ownerFilter === 'all' ||
                (ownerFilter === 'betty'   && b.addedBy === 'bettykwale@gmail.com') ||
-               (ownerFilter === 'chelsey' && b.addedBy === 'chelseymcrory@gmail.com') ||
-               (ownerFilter === 'peter'   && b.addedBy === 'petersmcrory@gmail.com') ||
-               (ownerFilter === 'ava'     && b.addedBy === 'ava');
+               (ownerFilter === 'nirmala' && b.addedBy === 'nirmalavisvanathan6@gmail.com');
     return mQ && mS && mO;
   });
 }
@@ -1708,7 +1596,7 @@ function setOwnerFilter(f) {
 }
 window.setOwnerFilter = setOwnerFilter;
 // ── Reading Goal ──────────────────────────────────────────────────────────────
-let readingGoal = parseInt(localStorage.getItem('spine-reading-goal') || '12');
+let readingGoal = parseInt(localStorage.getItem('cbbc-reading-goal') || '12');
 function renderGoal() {
   const pool = ownerFilteredBooks();
   const year = new Date().getFullYear();
@@ -1735,7 +1623,7 @@ window._setGoal = function() {
   const val = parseInt(document.getElementById('goal-input').value);
   if (val > 0) {
     readingGoal = val;
-    localStorage.setItem('spine-reading-goal', val);
+    localStorage.setItem('cbbc-reading-goal', val);
     renderGoal();
   }
 };
@@ -1796,6 +1684,7 @@ function renderAll() {
           <div class="book-band-top"></div>
           <div class="book-label">${b.dewey}<br>${(b.author||'').split(' ').pop().substring(0,3).toUpperCase()||'—'}</div>
           <div class="book-title-spine">${b.title}</div>
+
           <div class="book-status-dot" style="background:${statusColor(b.status)};"></div>
           <div class="book-band-bottom"></div>
         </div>
@@ -1804,9 +1693,9 @@ function renderAll() {
           <h4>${b.title}</h4>
           <div class="bc-author">${b.author || 'Unknown Author'}</div>
           <div class="bc-meta">Dewey: ${b.dewey} · ${b.year || 'n.d.'}</div>
-          <div class="bc-meta bc-owner">${b.addedBy === 'bettykwale@gmail.com' ? '❧ Betty' : b.addedBy === 'chelseymcrory@gmail.com' ? '❧ Chelsey' : b.addedBy === 'petersmcrory@gmail.com' ? '❧ Peter' : b.addedBy === 'ava' ? '❧ Ava' : ''}</div>
+          <div class="bc-meta bc-owner">${b.addedBy === 'bettykwale@gmail.com' ? '❧ Betty' : b.addedBy === 'nirmalavisvanathan6@gmail.com' ? '❧ Nirmala' : ''}</div>
           <div class="bc-meta"><span style="background:${statusColor(b.status)};color:#fff;font-size:0.68rem;padding:2px 8px;letter-spacing:0.06em;text-transform:uppercase;">${statusLabel(b.status)}</span></div>
-          ${b.rating ? `<div style="color:#c8960c;font-size:1rem;margin-top:4px;">${'★'.repeat(b.rating)}<span style="color:#ddd;">${'★'.repeat(5-b.rating)}</span></div>` : `<div style="color:#ddd;font-size:1rem;margin-top:4px;">☆☆☆☆☆</div>`}
+          ${b.rating ? `<div class="bc-stars" style="font-size:1rem;margin-top:4px;">${'★'.repeat(b.rating)}<span style="color:#ddd;">${'★'.repeat(5-b.rating)}</span></div>` : '<div class="bc-stars" style="font-size:1rem;margin-top:4px;color:#ddd;">☆☆☆☆☆</div>'}
           ${b.notes ? `<div class="bc-review">"${b.notes}"</div>` : ''}
           <div class="bc-actions">
             <button onclick="event.stopPropagation();window._openEdit('${b._key}')">Edit</button>
@@ -1904,7 +1793,7 @@ function selectBook(i) {
   const b = window._bookResults[i];
   document.getElementById('inp-title').value  = b.title;
   document.getElementById('inp-author').value = b.author;
-  if (b.year)  document.getElementById('inp-year').value  = b.year;
+  if (b.year) document.getElementById('inp-year').value = b.year;
   if (b.dewey) document.getElementById('inp-dewey').value = b.dewey;
   window._pendingCover = b.coverImage || null;
   document.getElementById('book-suggestions').innerHTML = '';
@@ -1922,6 +1811,8 @@ function guessDewey(categories, title) {
   if (text.match(/language|linguist|grammar|dictionary/)) return '400';
   return '000';
 }
+window.searchBooks = searchBooks;
+window.selectBook  = selectBook;
 window.findCover = function() {
   const title  = document.getElementById('edit-title').value.trim();
   const author = document.getElementById('edit-author').value.trim();
@@ -1947,13 +1838,12 @@ window.toggleReadDate = function(status) {
     document.getElementById('edit-readdate').value = new Date().toISOString().substring(0, 10);
   }
 };
-window.searchBooks = searchBooks;
-window.selectBook  = selectBook;
 // ── Star rating picker interaction ────────────────────────────────────────────
 document.querySelectorAll('#edit-stars .star').forEach(star => {
   star.addEventListener('click', () => {
     const val = parseInt(star.dataset.val);
     const current = parseInt(document.getElementById('edit-rating').value) || 0;
+    // Click same star again to clear rating
     const newVal = current === val ? 0 : val;
     document.getElementById('edit-rating').value = newVal;
     document.querySelectorAll('#edit-stars .star').forEach(s => {
