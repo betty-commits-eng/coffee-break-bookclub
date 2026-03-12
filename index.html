@@ -1605,37 +1605,42 @@ function setOwnerFilter(f) {
 }
 window.setOwnerFilter = setOwnerFilter;
 // ── Reading Goal ──────────────────────────────────────────────────────────────
-let readingGoal = parseInt(localStorage.getItem('cbbc-reading-goal') || '12');
+const MEMBERS = [
+  { key: 'betty',   email: 'bettykwale@gmail.com',          label: 'Betty' },
+  { key: 'nirmala', email: 'nirmalavisvanathan6@gmail.com',  label: 'Nirmala' },
+  // Add new members here as the club grows
+];
+function getMemberGoal(key) {
+  return parseInt(localStorage.getItem(`cbbc-goal-${key}`) || '12');
+}
+function setMemberGoal(key, val) {
+  if (val > 0) localStorage.setItem(`cbbc-goal-${key}`, val);
+}
 function renderGoal() {
-  const pool = ownerFilteredBooks();
   const year = new Date().getFullYear();
-  const read = pool.filter(b => b.status === 'read' && b.readDate && new Date(b.readDate).getFullYear() === year).length;
-  const pct  = Math.min(100, Math.round((read / readingGoal) * 100));
-  const done = read >= readingGoal;
+  let totalRead = 0, totalGoal = 0;
+  MEMBERS.forEach(m => {
+    const read = books.filter(b =>
+      (b.addedBy === m.email) &&
+      b.status === 'read' && b.readDate &&
+      new Date(b.readDate).getFullYear() === year
+    ).length;
+    totalRead += read;
+    totalGoal += getMemberGoal(m.key);
+  });
+  const pct  = Math.min(100, Math.round((totalRead / totalGoal) * 100));
+  const done = totalRead >= totalGoal;
   document.getElementById('goal-bar').innerHTML = `
     <div class="goal-header">
-      <span class="goal-label">📖 ${new Date().getFullYear()} Reading Goal</span>
-      <span class="goal-fraction">${read} / ${readingGoal} books</span>
+      <span class="goal-label">📖 ${year} Club Reading Goal</span>
+      <span class="goal-fraction">${totalRead} / ${totalGoal} books</span>
     </div>
     <div class="goal-track">
       <div class="goal-fill ${done ? 'complete' : ''}" style="width:${pct}%"></div>
     </div>
-    ${done ? '<div class="goal-congrats">🎉 Goal achieved! Magnificent reading!</div>' : ''}
-    <div class="goal-edit">
-      <span class="goal-label">Set goal:</span>
-      <input type="number" id="goal-input" value="${readingGoal}" min="1" max="365">
-      <button onclick="window._setGoal()">Update</button>
-    </div>
+    ${done ? '<div class="goal-congrats">🎉 Club goal achieved!</div>' : ''}
   `;
 }
-window._setGoal = function() {
-  const val = parseInt(document.getElementById('goal-input').value);
-  if (val > 0) {
-    readingGoal = val;
-    localStorage.setItem('cbbc-reading-goal', val);
-    renderGoal();
-  }
-};
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderStats() {
   // Stats respect the owner filter so counts match what's shown
