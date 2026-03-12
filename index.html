@@ -1619,7 +1619,9 @@ function setMemberGoal(key, val) {
 function renderGoal() {
   const year = new Date().getFullYear();
   let totalRead = 0, totalGoal = 0;
-  MEMBERS.forEach(m => {
+  const activeMembers = ownerFilter === 'all' ? MEMBERS : MEMBERS.filter(m => m.key === ownerFilter);
+  const label = ownerFilter === 'all' ? 'Club' : (activeMembers[0] ? activeMembers[0].label + "'s" : 'Club');
+  activeMembers.forEach(m => {
     const read = books.filter(b =>
       (b.addedBy === m.email) &&
       b.status === 'read' && b.readDate &&
@@ -1630,17 +1632,24 @@ function renderGoal() {
   });
   const pct  = Math.min(100, Math.round((totalRead / totalGoal) * 100));
   const done = totalRead >= totalGoal;
+  const activeMember = activeMembers[0];
+  const canEdit = ownerFilter !== 'all' && activeMember && activeMember.email === currentUserEmail;
+  const editBtn = canEdit ? `<span onclick="window._editGoal('${activeMember.key}', ${totalGoal})" style="cursor:pointer;font-size:0.85rem;margin-left:6px;color:var(--brown);" title="Edit goal">✎</span>` : '';
   document.getElementById('goal-bar').innerHTML = `
     <div class="goal-header">
-      <span class="goal-label">📖 ${year} Club Reading Goal</span>
-      <span class="goal-fraction">${totalRead} / ${totalGoal} books</span>
+      <span class="goal-label">📖 ${year} ${label} Reading Goal</span>
+      <span class="goal-fraction">${totalRead} / ${totalGoal} books${editBtn}</span>
     </div>
     <div class="goal-track">
       <div class="goal-fill ${done ? 'complete' : ''}" style="width:${pct}%"></div>
     </div>
-    ${done ? '<div class="goal-congrats">🎉 Club goal achieved!</div>' : ''}
+    ${done ? `<div class="goal-congrats">🎉 ${label} goal achieved!</div>` : ''}
   `;
 }
+window._editGoal = function(key, current) {
+  const newVal = parseInt(prompt(`Set your ${new Date().getFullYear()} goal:`, current));
+  if (newVal > 0) { setMemberGoal(key, newVal); renderGoal(); }
+};
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderStats() {
   // Stats respect the owner filter so counts match what's shown
