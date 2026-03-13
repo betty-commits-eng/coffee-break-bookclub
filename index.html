@@ -839,8 +839,6 @@
       <span class="star" data-val="5">★</span>
     </div>
     <input type="hidden" id="edit-rating" value="0">
-    <label>Notes</label>
-    <textarea id="edit-notes" rows="3" placeholder="Personal notes..."></textarea>
     <div class="modal-actions" id="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-save" onclick="saveEdit()">Save Changes</button>
@@ -1055,7 +1053,7 @@ function addBook() {
   if (!title || !dewey) { alert('Please enter a title and select a Dewey class.'); return; }
   const currentUser = auth.currentUser;
   const addedBy = currentUser ? currentUser.email : '';
-  fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, notes: '', addedBy, coverImage: window._pendingCover || null });
+  fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null });
   window._pendingCover = null;
   document.getElementById('inp-title').value  = '';
   document.getElementById('inp-author').value = '';
@@ -1078,7 +1076,7 @@ function openEdit(key, viewOnly = false) {
   document.getElementById('edit-dewey').value  = b.dewey;
   document.getElementById('edit-status').value = b.status;
   document.getElementById('edit-year').value   = b.year || '';
-  document.getElementById('edit-notes').value  = b.notes || '';
+
   const rating = b.rating || 0;
   document.getElementById('edit-rating').value = rating;
   document.querySelectorAll('#edit-stars .star').forEach(s => {
@@ -1089,7 +1087,7 @@ function openEdit(key, viewOnly = false) {
   document.getElementById('edit-cover').value = b.coverImage || '';
   const preview = document.getElementById('edit-cover-preview');
   preview.innerHTML = b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="height:80px;border:1px solid #c8a96e;">` : '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover image</span>';
-  const fields = ['edit-title','edit-author','edit-dewey','edit-status','edit-year','edit-notes','edit-readdate'];
+  const fields = ['edit-title','edit-author','edit-dewey','edit-status','edit-year','edit-readdate'];
   fields.forEach(id => { document.getElementById(id).disabled = viewOnly; });
   document.querySelectorAll('#edit-stars .star').forEach(s => s.style.pointerEvents = viewOnly ? 'none' : '');
   document.getElementById('find-cover-btn').style.display = viewOnly ? 'none' : '';
@@ -1116,7 +1114,7 @@ function saveEdit() {
     dewey:  document.getElementById('edit-dewey').value,
     status,
     year:   document.getElementById('edit-year').value ? parseInt(document.getElementById('edit-year').value) : null,
-    notes:  document.getElementById('edit-notes').value,
+    notes:  '',
     rating: parseInt(document.getElementById('edit-rating').value) || 0,
     readDate: status === 'read'
       ? (document.getElementById('edit-readdate').value ? new Date(document.getElementById('edit-readdate').value).toISOString() : new Date().toISOString())
@@ -1272,7 +1270,6 @@ function renderAll() {
           <div class="bc-meta bc-owner">${b.addedBy === 'bettykwale@gmail.com' ? '❧ Betty' : b.addedBy === 'nirmalavisvanathan6@gmail.com' ? '❧ Nirmala' : ''}</div>
           <div class="bc-meta"><span style="background:${statusColor(b.status)};color:#fff;font-size:0.68rem;padding:2px 8px;letter-spacing:0.06em;text-transform:uppercase;">${statusLabel(b.status)}</span></div>
           ${b.rating ? `<div class="bc-stars" style="font-size:1rem;margin-top:4px;">${'★'.repeat(b.rating)}<span style="color:#ddd;">${'★'.repeat(5-b.rating)}</span></div>` : '<div class="bc-stars" style="font-size:1rem;margin-top:4px;color:#ddd;">☆☆☆☆☆</div>'}
-          ${b.notes ? `<div class="bc-review">"${b.notes}"</div>` : ''}
           ${noteCount > 0 ? `<div class="bc-has-notes">💬 ${noteCount} discussion note${noteCount !== 1 ? 's' : ''}</div>` : ''}
           <div class="bc-actions">
             ${b.addedBy === currentUserEmail ? `
