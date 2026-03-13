@@ -36,16 +36,13 @@
   body {
     background-color: #b5975a;
     background-image:
-      /* Wood grain lines */
       repeating-linear-gradient(92deg, transparent, transparent 60px, rgba(0,0,0,0.04) 60px, rgba(0,0,0,0.04) 61px),
       repeating-linear-gradient(180deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 4px),
-      /* Cabinet wood texture */
       linear-gradient(135deg, #c4a265 0%, #a07840 25%, #b5975a 50%, #9a7035 75%, #b0904e 100%);
     font-family: 'Libre Baskerville', serif;
     color: var(--ink);
     min-height: 100vh;
   }
-  /* Card catalogue cabinet header */
   header {
     background:
       linear-gradient(180deg, #2a1a08 0%, #3d2a10 40%, #2e1e0a 100%);
@@ -55,7 +52,6 @@
     position: relative;
     box-shadow: 0 6px 24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
   }
-  /* Top brass rail */
   header::before {
     content: '';
     position: absolute;
@@ -64,7 +60,6 @@
     background: linear-gradient(180deg, #d4a843, #a07830, #c49838);
     box-shadow: 0 2px 4px rgba(0,0,0,0.4);
   }
-  /* Bottom brass rail */
   header::after {
     content: '';
     position: absolute;
@@ -77,7 +72,6 @@
     padding: 28px 40px 24px;
     position: relative;
   }
-  /* Brass label holder strip across the top */
   .header-label-strip {
     background: linear-gradient(180deg, #d4a843 0%, #c49030 50%, #b88020 100%);
     border-top: 2px solid #e8c060;
@@ -93,10 +87,7 @@
     color: #3a2008;
     box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), inset 0 -1px 2px rgba(0,0,0,0.2);
   }
-  .header-label-strip span {
-    opacity: 0.8;
-  }
-  /* Drawer pull / catalogue number plate */
+  .header-label-strip span { opacity: 0.8; }
   .catalogue-plate {
     display: inline-block;
     background: linear-gradient(135deg, #f5edd8, #e8d8b0);
@@ -128,7 +119,6 @@
     text-transform: uppercase;
     opacity: 0.85;
   }
-  /* Decorative catalogue card index tabs row */
   .catalogue-tabs-strip {
     display: flex;
     justify-content: center;
@@ -148,7 +138,6 @@
     clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 100%, 0% 100%);
     opacity: 0.7;
   }
-  /* Stamp effect for the header */
   .library-stamp {
     position: absolute;
     top: 28px;
@@ -178,11 +167,7 @@
     border: 1px solid rgba(180,60,40,0.3);
     border-radius: 2px;
   }
-  .stamp-text-large {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
+  .stamp-text-large { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; }
   .sync {
     display: inline-block;
     margin-top: 8px;
@@ -196,7 +181,6 @@
   .sync.live { background: rgba(45,138,45,0.25); color: #7dca7d; border: 1px solid #2d8a2d; }
   .sync.connecting { background: rgba(230,160,32,0.2); color: #e6c87d; border: 1px solid #e6a020; }
   .sync.offline { background: rgba(139,32,32,0.25); color: #d98a8a; border: 1px solid #8b2020; }
-  /* User bar */
   .user-bar {
     position: absolute;
     top: 16px;
@@ -205,19 +189,8 @@
     align-items: center;
     gap: 10px;
   }
-  .user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid var(--tan);
-    object-fit: cover;
-  }
-  .user-name {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    color: var(--tan);
-    font-size: 0.85rem;
-  }
+  .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--tan); object-fit: cover; }
+  .user-name { font-family: 'IM Fell English', serif; font-style: italic; color: var(--tan); font-size: 0.85rem; }
   .sign-out-btn {
     background: transparent;
     border: 1px solid var(--tan);
@@ -230,7 +203,6 @@
     transition: all 0.2s;
   }
   .sign-out-btn:hover { background: var(--tan); color: var(--dark-brown); }
-  /* Login screen */
   #login-screen {
     display: none;
     position: fixed;
@@ -247,13 +219,7 @@
   #login-screen.show { display: flex; }
   .login-card {
     background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 26px,
-        rgba(180,140,60,0.15) 26px,
-        rgba(180,140,60,0.15) 27px
-      ),
+      repeating-linear-gradient(0deg, transparent, transparent 26px, rgba(180,140,60,0.15) 26px, rgba(180,140,60,0.15) 27px),
       linear-gradient(180deg, #f8f0dc, #f0e4c4);
     border: 2px solid #8a6530;
     border-top: 6px solid #a07840;
@@ -277,22 +243,8 @@
     padding: 2px 6px;
     transform: rotate(3deg);
   }
-  .login-card h2 {
-    font-family: 'Special Elite', cursive;
-    font-size: 2.8rem;
-    color: var(--dark-brown);
-    letter-spacing: 0.12em;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-  .login-card p {
-    font-family: 'Courier Prime', monospace;
-    font-style: italic;
-    color: var(--brown);
-    font-size: 0.85rem;
-    margin-bottom: 32px;
-    letter-spacing: 0.08em;
-  }
+  .login-card h2 { font-family: 'Special Elite', cursive; font-size: 2.8rem; color: var(--dark-brown); letter-spacing: 0.12em; margin-bottom: 6px; text-transform: uppercase; }
+  .login-card p { font-family: 'Courier Prime', monospace; font-style: italic; color: var(--brown); font-size: 0.85rem; margin-bottom: 32px; letter-spacing: 0.08em; }
   .login-ornament { color: var(--tan); font-size: 1.5rem; margin-bottom: 16px; display: block; }
   .google-btn {
     display: flex;
@@ -320,33 +272,19 @@
     padding: 32px 20px;
     position: relative;
   }
-  /* Card catalogue drawer panel behind content */
   .main-wrap::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 28px,
-        rgba(139,100,40,0.12) 28px,
-        rgba(139,100,40,0.12) 29px
-      ),
+      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(139,100,40,0.12) 28px, rgba(139,100,40,0.12) 29px),
       linear-gradient(135deg, #c4a265 0%, #a07840 25%, #b5975a 50%, #9a7035 75%, #b0904e 100%);
     z-index: -1;
     pointer-events: none;
   }
-  /* Controls — looks like a catalogue entry card */
   .controls {
     background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 26px,
-        rgba(180,140,60,0.15) 26px,
-        rgba(180,140,60,0.15) 27px
-      ),
+      repeating-linear-gradient(0deg, transparent, transparent 26px, rgba(180,140,60,0.15) 26px, rgba(180,140,60,0.15) 27px),
       linear-gradient(180deg, #f8f0dc, #f0e4c4);
     border: 2px solid #8a6530;
     border-top: 6px solid #a07840;
@@ -360,12 +298,10 @@
     align-items: flex-end;
     position: relative;
   }
-  /* "New Entry" stamp on the form */
   .controls::before {
     content: 'NEW ENTRY';
     position: absolute;
-    top: 10px;
-    right: 14px;
+    top: 10px; right: 14px;
     font-family: 'Special Elite', cursive;
     font-size: 0.6rem;
     letter-spacing: 0.2em;
@@ -374,15 +310,7 @@
     padding: 2px 8px;
     transform: rotate(2deg);
   }
-  .controls label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--brown);
-    display: block;
-    margin-bottom: 4px;
-  }
+  .controls label { font-family: 'Courier Prime', monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown); display: block; margin-bottom: 4px; }
   .controls input, .controls select {
     background: rgba(255,255,255,0.6);
     border: none;
@@ -395,10 +323,7 @@
     outline: none;
     width: 100%;
   }
-  .controls input:focus, .controls select:focus {
-    border-bottom-color: var(--brown);
-    background: rgba(255,255,255,0.8);
-  }
+  .controls input:focus, .controls select:focus { border-bottom-color: var(--brown); background: rgba(255,255,255,0.8); }
   .field { flex: 1; min-width: 140px; }
   .field.wide { flex: 2; min-width: 200px; }
   button.add-btn {
@@ -418,7 +343,6 @@
   }
   button.add-btn:hover { background: linear-gradient(180deg, #7a5a3a, #5a3a1a); transform: translateY(-1px); box-shadow: 3px 4px 0 rgba(0,0,0,0.4); }
   button.add-btn:active { transform: translateY(1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.4); }
-  /* Owner filter tabs — catalogue drawer labels */
   .owner-tabs {
     display: flex;
     gap: 4px;
@@ -444,46 +368,14 @@
     position: relative;
     top: 2px;
   }
-  .owner-tab:hover {
-    background: linear-gradient(180deg, #f0e0b0, #e0cc90);
-    top: 0px;
-  }
-  .owner-tab.active {
-    background: linear-gradient(180deg, #f8f0dc, #f0e4c4);
-    color: var(--dark-brown);
-    font-weight: 700;
-    border-bottom-color: #f0e4c4;
-    top: 0px;
-    box-shadow: 2px -2px 6px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
+  .owner-tab:hover { background: linear-gradient(180deg, #f0e0b0, #e0cc90); top: 0px; }
+  .owner-tab.active { background: linear-gradient(180deg, #f8f0dc, #f0e4c4); color: var(--dark-brown); font-weight: 700; border-bottom-color: #f0e4c4; top: 0px; box-shadow: 2px -2px 6px rgba(0,0,0,0.2); z-index: 1; }
   .tab-icon { margin-right: 4px; }
-  .bc-owner {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    color: var(--brown);
-    font-size: 0.78rem;
-    margin-top: 2px;
-  }
-  /* "Adding for" row — only shown when Chelsey is logged in */
-  .adding-for-row {
-    display: none;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: 4px;
-  }
+  .bc-owner { font-family: 'IM Fell English', serif; font-style: italic; color: var(--brown); font-size: 0.78rem; margin-top: 2px; }
+  .adding-for-row { display: none; align-items: center; gap: 10px; width: 100%; margin-top: 4px; }
   .adding-for-row.show { display: flex; }
-  .adding-for-row label {
-    white-space: nowrap;
-  }
-  /* Search bar — typewriter style */
-  .search-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    align-items: center;
-  }
+  .adding-for-row label { white-space: nowrap; }
+  .search-row { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; }
   .search-row input {
     background: linear-gradient(180deg, #f8f0dc, #f0e4c4);
     border: 2px solid #8a6530;
@@ -508,534 +400,202 @@
     box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
     cursor: pointer;
   }
-  /* Dewey sections */
-  .dewey-section {
-    margin-bottom: 32px;
-    animation: fadeIn 0.4s ease;
-  }
+  .dewey-section { margin-bottom: 32px; animation: fadeIn 0.4s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .section-number {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--cream);
-    flex-shrink: 0;
-    border: 3px double rgba(255,255,255,0.3);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-  }
+  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; cursor: pointer; user-select: none; }
+  .section-number { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--cream); flex-shrink: 0; border: 3px double rgba(255,255,255,0.3); text-shadow: 1px 1px 2px rgba(0,0,0,0.4); }
   .section-title-wrap { flex: 1; }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--cream);
-    letter-spacing: 0.04em;
-  }
-  .section-sub {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    color: var(--tan);
-    font-size: 0.85rem;
-    margin-top: 2px;
-  }
-  .section-count {
-    background: rgba(0,0,0,0.3);
-    color: var(--tan);
-    font-family: 'Playfair Display', serif;
-    font-size: 0.8rem;
-    padding: 4px 12px;
-    border: 1px solid var(--tan);
-    letter-spacing: 0.08em;
-  }
-  /* Bookshelf */
-  .bookshelf {
-    background: linear-gradient(180deg, #2a1508 0%, #1a0d04 100%);
-    border: 2px solid #5a3a1a;
-    border-radius: 2px;
-    padding: 20px 20px 28px;
-    position: relative;
-    min-height: 100px;
-  }
-  .bookshelf::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 12px;
-    background: linear-gradient(180deg, #3d2314 0%, #5a3a1a 100%);
-    border-top: 2px solid #7a5a2a;
-    border-radius: 0 0 2px 2px;
-  }
-  .books-row {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    min-height: 120px;
-  }
-  /* Vintage Book spines */
-  .book {
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.25s ease, filter 0.25s ease;
-    flex-shrink: 0;
-    z-index: 1;
-  }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); letter-spacing: 0.04em; }
+  .section-sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--tan); font-size: 0.85rem; margin-top: 2px; }
+  .section-count { background: rgba(0,0,0,0.3); color: var(--tan); font-family: 'Playfair Display', serif; font-size: 0.8rem; padding: 4px 12px; border: 1px solid var(--tan); letter-spacing: 0.08em; }
+  .bookshelf { background: linear-gradient(180deg, #2a1508 0%, #1a0d04 100%); border: 2px solid #5a3a1a; border-radius: 2px; padding: 20px 20px 28px; position: relative; min-height: 100px; }
+  .bookshelf::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 12px; background: linear-gradient(180deg, #3d2314 0%, #5a3a1a 100%); border-top: 2px solid #7a5a2a; border-radius: 0 0 2px 2px; }
+  .books-row { display: flex; gap: 4px; flex-wrap: wrap; align-items: flex-end; min-height: 120px; }
+  .book { position: relative; cursor: pointer; transition: transform 0.25s ease, filter 0.25s ease; flex-shrink: 0; z-index: 1; }
   .book:hover { transform: translateY(-14px); filter: brightness(1.15); z-index: 200; }
-  .book-spine {
-    width: 38px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 3px 8px;
-    border-radius: 2px 1px 1px 2px;
-    position: relative;
-    overflow: hidden;
-    /* Leather/cloth texture via layered shadows */
-    box-shadow:
-      -3px 0 6px rgba(0,0,0,0.5),
-      inset 3px 0 6px rgba(255,255,255,0.12),
-      inset -2px 0 4px rgba(0,0,0,0.25),
-      2px 0 0 rgba(0,0,0,0.4);
-  }
-  /* Cloth grain overlay */
-  .book-spine::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.04) 2px,
-        rgba(0,0,0,0.04) 3px
-      );
-    pointer-events: none;
-  }
-  /* Highlight edge — spine binding crease */
-  .book-spine::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 5px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05), transparent);
-    pointer-events: none;
-  }
-  /* Top decorative band */
-  .book-band-top {
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08));
-    border-bottom: 1px solid rgba(0,0,0,0.3);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-  /* Bottom decorative band */
-  .book-band-bottom {
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(0deg, rgba(255,255,255,0.2), rgba(255,255,255,0.06));
-    border-top: 1px solid rgba(0,0,0,0.3);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-  /* Gold label — call number tag */
-  .book-label {
-    background: linear-gradient(135deg, #f5edd8, #e0cfa0, #f5edd8);
-    color: #1a1008;
-    font-size: 8px;
-    font-family: 'Courier Prime', monospace;
-    font-weight: 700;
-    padding: 3px 3px;
-    text-align: center;
-    width: calc(100% - 4px);
-    letter-spacing: 0.04em;
-    line-height: 1.4;
-    border: 1px solid rgba(180,140,60,0.6);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
-    position: relative;
-    z-index: 2;
-    flex-shrink: 0;
-  }
-  /* Gold title lettering on spine */
-  .book-title-spine {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    color: rgba(255,240,180,0.92);
-    font-family: 'IM Fell English', serif;
-    font-size: 10px;
-    font-style: italic;
-    text-align: center;
-    overflow: hidden;
-    flex: 1;
-    max-height: 90px;
-    text-shadow:
-      0 0 8px rgba(212,168,67,0.6),
-      1px 1px 2px rgba(0,0,0,0.8);
-    letter-spacing: 0.06em;
-    position: relative;
-    z-index: 2;
-    padding: 4px 0;
-  }
-  /* Status dot — small wax seal look */
-  .book-status-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.4);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 2;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
-  }
-  /* Tooltip / book card — FIX: use a pseudo-element bridge to prevent gap */
-  .book-card {
-    display: none;
-    position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: #f5edd8;
-    border: 2px solid var(--brown);
-    padding: 14px;
-    width: 260px;
-    z-index: 1000;
-    box-shadow: 4px 4px 0 var(--dark-brown);
-    text-align: left;
-    isolation: isolate;
-  }
-  /* Transparent bridge fills the gap so mouse doesn't leave .book */
-  .book-card::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    height: 12px; /* covers the gap */
-    background: transparent;
-  }
+  .book-spine { width: 38px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 10px 3px 8px; border-radius: 2px 1px 1px 2px; position: relative; overflow: hidden; box-shadow: -3px 0 6px rgba(0,0,0,0.5), inset 3px 0 6px rgba(255,255,255,0.12), inset -2px 0 4px rgba(0,0,0,0.25), 2px 0 0 rgba(0,0,0,0.4); }
+  .book-spine::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 3px); pointer-events: none; }
+  .book-spine::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 5px; background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05), transparent); pointer-events: none; }
+  .book-band-top { width: 100%; height: 6px; background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08)); border-bottom: 1px solid rgba(0,0,0,0.3); flex-shrink: 0; position: relative; z-index: 1; }
+  .book-band-bottom { width: 100%; height: 6px; background: linear-gradient(0deg, rgba(255,255,255,0.2), rgba(255,255,255,0.06)); border-top: 1px solid rgba(0,0,0,0.3); flex-shrink: 0; position: relative; z-index: 1; }
+  .book-label { background: linear-gradient(135deg, #f5edd8, #e0cfa0, #f5edd8); color: #1a1008; font-size: 8px; font-family: 'Courier Prime', monospace; font-weight: 700; padding: 3px 3px; text-align: center; width: calc(100% - 4px); letter-spacing: 0.04em; line-height: 1.4; border: 1px solid rgba(180,140,60,0.6); box-shadow: 0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5); position: relative; z-index: 2; flex-shrink: 0; }
+  .book-title-spine { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); color: rgba(255,240,180,0.92); font-family: 'IM Fell English', serif; font-size: 10px; font-style: italic; text-align: center; overflow: hidden; flex: 1; max-height: 90px; text-shadow: 0 0 8px rgba(212,168,67,0.6), 1px 1px 2px rgba(0,0,0,0.8); letter-spacing: 0.06em; position: relative; z-index: 2; padding: 4px 0; }
+  .book-status-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0; position: relative; z-index: 2; box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .book-card { display: none; position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: #f5edd8; border: 2px solid var(--brown); padding: 14px; width: 260px; z-index: 1000; box-shadow: 4px 4px 0 var(--dark-brown); text-align: left; isolation: isolate; }
+  .book-card::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 12px; background: transparent; }
   .book:hover .book-card { display: block; }
-  .book-card::before {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-    background: var(--cream);
-    border-right: 2px solid var(--brown);
-    border-bottom: 2px solid var(--brown);
-    transform: translateX(-50%) rotate(45deg);
-  }
-  .book-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.95rem;
-    color: var(--ink);
-    margin-bottom: 4px;
-    border-bottom: 1px solid var(--tan);
-    padding-bottom: 6px;
-  }
-  .book-card .bc-author {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 0.82rem;
-    color: var(--brown);
-    margin-bottom: 6px;
-  }
-  .book-card .bc-meta {
-    font-size: 0.78rem;
-    color: var(--dark-brown);
-    margin-bottom: 4px;
-  }
-  .bc-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-  }
-  .bc-actions button {
-    flex: 1;
-    padding: 5px;
-    font-size: 0.7rem;
-    font-family: 'Libre Baskerville', serif;
-    cursor: pointer;
-    border: 1px solid var(--brown);
-    background: var(--parchment);
-    color: var(--brown);
-    transition: background 0.15s;
-    letter-spacing: 0.05em;
-  }
+  .book-card::before { content: ''; position: absolute; bottom: -8px; left: 50%; width: 12px; height: 12px; background: var(--cream); border-right: 2px solid var(--brown); border-bottom: 2px solid var(--brown); transform: translateX(-50%) rotate(45deg); }
+  .book-card h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--ink); margin-bottom: 4px; border-bottom: 1px solid var(--tan); padding-bottom: 6px; }
+  .book-card .bc-author { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.82rem; color: var(--brown); margin-bottom: 6px; }
+  .book-card .bc-meta { font-size: 0.78rem; color: var(--dark-brown); margin-bottom: 4px; }
+  .bc-actions { display: flex; gap: 6px; margin-top: 10px; }
+  .bc-actions button { flex: 1; padding: 5px; font-size: 0.7rem; font-family: 'Libre Baskerville', serif; cursor: pointer; border: 1px solid var(--brown); background: var(--parchment); color: var(--brown); transition: background 0.15s; letter-spacing: 0.05em; }
   .bc-actions button:hover { background: var(--brown); color: var(--cream); }
   .bc-actions button.delete { border-color: var(--red); color: var(--red); }
   .bc-actions button.delete:hover { background: var(--red); color: var(--cream); }
-  /* Status colors */
   .status-read { background: #2d8a2d; }
   .status-reading { background: #e6a020; }
   .status-unread { background: #888; }
   .status-wishlist { background: #6a4fcc; }
-  .empty-shelf {
-    color: rgba(245,237,216,0.3);
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-  }
-  /* Stats bar — catalogue card style */
-  .stats-bar {
-    display: flex;
-    gap: 3px;
-    margin-bottom: 28px;
-    overflow-x: auto;
-    background: linear-gradient(180deg, #d4c090, #c4b080);
-    border: 2px solid #8a6530;
-    border-top: 4px solid #a07840;
-    padding: 3px;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
-  }
-  .stat {
-    background: linear-gradient(180deg, #f5edd8, #ede0c4);
-    border: 1px solid #c4a060;
-    border-top: 3px solid #d4b070;
-    padding: 12px 16px;
-    text-align: center;
-    flex: 1;
-    min-width: 90px;
-    position: relative;
-    font-family: 'Courier Prime', monospace;
-  }
-  /* Catalogue card tab notch */
-  .stat::after {
-    content: '';
-    position: absolute;
-    top: -3px; left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 3px;
-    background: #a07840;
-  }
-  .stat-num {
-    font-family: 'Special Elite', cursive;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--dark-brown);
-    display: block;
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--brown);
-    margin-top: 4px;
-    display: block;
-  }
-  /* Modal */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-  }
+  .empty-shelf { color: rgba(245,237,216,0.3); font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.9rem; text-align: center; padding: 20px; width: 100%; }
+  .stats-bar { display: flex; gap: 3px; margin-bottom: 28px; overflow-x: auto; background: linear-gradient(180deg, #d4c090, #c4b080); border: 2px solid #8a6530; border-top: 4px solid #a07840; padding: 3px; box-shadow: 3px 3px 0 rgba(0,0,0,0.3); }
+  .stat { background: linear-gradient(180deg, #f5edd8, #ede0c4); border: 1px solid #c4a060; border-top: 3px solid #d4b070; padding: 12px 16px; text-align: center; flex: 1; min-width: 90px; position: relative; font-family: 'Courier Prime', monospace; }
+  .stat::after { content: ''; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 30px; height: 3px; background: #a07840; }
+  .stat-num { font-family: 'Special Elite', cursive; font-size: 1.8rem; font-weight: 700; color: var(--dark-brown); display: block; line-height: 1; }
+  .stat-label { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); margin-top: 4px; display: block; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal {
     background: var(--cream);
     border: 3px double var(--brown);
     padding: 28px;
     width: 90%;
-    max-width: 480px;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
     position: relative;
     box-shadow: 8px 8px 0 var(--dark-brown);
     animation: slideIn 0.3s ease;
   }
   @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .modal h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: var(--dark-brown);
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--tan);
-    padding-bottom: 10px;
-  }
-  .modal label {
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--brown);
-    display: block;
-    margin-bottom: 5px;
-    margin-top: 14px;
-    font-family: 'Playfair Display', serif;
-  }
-  .modal input, .modal select, .modal textarea {
-    width: 100%;
-    background: var(--parchment);
-    border: 1px solid var(--tan);
-    padding: 9px 12px;
-    font-family: 'Libre Baskerville', serif;
-    font-size: 0.9rem;
-    color: var(--ink);
-    outline: none;
-    border-radius: 1px;
-  }
-  .modal input:focus, .modal select:focus, .modal textarea:focus {
-    border-color: var(--brown);
-    box-shadow: 0 0 0 2px rgba(123,79,46,0.15);
-  }
-  .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  .modal-actions button {
-    flex: 1;
-    padding: 10px;
-    font-family: 'Playfair Display', serif;
-    font-size: 0.9rem;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: all 0.2s;
-  }
-  .btn-save {
-    background: var(--dark-brown);
-    color: var(--cream);
-    border: none;
-  }
+  .modal h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--dark-brown); margin-bottom: 20px; border-bottom: 2px solid var(--tan); padding-bottom: 10px; }
+  .modal label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown); display: block; margin-bottom: 5px; margin-top: 14px; font-family: 'Playfair Display', serif; }
+  .modal input, .modal select, .modal textarea { width: 100%; background: var(--parchment); border: 1px solid var(--tan); padding: 9px 12px; font-family: 'Libre Baskerville', serif; font-size: 0.9rem; color: var(--ink); outline: none; border-radius: 1px; }
+  .modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--brown); box-shadow: 0 0 0 2px rgba(123,79,46,0.15); }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions button { flex: 1; padding: 10px; font-family: 'Playfair Display', serif; font-size: 0.9rem; cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s; }
+  .btn-save { background: var(--dark-brown); color: var(--cream); border: none; }
   .btn-save:hover { background: var(--brown); }
-  .btn-cancel {
-    background: transparent;
-    color: var(--brown);
-    border: 2px solid var(--brown);
-  }
+  .btn-cancel { background: transparent; color: var(--brown); border: 2px solid var(--brown); }
   .btn-cancel:hover { background: var(--parchment); }
-  .close-modal {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: var(--brown);
-    line-height: 1;
-  }
-  /* Legend */
-  .legend {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    color: var(--parchment);
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-  }
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-  /* View toggle */
-  .view-toggle {
-    display: flex;
-    gap: 4px;
-  }
-  .view-btn {
-    background: var(--parchment);
-    border: 1px solid var(--brown);
-    color: var(--brown);
-    padding: 6px 14px;
-    font-family: 'Libre Baskerville', serif;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .close-modal { position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--brown); line-height: 1; }
+  .legend { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--parchment); font-family: 'IM Fell English', serif; font-style: italic; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .view-toggle { display: flex; gap: 4px; }
+  .view-btn { background: var(--parchment); border: 1px solid var(--brown); color: var(--brown); padding: 6px 14px; font-family: 'Libre Baskerville', serif; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
   .view-btn.active { background: var(--dark-brown); color: var(--cream); border-color: var(--dark-brown); }
-  /* List view */
   .list-view { display: none; }
   .list-view.show { display: block; }
   .shelf-view.hide { display: none; }
-  .book-list-item {
-    background: var(--parchment);
-    border-left: 6px solid var(--brown);
-    padding: 12px 16px;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
+  .book-list-item { background: var(--parchment); border-left: 6px solid var(--brown); padding: 12px 16px; margin-bottom: 6px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: background 0.15s; }
   .book-list-item:hover { background: #e8d8b0; }
-  .bli-call {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--dark-brown);
-    min-width: 60px;
-  }
-  .bli-title {
-    font-family: 'IM Fell English', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: var(--ink);
-    flex: 1;
-  }
-  .bli-author {
-    font-size: 0.82rem;
-    color: var(--brown);
-    min-width: 100px;
-    text-align: right;
-  }
-  .bli-status {
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    min-width: 70px;
-    text-align: center;
-  }
-  /* Section collapsed */
+  .bli-call { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: var(--dark-brown); min-width: 60px; }
+  .bli-title { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: var(--ink); flex: 1; }
+  .bli-author { font-size: 0.82rem; color: var(--brown); min-width: 100px; text-align: right; }
+  .bli-status { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; min-width: 70px; text-align: center; }
   .dewey-section.collapsed .bookshelf { display: none; }
   .dewey-section.collapsed .list-view { display: none !important; }
+  .view-toggle-row { display: flex; justify-content: flex-end; margin-bottom: 10px; }
 
-  /* ── Mobile-friendly view toggle row ── */
-  .view-toggle-row {
+  /* ── Discussion Notes ── */
+  .discussion-section {
+    margin-top: 20px;
+    border-top: 2px solid var(--tan);
+    padding-top: 16px;
+  }
+  .discussion-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--dark-brown);
+    margin-bottom: 12px;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+  }
+  .discussion-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--tan);
+  }
+  .discussion-note {
+    background: var(--parchment);
+    border-left: 3px solid var(--tan);
+    padding: 10px 12px;
     margin-bottom: 10px;
+    position: relative;
+  }
+  .discussion-note-meta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--brown);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .discussion-note-text {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .discussion-note-delete {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0 2px;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+  .discussion-note-delete:hover { color: var(--red); }
+  .discussion-add-area {
+    margin-top: 8px;
+  }
+  .discussion-add-area textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid var(--tan);
+    border-radius: 1px;
+    padding: 9px 12px;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+  }
+  .discussion-add-area textarea:focus { border-color: var(--brown); }
+  .discussion-post-btn {
+    margin-top: 8px;
+    background: var(--dark-brown);
+    color: var(--cream);
+    border: none;
+    padding: 8px 20px;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .discussion-post-btn:hover { background: var(--brown); }
+  .no-notes-msg {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: #aaa;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 10px 0;
+  }
+  /* BC discussion indicator on book card */
+  .bc-has-notes {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--brown);
+    margin-top: 4px;
   }
 
-  /* ── Responsive ── */
   @media (max-width: 700px) {
-    /* Header */
     header h1 { font-size: 1.8rem; }
     .header-label-strip { font-size: 0.55rem; padding: 5px 12px; }
     .library-stamp { display: none; }
@@ -1044,86 +604,31 @@
     .catalogue-plate { font-size: 0.55rem; margin-bottom: 6px; }
     .user-bar { top: 10px; right: 10px; }
     .user-name { display: none; }
-
-    /* Main padding */
     .main-wrap { padding: 16px 12px; }
-
-    /* Add book form */
     .controls { flex-direction: column; padding: 16px; }
     .field, .field.wide { min-width: 100%; }
     .controls::before { display: none; }
     button.add-btn { width: 100%; text-align: center; }
-
-    /* Stats bar — scroll horizontally on mobile */
     .stats-bar { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
     .stat { min-width: 75px; padding: 10px 8px; }
     .stat-num { font-size: 1.4rem; }
     .stat-label { font-size: 0.55rem; }
-
-    /* Owner tabs — scrollable horizontal row */
-    .owner-tabs {
-      overflow-x: auto;
-      flex-wrap: nowrap;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 4px;
-      gap: 3px;
-      /* Fade hint on right edge */
-      -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
-      mask-image: linear-gradient(to right, black 85%, transparent 100%);
-      margin-bottom: 16px;
-    }
-    .owner-tab {
-      flex: 0 0 auto;
-      font-size: 0.7rem;
-      padding: 8px 12px 10px;
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-    }
+    .owner-tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 4px; gap: 3px; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); margin-bottom: 16px; }
+    .owner-tab { flex: 0 0 auto; font-size: 0.7rem; padding: 8px 12px 10px; letter-spacing: 0.06em; white-space: nowrap; }
     .tab-icon { display: none; }
-
-    /* Search row — stack on mobile */
-    .search-row {
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    .search-row { flex-wrap: wrap; gap: 8px; }
     .search-row input { min-width: 100%; }
     .search-row select { flex: 1; }
-
-    /* View toggle — sits beside the status filter */
     .view-toggle-row { margin-bottom: 8px; }
-
-    /* Section header smaller */
     .section-number { width: 48px; height: 48px; font-size: 1.1rem; }
     .section-title { font-size: 1rem; }
     .section-sub { font-size: 0.72rem; }
-
-    /* List view — hide author column on small screens */
     .bli-author { display: none; }
     .bli-call { min-width: 44px; font-size: 0.85rem; }
   }
 
-  /* Stars on spine */
-  .spine-stars {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font-size: 7px;
-    color: #f5d87a;
-    text-shadow: 0 0 4px rgba(0,0,0,0.7);
-    letter-spacing: 1px;
-    flex-shrink: 0;
-    z-index: 2;
-    position: relative;
-    padding: 2px 0;
-  }
-  /* Reading goal bar */
-  .goal-bar {
-    background: linear-gradient(180deg, #d4c090, #c4b080);
-    border: 2px solid #8a6530;
-    border-top: 4px solid #a07840;
-    padding: 14px 18px;
-    margin-bottom: 28px;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
-  }
+  .spine-stars { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 7px; color: #f5d87a; text-shadow: 0 0 4px rgba(0,0,0,0.7); letter-spacing: 1px; flex-shrink: 0; z-index: 2; position: relative; padding: 2px 0; }
+  .goal-bar { background: linear-gradient(180deg, #d4c090, #c4b080); border: 2px solid #8a6530; border-top: 4px solid #a07840; padding: 14px 18px; margin-bottom: 28px; box-shadow: 3px 3px 0 rgba(0,0,0,0.3); }
   .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .goal-label { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); }
   .goal-fraction { font-family: 'Special Elite', cursive; font-size: 0.9rem; color: var(--dark-brown); }
@@ -1135,14 +640,12 @@
   .goal-edit button { padding: 3px 10px; font-family: 'Courier Prime', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--brown); background: var(--parchment); color: var(--brown); cursor: pointer; }
   .goal-edit button:hover { background: var(--brown); color: var(--cream); }
   .goal-congrats { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: #c8960c; margin-top: 6px; }
-  /* Book search autocomplete */
   .book-suggestions { position: absolute; top: 100%; left: 0; right: 0; background: #f5edd8; border: 1px solid #c4a060; border-top: none; z-index: 100; max-height: 280px; overflow-y: auto; box-shadow: 3px 3px 8px rgba(0,0,0,0.2); }
   .book-suggestion { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #e8d8b0; font-family: 'Libre Baskerville', serif; font-size: 0.82rem; }
   .book-suggestion:hover { background: #ede0c4; }
   .book-suggestion .sug-title { font-weight: bold; color: var(--dark-brown); }
   .book-suggestion .sug-author { color: var(--brown); font-size: 0.75rem; font-style: italic; }
   .book-suggestion .sug-year { color: #888; font-size: 0.72rem; }
-  /* Library dropdown */
   .library-dropdown { position: relative; margin-top: 4px; }
   .library-btn { display: block; width: 100%; text-align: center; padding: 5px; background: #f5edd8; border: 1px solid #1a3a5c; color: #1a3a5c; font-size: 0.72rem; font-family: 'Libre Baskerville', serif; letter-spacing: 0.05em; cursor: pointer; transition: background 0.15s; }
   .library-btn:hover { background: #1a3a5c; color: #fff; }
@@ -1150,41 +653,15 @@
   .library-menu.open { display: block; }
   .library-menu a { display: block; padding: 7px 10px; font-size: 0.75rem; font-family: 'Libre Baskerville', serif; color: #1a3a5c; text-decoration: none; border-bottom: 1px solid #e8d8b0; }
   .library-menu a:hover { background: #1a3a5c; color: #fff; }
-  /* Review text on card */
-  .bc-review {
-    font-style: italic;
-    font-size: 0.78rem;
-    color: var(--dark-brown);
-    margin: 6px 0 4px;
-    line-height: 1.5;
-    border-left: 2px solid var(--tan);
-    padding-left: 8px;
-  }
-  /* Amazon button */
-  .bc-amazon {
-    display: block;
-    text-align: center;
-    margin-top: 8px;
-    padding: 5px;
-    background: #f5edd8;
-    border: 1px solid #c8960c;
-    color: #c8960c;
-    font-size: 0.72rem;
-    font-family: 'Libre Baskerville', serif;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    transition: background 0.15s;
-  }
+  .bc-review { font-style: italic; font-size: 0.78rem; color: var(--dark-brown); margin: 6px 0 4px; line-height: 1.5; border-left: 2px solid var(--tan); padding-left: 8px; }
+  .bc-amazon { display: block; text-align: center; margin-top: 8px; padding: 5px; background: #f5edd8; border: 1px solid #c8960c; color: #c8960c; font-size: 0.72rem; font-family: 'Libre Baskerville', serif; letter-spacing: 0.05em; text-decoration: none; transition: background 0.15s; }
   .bc-amazon:hover { background: #c8960c; color: #fff; }
-  /* Star rating picker */
   .star-picker { display: flex; gap: 4px; margin-bottom: 10px; }
   .star-picker .star { font-size: 1.8rem; color: #ccc; cursor: pointer; transition: color 0.15s; line-height: 1; }
   .star-picker .star.lit { color: #c8960c; }
   .star-picker .star:hover { color: #e6b820; }
-  /* Star display on book card */
   .bc-stars { color: #c8960c; font-size: 0.85rem; letter-spacing: 1px; margin-top: 2px; }
   .bc-stars .dim { color: #ccc; }
-
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
@@ -1236,7 +713,6 @@
   </div>
 </header>
 <div class="main-wrap">
-  <!-- Add Book Form -->
   <div class="controls">
     <div class="field wide" style="position:relative;">
       <label>Title <span style="font-size:0.65rem;color:var(--brown);font-style:italic;">— type to search books automatically</span></label>
@@ -1278,10 +754,8 @@
     </div>
     <button class="add-btn" onclick="addBook()">+ Add to Collection</button>
   </div>
-  <!-- Stats -->
   <div class="stats-bar" id="stats-bar"></div>
   <div class="goal-bar" id="goal-bar"></div>
-  <!-- Owner Filter Tabs -->
   <div class="owner-tabs">
     <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')">
       <span class="tab-icon">⊞</span> All Members
@@ -1293,14 +767,12 @@
       <span class="tab-icon">❧</span> Nirmala's Library
     </button>
   </div>
-  <!-- View Toggle -->
   <div class="view-toggle-row">
     <div class="view-toggle">
       <button class="view-btn active" id="btn-shelf" onclick="setView('shelf')">Shelf</button>
       <button class="view-btn" id="btn-list" onclick="setView('list')">List</button>
     </div>
   </div>
-  <!-- Search + Controls -->
   <div class="search-row">
     <input type="text" id="search" placeholder="Search by title or author..." oninput="renderAll()">
     <select id="filter-status" onchange="renderAll()">
@@ -1311,17 +783,16 @@
       <option value="wishlist">Wishlist</option>
     </select>
   </div>
-  <!-- Legend -->
   <div class="legend">
     <div class="legend-item"><div class="legend-dot status-read"></div> Read</div>
     <div class="legend-item"><div class="legend-dot status-reading"></div> Reading</div>
     <div class="legend-item"><div class="legend-dot status-unread"></div> Unread</div>
     <div class="legend-item"><div class="legend-dot status-wishlist"></div> Wishlist</div>
   </div>
-  <!-- Library -->
   <div id="library"></div>
 </div>
-<!-- Edit Modal -->
+
+<!-- Edit / View / Details Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="close-modal" onclick="closeModal()">×</button>
@@ -1374,16 +845,27 @@
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-save" onclick="saveEdit()">Save Changes</button>
     </div>
+
+    <!-- ── Discussion Notes ── -->
+    <div class="discussion-section" id="discussion-section">
+      <div class="discussion-section-title">💬 Discussion Notes</div>
+      <div id="discussion-notes-list"></div>
+      <div class="discussion-add-area" id="discussion-add-area">
+        <textarea id="discussion-new-note" placeholder="Share your thoughts on this book…" rows="3"></textarea>
+        <button class="discussion-post-btn" onclick="postDiscussionNote()">Post Note</button>
+      </div>
+    </div>
   </div>
 </div>
+
 <script type="module">
-// ── Firebase SDK ──────────────────────────────────────────────────────────────
 import { initializeApp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, remove, onValue, update }
+import { getDatabase, ref, push, remove, onValue, update, set }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAHWkIIAY_Fns3Ow6QnZOHGBAJa-sSNT6U",
   authDomain: "cbbc-001.firebaseapp.com",
@@ -1393,24 +875,27 @@ const firebaseConfig = {
   messagingSenderId: "262547572773",
   appId: "1:262547572773:web:3fe12d78536c8f1cba57cc"
 };
-// ── ALLOWED EMAILS ────────────────────────────────────────────────────────────
+
 const ALLOWED_EMAILS = [
   "bettykwale@gmail.com",
   "nirmalavisvanathan6@gmail.com",
 ];
+
 const fbApp    = initializeApp(firebaseConfig);
 const db       = getDatabase(fbApp);
 const auth     = getAuth(fbApp);
 const provider = new GoogleAuthProvider();
 const booksRef = ref(db, 'books');
-// ── App state ─────────────────────────────────────────────────────────────────
+
 let books = [];
 let viewMode = 'shelf';
 let collapsedSections = new Set();
 let dbUnsubscribe = null;
 let ownerFilter = 'all';
 let currentUserEmail = '';
-// ── Auth state ────────────────────────────────────────────────────────────────
+let currentEditKey = null; // track which book is open in modal
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
 onAuthStateChanged(auth, (user) => {
   if (user && (ALLOWED_EMAILS.length === 0 || ALLOWED_EMAILS.includes(user.email))) {
     currentUserEmail = user.email;
@@ -1433,11 +918,12 @@ onAuthStateChanged(auth, (user) => {
     renderAll();
   }
 });
+
 let lastDataHash = '';
 function hashData(data) {
-  // Simple hash to detect changes and avoid unnecessary re-renders
   return JSON.stringify(data ? Object.keys(data).sort() : []) + JSON.stringify(data);
 }
+
 function startListening() {
   const syncEl = document.getElementById('sync-status');
   syncEl.textContent = '⟳ Connecting…';
@@ -1452,13 +938,15 @@ function startListening() {
           const newHash = hashData(data);
           syncEl.textContent = '● Live';
           syncEl.className = 'sync live';
-          if (newHash === lastDataHash) return; // No change — skip re-render to prevent flicker
+          if (newHash === lastDataHash) return;
           lastDataHash = newHash;
           books = [];
           if (data) {
             Object.entries(data).forEach(([key, val]) => books.push({ _key: key, ...val }));
           }
           renderAll();
+          // If modal is open, refresh discussion notes
+          if (currentEditKey) renderDiscussionNotes(currentEditKey);
         })
         .catch(err => {
           console.error('Load error:', err);
@@ -1470,7 +958,7 @@ function startListening() {
   loadBooks();
   dbUnsubscribe = setInterval(loadBooks, 3000);
 }
-// ── Auth actions ──────────────────────────────────────────────────────────────
+
 function signInWithGoogle() {
   signInWithPopup(auth, provider).catch(() => {
     document.getElementById('login-error').textContent = 'Sign-in failed. Please try again.';
@@ -1478,16 +966,72 @@ function signInWithGoogle() {
   });
 }
 function signOut() { fbSignOut(auth); }
-// ── Firebase write helpers ────────────────────────────────────────────────────
+
 function fbAdd(data) {
   const readDate = data.status === 'read' ? new Date().toISOString() : null;
   push(booksRef, { ...data, added: new Date().toISOString(), ...(readDate ? { readDate } : {}) })
     .catch(e => { alert('Could not save: ' + e.message); });
 }
-function fbUpdate(key, data) {
-  update(ref(db, `books/${key}`), data);
+function fbUpdate(key, data) { update(ref(db, `books/${key}`), data); }
+function fbDelete(key)       { remove(ref(db, `books/${key}`)); }
+
+// ── Discussion Notes ──────────────────────────────────────────────────────────
+function getDisplayName(email) {
+  if (email === 'bettykwale@gmail.com') return 'Betty';
+  if (email === 'nirmalavisvanathan6@gmail.com') return 'Nirmala';
+  return email.split('@')[0];
 }
-function fbDelete(key)      { remove(ref(db, `books/${key}`)); }
+
+function renderDiscussionNotes(bookKey) {
+  const b = books.find(x => x._key === bookKey);
+  if (!b) return;
+  const notes = b.discussion ? Object.entries(b.discussion) : [];
+  const list = document.getElementById('discussion-notes-list');
+  if (!list) return;
+
+  if (notes.length === 0) {
+    list.innerHTML = '<div class="no-notes-msg">No discussion notes yet. Be the first to share your thoughts!</div>';
+  } else {
+    // Sort by timestamp ascending
+    notes.sort((a, b) => (a[1].timestamp || '').localeCompare(b[1].timestamp || ''));
+    list.innerHTML = notes.map(([noteKey, note]) => {
+      const isOwn = note.author === currentUserEmail;
+      const date = note.timestamp ? new Date(note.timestamp).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+      return `
+        <div class="discussion-note">
+          <div class="discussion-note-meta">
+            <span>❧ ${getDisplayName(note.author)} · ${date}</span>
+            ${isOwn ? `<button class="discussion-note-delete" onclick="window._deleteNote('${bookKey}','${noteKey}')" title="Delete note">✕</button>` : ''}
+          </div>
+          <div class="discussion-note-text">${escapeHtml(note.text)}</div>
+        </div>`;
+    }).join('');
+  }
+}
+
+function escapeHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function postDiscussionNote() {
+  const text = document.getElementById('discussion-new-note').value.trim();
+  if (!text) return;
+  if (!currentEditKey) return;
+  const noteRef = ref(db, `books/${currentEditKey}/discussion`);
+  push(noteRef, {
+    text,
+    author: currentUserEmail,
+    timestamp: new Date().toISOString()
+  }).then(() => {
+    document.getElementById('discussion-new-note').value = '';
+  }).catch(e => alert('Could not post note: ' + e.message));
+}
+
+window._deleteNote = function(bookKey, noteKey) {
+  if (!confirm('Delete this note?')) return;
+  remove(ref(db, `books/${bookKey}/discussion/${noteKey}`));
+};
+
 // ── Dewey classes ─────────────────────────────────────────────────────────────
 const DEWEY_CLASSES = [
   { num: '000', name: 'Generalities',     sub: 'Computer science, information & general works', color: '#5c4a1a' },
@@ -1501,7 +1045,7 @@ const DEWEY_CLASSES = [
   { num: '800', name: 'Literature',       sub: 'Fiction, poetry & drama',                        color: '#3a5c1a' },
   { num: '900', name: 'History',          sub: 'History, geography & biography',                 color: '#1a5c5c' },
 ];
-// ── Book actions ──────────────────────────────────────────────────────────────
+
 function addBook() {
   const title  = document.getElementById('inp-title').value.trim();
   const author = document.getElementById('inp-author').value.trim();
@@ -1518,13 +1062,16 @@ function addBook() {
   document.getElementById('inp-dewey').value  = '';
   document.getElementById('inp-year').value   = '';
 }
+
 function deleteBook(key) {
   if (!confirm('Remove this book from your collection?')) return;
   fbDelete(key);
 }
+
 function openEdit(key, viewOnly = false) {
   const b = books.find(x => x._key === key);
   if (!b) return;
+  currentEditKey = key;
   document.getElementById('edit-id').value     = key;
   document.getElementById('edit-title').value  = b.title;
   document.getElementById('edit-author').value = b.author || '';
@@ -1532,7 +1079,6 @@ function openEdit(key, viewOnly = false) {
   document.getElementById('edit-status').value = b.status;
   document.getElementById('edit-year').value   = b.year || '';
   document.getElementById('edit-notes').value  = b.notes || '';
-  // Set star rating
   const rating = b.rating || 0;
   document.getElementById('edit-rating').value = rating;
   document.querySelectorAll('#edit-stars .star').forEach(s => {
@@ -1543,16 +1089,24 @@ function openEdit(key, viewOnly = false) {
   document.getElementById('edit-cover').value = b.coverImage || '';
   const preview = document.getElementById('edit-cover-preview');
   preview.innerHTML = b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="height:80px;border:1px solid #c8a96e;">` : '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover image</span>';
-  // View-only mode
   const fields = ['edit-title','edit-author','edit-dewey','edit-status','edit-year','edit-notes','edit-readdate'];
   fields.forEach(id => { document.getElementById(id).disabled = viewOnly; });
   document.querySelectorAll('#edit-stars .star').forEach(s => s.style.pointerEvents = viewOnly ? 'none' : '');
   document.getElementById('find-cover-btn').style.display = viewOnly ? 'none' : '';
   document.getElementById('modal-actions').style.display = viewOnly ? 'none' : '';
   document.getElementById('modal-title').textContent = viewOnly ? 'Book Details' : 'Edit Book';
+  // Always show discussion section
+  document.getElementById('discussion-section').style.display = '';
+  document.getElementById('discussion-new-note').value = '';
+  renderDiscussionNotes(key);
   document.getElementById('modal').classList.add('open');
 }
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  currentEditKey = null;
+}
+
 function saveEdit() {
   const key = document.getElementById('edit-id').value;
   const status = document.getElementById('edit-status').value;
@@ -1571,7 +1125,7 @@ function saveEdit() {
   });
   closeModal();
 }
-// ── Helpers ───────────────────────────────────────────────────────────────────
+
 function statusColor(s) {
   return { read:'#2d8a2d', reading:'#e6a020', unread:'#888', wishlist:'#6a4fcc' }[s] || '#888';
 }
@@ -1604,11 +1158,11 @@ function setOwnerFilter(f) {
   renderAll();
 }
 window.setOwnerFilter = setOwnerFilter;
+
 // ── Reading Goal ──────────────────────────────────────────────────────────────
 const MEMBERS = [
   { key: 'betty',   email: 'bettykwale@gmail.com',          label: 'Betty' },
   { key: 'nirmala', email: 'nirmalavisvanathan6@gmail.com',  label: 'Nirmala' },
-  // Add new members here as the club grows
 ];
 function getMemberGoal(key) {
   return parseInt(localStorage.getItem(`cbbc-goal-${key}`) || '12');
@@ -1650,9 +1204,9 @@ window._editGoal = function(key, current) {
   const newVal = parseInt(prompt(`Set your ${new Date().getFullYear()} goal:`, current));
   if (newVal > 0) { setMemberGoal(key, newVal); renderGoal(); }
 };
+
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderStats() {
-  // Stats respect the owner filter so counts match what's shown
   const pool     = ownerFilteredBooks();
   const total    = pool.length;
   const read     = pool.filter(b => b.status==='read').length;
@@ -1667,6 +1221,7 @@ function renderStats() {
     <div class="stat"><span class="stat-num">${wishlist}</span><span class="stat-label">Wishlist</span></div>
   `;
 }
+
 function renderAll() {
   renderStats();
   renderGoal();
@@ -1682,32 +1237,30 @@ function renderAll() {
   lib.innerHTML = sectionsWithBooks.map(cls => {
     const sectionBooks = fb.filter(b => b.dewey === cls.num);
     const collapsed    = collapsedSections.has(cls.num);
-    // Vintage book spine colors — rich leather & cloth tones
     const vintageColors = [
-      { base: '#6b1a1a', mid: '#8b2525', hi: '#a03030' }, // deep crimson
-      { base: '#1a3d1a', mid: '#2a5a2a', hi: '#3a7a3a' }, // forest green
-      { base: '#1a2d4a', mid: '#253d6a', hi: '#2e4f8a' }, // navy
-      { base: '#4a2a0a', mid: '#6a3a10', hi: '#8a5020' }, // saddle brown
-      { base: '#3a1a4a', mid: '#52286a', hi: '#6a358a' }, // plum
-      { base: '#1a3a3a', mid: '#255252', hi: '#2e6a6a' }, // teal
-      { base: '#4a1a2a', mid: '#6a2538', hi: '#8a3048' }, // burgundy
-      { base: '#2a3a1a', mid: '#3a5225', hi: '#4a6a2e' }, // olive
-      { base: '#3a2a0a', mid: '#523a10', hi: '#6a4a18' }, // dark tan
-      { base: '#1a1a3a', mid: '#252552', hi: '#2e2e6a' }, // indigo
+      { base: '#6b1a1a', mid: '#8b2525', hi: '#a03030' },
+      { base: '#1a3d1a', mid: '#2a5a2a', hi: '#3a7a3a' },
+      { base: '#1a2d4a', mid: '#253d6a', hi: '#2e4f8a' },
+      { base: '#4a2a0a', mid: '#6a3a10', hi: '#8a5020' },
+      { base: '#3a1a4a', mid: '#52286a', hi: '#6a358a' },
+      { base: '#1a3a3a', mid: '#255252', hi: '#2e6a6a' },
+      { base: '#4a1a2a', mid: '#6a2538', hi: '#8a3048' },
+      { base: '#2a3a1a', mid: '#3a5225', hi: '#4a6a2e' },
+      { base: '#3a2a0a', mid: '#523a10', hi: '#6a4a18' },
+      { base: '#1a1a3a', mid: '#252552', hi: '#2e2e6a' },
     ];
-    // Vary book heights for a natural shelf look
     const heights = [110, 125, 115, 135, 108, 130, 120, 118, 128, 112];
     const spines = sectionBooks.map((b, i) => {
       const vc = vintageColors[i % vintageColors.length];
       const h = heights[i % heights.length];
       const spineGrad = `linear-gradient(90deg, ${vc.base} 0%, ${vc.mid} 40%, ${vc.hi} 55%, ${vc.mid} 70%, ${vc.base} 100%)`;
+      const noteCount = b.discussion ? Object.keys(b.discussion).length : 0;
       return `
       <div class="book" title="${b.title}">
         <div class="book-spine" style="background:${spineGrad}; height:${h}px;">
           <div class="book-band-top"></div>
           <div class="book-label">${b.dewey}<br>${(b.author||'').split(' ').pop().substring(0,3).toUpperCase()||'—'}</div>
           <div class="book-title-spine">${b.title}</div>
-
           <div class="book-status-dot" style="background:${statusColor(b.status)};"></div>
           <div class="book-band-bottom"></div>
         </div>
@@ -1720,6 +1273,7 @@ function renderAll() {
           <div class="bc-meta"><span style="background:${statusColor(b.status)};color:#fff;font-size:0.68rem;padding:2px 8px;letter-spacing:0.06em;text-transform:uppercase;">${statusLabel(b.status)}</span></div>
           ${b.rating ? `<div class="bc-stars" style="font-size:1rem;margin-top:4px;">${'★'.repeat(b.rating)}<span style="color:#ddd;">${'★'.repeat(5-b.rating)}</span></div>` : '<div class="bc-stars" style="font-size:1rem;margin-top:4px;color:#ddd;">☆☆☆☆☆</div>'}
           ${b.notes ? `<div class="bc-review">"${b.notes}"</div>` : ''}
+          ${noteCount > 0 ? `<div class="bc-has-notes">💬 ${noteCount} discussion note${noteCount !== 1 ? 's' : ''}</div>` : ''}
           <div class="bc-actions">
             ${b.addedBy === currentUserEmail ? `
             <button onclick="event.stopPropagation();window._openEdit('${b._key}', false)">Edit</button>
@@ -1766,6 +1320,7 @@ function renderAll() {
       </div>`;
   }).join('');
 }
+
 function toggleSection(num) {
   collapsedSections.has(num) ? collapsedSections.delete(num) : collapsedSections.add(num);
   renderAll();
@@ -1776,6 +1331,7 @@ function setView(mode) {
   document.getElementById('btn-list').classList.toggle('active',  mode==='list');
   renderAll();
 }
+
 // ── Book Search Autocomplete ──────────────────────────────────────────────────
 let searchTimer = null;
 function searchBooks(query) {
@@ -1865,12 +1421,12 @@ window.toggleReadDate = function(status) {
     document.getElementById('edit-readdate').value = new Date().toISOString().substring(0, 10);
   }
 };
-// ── Star rating picker interaction ────────────────────────────────────────────
+
+// ── Star rating picker ────────────────────────────────────────────────────────
 document.querySelectorAll('#edit-stars .star').forEach(star => {
   star.addEventListener('click', () => {
     const val = parseInt(star.dataset.val);
     const current = parseInt(document.getElementById('edit-rating').value) || 0;
-    // Click same star again to clear rating
     const newVal = current === val ? 0 : val;
     document.getElementById('edit-rating').value = newVal;
     document.querySelectorAll('#edit-stars .star').forEach(s => {
@@ -1890,17 +1446,19 @@ document.querySelectorAll('#edit-stars .star').forEach(star => {
     });
   });
 });
-// ── Expose to inline handlers ─────────────────────────────────────────────────
-window.signInWithGoogle = signInWithGoogle;
-window.signOut          = signOut;
-window.addBook          = addBook;
-window.closeModal       = closeModal;
-window.saveEdit         = saveEdit;
-window.setView          = setView;
-window._openEdit        = openEdit;
-window._deleteBook      = deleteBook;
-window._toggleSection   = toggleSection;
-// ── Wire up events ────────────────────────────────────────────────────────────
+
+// ── Expose globals ────────────────────────────────────────────────────────────
+window.signInWithGoogle  = signInWithGoogle;
+window.signOut           = signOut;
+window.addBook           = addBook;
+window.closeModal        = closeModal;
+window.saveEdit          = saveEdit;
+window.setView           = setView;
+window._openEdit         = openEdit;
+window._deleteBook       = deleteBook;
+window._toggleSection    = toggleSection;
+window.postDiscussionNote = postDiscussionNote;
+
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target === document.getElementById('modal')) closeModal();
 });
@@ -1909,7 +1467,7 @@ document.getElementById('inp-title').addEventListener('keydown', e => {
 });
 document.getElementById('search').addEventListener('input', renderAll);
 document.getElementById('filter-status').addEventListener('change', renderAll);
-// ── Service Worker — disabled to prevent caching issues ──────────────────────
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(r => r.forEach(x => x.unregister()));
 }
