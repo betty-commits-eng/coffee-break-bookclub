@@ -426,7 +426,7 @@
   .book-band-bottom { width: 100%; flex-shrink: 0; position: relative; z-index: 2; height: 16px; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(255,255,255,0.1) 25%, rgba(0,0,0,0.1) 50%, rgba(255,255,255,0.08) 75%, rgba(0,0,0,0.6) 100%); border-top: 1px solid rgba(0,0,0,0.8); box-shadow: 0 -2px 5px rgba(0,0,0,0.6), inset 0 -1px 0 rgba(255,255,255,0.12); }
   .book-band-bottom::after { content: ''; position: absolute; top: 50%; left: 15%; right: 15%; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.6) 30%, rgba(255,210,80,0.9) 50%, rgba(212,168,67,0.6) 70%, transparent); transform: translateY(-50%); }
   /* Small recessed gold plate label */
-  .book-label { background: linear-gradient(160deg, #8a6010 0%, #b88a18 20%, #c8960c 40%, #a07010 70%, #7a5008 100%); color: rgba(255,235,160,0.95); font-size: 6.5px; font-family: 'Courier Prime', monospace; font-weight: 700; padding: 3px 2px; text-align: center; width: calc(100% - 10px); letter-spacing: 0.03em; line-height: 1.3; border: 1px solid rgba(60,30,0,0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.4), inset 1px 0 0 rgba(0,0,0,0.3), inset -1px 0 0 rgba(0,0,0,0.3); position: relative; z-index: 4; flex-shrink: 0; text-shadow: 0 1px 2px rgba(0,0,0,0.6); }
+  .book-label { background: linear-gradient(160deg, #3a2408 0%, #5a3a10 35%, #4a2e0a 65%, #2e1a04 100%); color: rgba(212,168,67,0.85); font-size: 6px; font-family: 'Courier Prime', monospace; font-weight: 700; padding: 3px 2px; text-align: center; width: calc(100% - 12px); letter-spacing: 0.03em; line-height: 1.3; border: 1px solid rgba(180,120,20,0.3); box-shadow: 0 1px 4px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,200,60,0.08), inset 0 -1px 0 rgba(0,0,0,0.5); position: relative; z-index: 4; flex-shrink: 0; text-shadow: 0 0 6px rgba(212,168,67,0.5), 0 1px 2px rgba(0,0,0,0.8); }
   /* Gold title lettering */
   .book-title-spine { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); color: rgba(255,228,140,0.88); font-family: 'IM Fell English', serif; font-size: 10px; font-style: italic; text-align: center; overflow: hidden; flex: 1; max-height: 80px; text-shadow: 0 0 8px rgba(180,130,40,0.7), 1px 1px 3px rgba(0,0,0,0.95); letter-spacing: 0.08em; position: relative; z-index: 2; padding: 4px 0; }
   /* Wax seal dot */
@@ -1248,22 +1248,28 @@ function renderAll() {
     const sectionBooks = fb.filter(b => b.dewey === cls.num);
     const collapsed    = collapsedSections.has(cls.num);
     const vintageColors = [
-      { base: '#3a0a0a', mid: '#6b1a1a', hi: '#8a2525' },  // deep oxblood
-      { base: '#0a1a0a', mid: '#1a3d1a', hi: '#2a5a2a' },  // dark forest
-      { base: '#0a1020', mid: '#1a2848', hi: '#253860' },  // midnight navy
-      { base: '#200a00', mid: '#4a1e08', hi: '#6a3010' },  // dark saddle
-      { base: '#180a28', mid: '#32165a', hi: '#4a2278' },  // deep plum
-      { base: '#0a1818', mid: '#183030', hi: '#224848' },  // dark teal
-      { base: '#280a10', mid: '#501020', hi: '#6e1c30' },  // dark burgundy
-      { base: '#101808', mid: '#223010', hi: '#324818' },  // dark olive
-      { base: '#1a1000', mid: '#3a2408', hi: '#523410' },  // ebony brown
-      { base: '#080820', mid: '#141440', hi: '#1e1e58' },  // deep indigo
+      // Oxblood reds (dominant)
+      { base: '#2a0808', mid: '#501010', hi: '#6a1818' },
+      { base: '#300a0a', mid: '#5a1212', hi: '#721c1c' },
+      // Forest greens
+      { base: '#0a1a0a', mid: '#1a3018', hi: '#254a22' },
+      { base: '#0c1c0c', mid: '#1e3420', hi: '#2a5228' },
+      // Near-black navy
+      { base: '#080e18', mid: '#101c30', hi: '#182840' },
+      { base: '#0a1020', mid: '#142038', hi: '#1c2e4e' },
+      // Dark saddle brown
+      { base: '#1c0e04', mid: '#382008', hi: '#4e2e0e' },
+      { base: '#180c04', mid: '#321c06', hi: '#48280a' },
+      // Deep charcoal accent
+      { base: '#0e0e0e', mid: '#1e1e1e', hi: '#2e2c28' },
+      // Back to oxblood
+      { base: '#280808', mid: '#4c1010', hi: '#641818' },
     ];
     const heights = [110, 125, 115, 135, 108, 130, 120, 118, 128, 112];
     const spines = sectionBooks.map((b, i) => {
       const vc = vintageColors[i % vintageColors.length];
       const h = heights[i % heights.length];
-      const spineGrad = `linear-gradient(90deg, ${vc.base} 0%, ${vc.mid} 30%, ${vc.hi} 50%, ${vc.mid} 65%, ${vc.base} 85%, rgba(0,0,0,0.4) 100%)`;
+      const spineGrad = `linear-gradient(90deg, ${vc.base} 0%, ${vc.mid} 30%, ${vc.hi} 50%, ${vc.mid} 65%, ${vc.base} 85%, rgba(0,0,0,0.5) 100%)`;
       const noteCount = b.discussion ? Object.keys(b.discussion).length : 0;
       return `
       <div class="book" title="${b.title}">
