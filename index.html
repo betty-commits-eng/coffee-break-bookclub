@@ -408,16 +408,17 @@
   .section-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); letter-spacing: 0.04em; }
   .section-sub { font-family: 'IM Fell English', serif; font-style: italic; color: var(--tan); font-size: 0.85rem; margin-top: 2px; }
   .section-count { background: rgba(0,0,0,0.3); color: var(--tan); font-family: 'Playfair Display', serif; font-size: 0.8rem; padding: 4px 12px; border: 1px solid var(--tan); letter-spacing: 0.08em; }
-  .bookshelf { background: linear-gradient(180deg, #2a1508 0%, #1a0d04 100%); border: 2px solid #5a3a1a; border-radius: 2px; padding: 20px 20px 28px; position: relative; min-height: 100px; }
-  .bookshelf::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 12px; background: linear-gradient(180deg, #3d2314 0%, #5a3a1a 100%); border-top: 2px solid #7a5a2a; border-radius: 0 0 2px 2px; }
+  .bookshelf { background: linear-gradient(180deg, #2e1608 0%, #241208 40%, #1c0e06 100%); border: 2px solid #4a2c10; border-top: 3px solid #5a3818; border-radius: 2px; padding: 20px 20px 28px; position: relative; min-height: 100px; box-shadow: inset 0 10px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(140,80,20,0.1); }
+  .bookshelf::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50px; background: linear-gradient(180deg, rgba(140,80,20,0.08) 0%, transparent 100%); pointer-events: none; z-index: 0; }
+  .bookshelf::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 14px; background: linear-gradient(180deg, #2e1a0a 0%, #38200e 50%, #2a180a 100%); border-top: 1px solid #4a2e14; border-radius: 0 0 2px 2px; box-shadow: 0 3px 8px rgba(0,0,0,0.7); }
   .books-row { display: flex; gap: 4px; flex-wrap: wrap; align-items: flex-end; min-height: 120px; }
   .book { position: relative; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease; flex-shrink: 0; z-index: 1; }
-  .book:hover { transform: translateY(-18px) rotate(-1deg); filter: brightness(1.18) contrast(1.05); z-index: 200; }
-  .book-spine { width: 42px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0; border-radius: 3px 1px 1px 3px; position: relative; overflow: hidden; box-shadow: -4px 0 8px rgba(0,0,0,0.8), inset 4px 0 10px rgba(255,255,255,0.08), inset -3px 0 8px rgba(0,0,0,0.5), 3px 0 0 rgba(0,0,0,0.6), inset 0 0 30px rgba(0,0,0,0.3); }
-  /* Leather grain */
-  .book-spine::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 3px), repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px); pointer-events: none; z-index: 1; }
-  /* Binding crease */
-  .book-spine::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 7px; background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.07) 50%, transparent 100%); pointer-events: none; z-index: 3; }
+  .book:hover { transform: translateY(-18px) rotate(-1deg); filter: brightness(1.15) contrast(1.05); z-index: 200; }
+  .book-spine { width: 42px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0; border-radius: 3px 1px 1px 3px; position: relative; overflow: hidden; box-shadow: -3px 0 6px rgba(0,0,0,0.9), inset 2px 0 5px rgba(255,255,255,0.04), inset -2px 0 6px rgba(0,0,0,0.6), 2px 0 0 rgba(0,0,0,0.7), inset 0 0 25px rgba(0,0,0,0.4); }
+  /* Matte leather grain */
+  .book-spine::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 3px), repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px); pointer-events: none; z-index: 1; }
+  /* Very subtle crease — not glassy */
+  .book-spine::after { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 5px; background: linear-gradient(90deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 60%, transparent 100%); pointer-events: none; z-index: 3; }
   /* Top raised band */
   .book-band-top { width: 100%; flex-shrink: 0; position: relative; z-index: 2; height: 16px; background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(255,255,255,0.1) 25%, rgba(0,0,0,0.1) 50%, rgba(255,255,255,0.08) 75%, rgba(0,0,0,0.6) 100%); border-bottom: 1px solid rgba(0,0,0,0.8); box-shadow: 0 2px 5px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.12); }
   /* Tiny gold tooling line in band — no unicode symbols */
@@ -1248,22 +1249,16 @@ function renderAll() {
     const sectionBooks = fb.filter(b => b.dewey === cls.num);
     const collapsed    = collapsedSections.has(cls.num);
     const vintageColors = [
-      // Oxblood reds (dominant)
-      { base: '#2a0808', mid: '#501010', hi: '#6a1818' },
-      { base: '#300a0a', mid: '#5a1212', hi: '#721c1c' },
-      // Forest greens
-      { base: '#0a1a0a', mid: '#1a3018', hi: '#254a22' },
-      { base: '#0c1c0c', mid: '#1e3420', hi: '#2a5228' },
-      // Near-black navy
-      { base: '#080e18', mid: '#101c30', hi: '#182840' },
-      { base: '#0a1020', mid: '#142038', hi: '#1c2e4e' },
-      // Dark saddle brown
-      { base: '#1c0e04', mid: '#382008', hi: '#4e2e0e' },
-      { base: '#180c04', mid: '#321c06', hi: '#48280a' },
-      // Deep charcoal accent
-      { base: '#0e0e0e', mid: '#1e1e1e', hi: '#2e2c28' },
-      // Back to oxblood
-      { base: '#280808', mid: '#4c1010', hi: '#641818' },
+      { base: '#280808', mid: '#4e1010', hi: '#782020' },  // oxblood
+      { base: '#2c0808', mid: '#541212', hi: '#802828' },  // oxblood variant
+      { base: '#0a180a', mid: '#182c16', hi: '#2a5228' },  // forest green
+      { base: '#0c1c0c', mid: '#1c3018', hi: '#306030' },  // forest variant
+      { base: '#080e1a', mid: '#101c2e', hi: '#1e3450' },  // navy
+      { base: '#0a1020', mid: '#141e30', hi: '#22345a' },  // navy variant
+      { base: '#1c0e04', mid: '#341c08', hi: '#583010' },  // saddle brown
+      { base: '#180c04', mid: '#2e1806', hi: '#4e2c0e' },  // brown variant
+      { base: '#280808', mid: '#4e1010', hi: '#782020' },  // oxblood repeat
+      { base: '#0a180a', mid: '#182c16', hi: '#2a5228' },  // forest repeat
     ];
     const heights = [110, 125, 115, 135, 108, 130, 120, 118, 128, 112];
     const spines = sectionBooks.map((b, i) => {
