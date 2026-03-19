@@ -225,9 +225,19 @@
     gap: 4px;
     margin-bottom: 28px;
     align-items: flex-end;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+    mask-image: linear-gradient(to right, black 80%, transparent 100%);
+    padding-bottom: 4px;
   }
+  .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tab {
-    flex: 1;
+    flex: 0 0 auto;
+    white-space: nowrap;
     background: linear-gradient(180deg, #e8d8a0, #d4c080);
     color: #3a2008;
     border: 2px solid #8a6530;
@@ -498,8 +508,8 @@
     .stat { min-width: 75px; padding: 10px 8px; }
     .stat-num { font-size: 1.4rem; }
     .stat-label { font-size: 0.55rem; }
-    .owner-tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 4px; gap: 3px; -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); margin-bottom: 16px; }
-    .owner-tab { flex: 0 0 auto; font-size: 0.7rem; padding: 8px 12px 10px; letter-spacing: 0.06em; white-space: nowrap; }
+    .owner-tabs { gap: 3px; margin-bottom: 16px; }
+    .owner-tab { font-size: 0.7rem; padding: 8px 12px 10px; letter-spacing: 0.06em; }
     .tab-icon { display: none; }
     .search-row { flex-wrap: wrap; gap: 8px; }
     .search-row input { min-width: 100%; }
