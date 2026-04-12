@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Coffee Break Book Club">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Kalam:wght@300;400&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #1a1008;
@@ -68,8 +68,8 @@
   header .subtitle { font-family:'Courier Prime',monospace; font-style:italic; color:#c9a96e; font-size:0.85rem; margin-top:4px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.85; }
   .catalogue-tabs-strip { display:flex; justify-content:center; gap:3px; margin-top:14px; padding:0 20px; }
   .catalogue-tab-chip { background:linear-gradient(180deg,#e8d8b0,#d4c090); border:1px solid #8a6530; border-bottom:none; padding:3px 10px; font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.1em; color:#3a2008; clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 100%,0% 100%); opacity:0.7; }
-  .library-stamp { position:absolute; top:28px; right:160px; width:80px; height:80px; border:3px solid rgba(180,60,40,0.5); border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; transform:rotate(-8deg); color:rgba(180,60,40,0.5); font-family:'Special Elite',cursive; font-size:0.5rem; letter-spacing:0.12em; text-transform:uppercase; line-height:1.6; text-align:center; padding:6px; }
-  .library-stamp::before { content:''; position:absolute; inset:3px; border:1px solid rgba(180,60,40,0.3); border-radius:2px; }
+  .library-stamp { position:absolute; top:50%; left:18%; transform:translateY(-50%) rotate(-6deg); width:110px; height:110px; border:3px solid rgba(180,60,40,0.5); border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:rgba(180,60,40,0.5); font-family:'Special Elite',cursive; font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; line-height:1.7; text-align:center; padding:8px; transition:all 0.4s ease; }
+  .library-stamp::before { content:''; position:absolute; inset:4px; border:1px solid rgba(180,60,40,0.3); border-radius:2px; }
   .stamp-text-large { font-size:0.7rem; font-weight:700; letter-spacing:0.08em; display:block; }
   .sync { display:inline-block; margin-top:8px; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; padding:3px 12px; border-radius:20px; font-family:'Libre Baskerville',serif; }
   .sync.live { background:rgba(45,138,45,0.25); color:#7dca7d; border:1px solid #2d8a2d; }
@@ -559,6 +559,24 @@
   .bc-stars .dim { color: #ccc; }
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
+  /* ── Theme switcher button ── */
+  #theme-switcher { position:fixed; bottom:20px; right:20px; z-index:400; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  #theme-toggle-btn { background:rgba(0,0,0,0.7); color:#f0e8d0; border:1px solid rgba(255,255,255,0.25); padding:12px 20px; font-family:'Courier Prime',monospace; font-size:0.85rem; letter-spacing:0.12em; cursor:pointer; border-radius:4px; backdrop-filter:blur(4px); transition:all 0.2s; }
+  #theme-toggle-btn:hover { background:rgba(0,0,0,0.9); border-color:rgba(255,255,255,0.4); }
+  #theme-menu { display:none; flex-direction:column; gap:4px; }
+  #theme-menu.open { display:flex; }
+  .theme-btn { background:rgba(0,0,0,0.7); color:#f0e8d0; border:1px solid rgba(255,255,255,0.15); padding:7px 14px; font-family:'Courier Prime',monospace; font-size:0.68rem; letter-spacing:0.1em; cursor:pointer; border-radius:3px; text-align:right; backdrop-filter:blur(4px); transition:all 0.2s; white-space:nowrap; }
+  .theme-btn:hover { background:rgba(0,0,0,0.9); border-color:rgba(255,255,255,0.35); }
+  .theme-btn.active { border-color:rgba(255,220,100,0.6); color:#f0d060; }
+  .stamp-gothic { border-color:rgba(80,70,100,0.65) !important; color:rgba(80,70,100,0.65) !important; border-radius:50% !important; width:120px !important; height:120px !important; transform:translateY(-50%) rotate(-4deg) !important; font-family:'Libre Baskerville',serif !important; border-width:3px !important; }
+  .stamp-gothic::before { border-color:rgba(80,70,100,0.3) !important; border-radius:50% !important; border-style:solid !important; }
+  .stamp-japanese { border-color:rgba(192,64,48,0.8) !important; color:rgba(192,64,48,0.8) !important; border-radius:4px !important; transform:translateY(-50%) rotate(4deg) !important; font-family:'Noto Serif JP',serif !important; border-width:4px !important; width:110px !important; height:110px !important; }
+  .stamp-japanese::before { border-color:rgba(192,64,48,0.4) !important; border-width:2px !important; }
+  .stamp-beatrix { border-color:rgba(60,100,40,0.9) !important; color:rgba(60,100,40,0.9) !important; border-radius:50% !important; transform:translateY(-50%) rotate(-8deg) !important; font-family:'Kalam',cursive !important; border-style:solid !important; border-width:3px !important; width:130px !important; height:120px !important; }
+  .stamp-beatrix::before { border-color:rgba(60,100,40,0.5) !important; border-radius:50% !important; border-style:dashed !important; }
+  .book-label { background:linear-gradient(180deg,#1a2a4a 0%,#0e1830 40%,#081020 100%) !important; padding:2px 3px; text-align:center; width:calc(100% - 16px); letter-spacing:0.04em; line-height:1.4; border-radius:3px; border:1px solid rgba(200,150,40,0.65); box-shadow:0 2px 6px rgba(0,0,0,0.95),inset 0 1px 0 rgba(255,215,80,0.15); position:relative; z-index:4; flex-shrink:0; color:transparent; -webkit-text-fill-color:transparent; }
+  .book-label::before { content:''; position:absolute; inset:2px; border-radius:2px; border:1px solid rgba(200,155,40,0.3); pointer-events:none; }
+  .book-label span { background:linear-gradient(180deg,#fff6c0 0%,#e8c84a 40%,#c8960c 70%,#8c6b1f 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 0 3px rgba(255,200,60,0.4)); display:block; font-size:5px; font-family:'Courier Prime',monospace; font-weight:700; }
 </style>
 </head>
 <body>
@@ -599,6 +617,7 @@
       <span>Break</span>
       <span class="stamp-text-large">Book</span>
       <span>Club</span>
+      <span style="font-size:0.5rem;opacity:0.7;margin-top:2px;">Est. 2026</span>
     </div>
     <div class="user-bar" id="user-bar" style="display:none;">
       <img class="user-avatar" id="user-avatar" src="" alt="">
@@ -769,7 +788,7 @@
 <script type="module">
 import { initializeApp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, remove, onValue, update, set }
+import { getDatabase, ref, push, remove, onValue, update, set, get }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -817,6 +836,13 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('user-bar').style.display = 'flex';
     document.getElementById('user-name').textContent = user.displayName || user.email;
     if (user.photoURL) document.getElementById('user-avatar').src = user.photoURL;
+    // Load saved theme for this user
+    const themeKey = user.email.replace(/[.@]/g,'_');
+    get(ref(db, `themes/${themeKey}`)).then(snap => {
+      const saved = snap.val();
+      if (saved && THEMES[saved]) applyTheme(saved, false);
+      else applyTheme('antique', false);
+    }).catch(() => applyTheme('antique', false));
     if (!dbUnsubscribe) startListening();
   } else if (user) {
     fbSignOut(auth);
@@ -1158,18 +1184,7 @@ function renderAll() {
   lib.innerHTML = sectionsWithBooks.map(cls => {
     const sectionBooks = fb.filter(b => b.dewey === cls.num);
     const collapsed    = collapsedSections.has(cls.num);
-    const vintageColors = [
-      { base: '#280808', mid: '#4e1010', hi: '#782020' },  // oxblood
-      { base: '#2c0808', mid: '#541212', hi: '#802828' },  // oxblood variant
-      { base: '#0a180a', mid: '#182c16', hi: '#2a5228' },  // forest green
-      { base: '#0c1c0c', mid: '#1c3018', hi: '#306030' },  // forest variant
-      { base: '#080e1a', mid: '#101c2e', hi: '#1e3450' },  // navy
-      { base: '#0a1020', mid: '#141e30', hi: '#22345a' },  // navy variant
-      { base: '#1c0e04', mid: '#341c08', hi: '#583010' },  // saddle brown
-      { base: '#180c04', mid: '#2e1806', hi: '#4e2c0e' },  // brown variant
-      { base: '#280808', mid: '#4e1010', hi: '#782020' },  // oxblood repeat
-      { base: '#0a180a', mid: '#182c16', hi: '#2a5228' },  // forest repeat
-    ];
+    const vintageColors = THEMES[currentTheme].bookColors;
     const heights = [170, 190, 175, 195, 165, 185, 180, 172, 188, 168];
     const spines = sectionBooks.map((b, i) => {
       const vc = vintageColors[i % vintageColors.length];
@@ -1211,7 +1226,7 @@ function renderAll() {
               <a href="https://ottawa.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Ottawa Public Library</a>
               <a href="https://nelson.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Nelson Public Library</a>
               <a href="https://fulcolibrary.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Fulco Library</a>
-              <a href="https://catalogue.bl.uk/primo-explore/search?query=any,contains,${encodeURIComponent(b.title + ' ' + (b.author||''))}&vid=BLVU1&lang=en_US" target="_blank">British Library</a>
+              <a href="https://www.bl.uk/catalogues-and-collections/find-it-at-the-british-library/?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}" target="_blank">British Library</a>
             </div>
           </div>
         </div>
@@ -1369,6 +1384,221 @@ document.querySelectorAll('#edit-stars .star').forEach(star => {
   });
 });
 
+// ── Themes ────────────────────────────────────────────────────────────────────
+let currentTheme = 'antique';
+const THEMES = {
+  antique: {
+    bodyBg: '#b5975a', bodyImg: `repeating-linear-gradient(92deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px), repeating-linear-gradient(180deg,transparent,transparent 3px,rgba(255,255,255,0.03) 3px,rgba(255,255,255,0.03) 4px), linear-gradient(135deg,#c4a265 0%,#a07840 25%,#b5975a 50%,#9a7035 75%,#b0904e 100%)`, bodySize: 'auto', bodyPos: '0 0',
+    mainOverlay: `repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(139,100,40,0.12) 28px,rgba(139,100,40,0.12) 29px),linear-gradient(135deg,#c4a265 0%,#a07840 25%,#b5975a 50%,#9a7035 75%,#b0904e 100%)`,
+    headerBg: 'linear-gradient(180deg, #2a1a08 0%, #3d2a10 40%, #2e1e0a 100%)', headerBorder: '#8a6530',
+    headerH1: '#f5edd8', headerH1Shadow: '2px 2px 0 rgba(0,0,0,0.6),0 0 20px rgba(212,168,67,0.2)',
+    headerStrip: 'linear-gradient(180deg,#d4a843 0%,#c49030 50%,#b88020 100%)', headerStripBorderTop: '#e8c060', headerStripBorderBot: '#8a5a10', headerStripText: '#3a2008',
+    plateBg: 'linear-gradient(135deg,#f5edd8,#e8d8b0)', plateBorder: '#8a6530', plateText: '#3a2008',
+    statsBg: 'linear-gradient(180deg,#d4c090,#c4b080)', statsBorder: '#8a6530', statsBorderTop: '#a07840',
+    statCellBg: 'linear-gradient(180deg,#f5edd8,#ede0c4)', statCellBorder: '#c4a060',
+    statNum: '#3d2314', statLabel: '#7b4f2e',
+    goalBg: 'linear-gradient(180deg,#d4c090,#c4b080)', goalTrack: '#e8d8b0',
+    tabBg: 'linear-gradient(180deg,#e8d8a0,#d4c080)', tabText: '#3a2008', tabBorder: '#8a6530',
+    tabHover: 'linear-gradient(180deg,#f0e0b0,#e0cc90)',
+    tabActive: 'linear-gradient(180deg,#f8f0dc,#f0e4c4)', tabActiveText: '#3d2314', tabActiveBotBorder: '#f0e4c4',
+    inputBg: 'linear-gradient(180deg,#f8f0dc,#f0e4c4)', inputBorder: '#8a6530', inputBorderTop: '#a07840', inputText: '#1a1008', inputPlaceholder: '#a08060',
+    controlsBg: 'repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(180,140,60,0.15) 26px,rgba(180,140,60,0.15) 27px),linear-gradient(180deg,#f8f0dc,#f0e4c4)',
+    addBtnBg: 'linear-gradient(180deg,#5a3a1a,#3d2314)',
+    sectionNumBorder: 'rgba(255,255,255,0.3)', sectionNumText: '#f5edd8', sectionTitle: '#f5edd8', sectionSub: '#c9a96e',
+    legendText: '#ede0c4', viewBtnBg: '#ede0c4', viewBtnActive: '#3d2314', viewBtnActiveText: '#f5edd8',
+    sectionCountBg: 'rgba(0,0,0,0.3)', sectionCountText: '#c9a96e', sectionCountBorder: '#c9a96e',
+    shelfBg: 'linear-gradient(180deg, #1a0e06 0%, #140a04 60%, #100804 100%)', shelfBorder: '2px solid #5a3010', shelfBorderTop: '3px solid #7a4818', shelfShadow: 'inset 0 8px 20px rgba(0,0,0,0.8), inset 0 -6px 24px rgba(160,90,15,0.2)',
+    plankBg: 'linear-gradient(180deg, #2a1608 0%, #3a2010 20%, #4a2c14 45%, #5a3818 60%, #4a2c14 80%, #362010 100%)', plankBorder: '2px solid #8a5828', plankShadow: '0 6px 16px rgba(0,0,0,0.9), inset 0 1px 0 rgba(220,160,60,0.25)',
+    bandBg: 'linear-gradient(180deg,rgba(0,0,0,0.85) 0%,rgba(255,255,255,0.14) 30%,rgba(0,0,0,0.12) 55%,rgba(255,255,255,0.1) 75%,rgba(0,0,0,0.75) 100%)', bandShadow: '0 3px 8px rgba(0,0,0,0.8),inset 0 1px 0 rgba(255,255,255,0.12)', bandLine: 'linear-gradient(90deg,transparent,rgba(212,168,67,0.4) 20%,rgba(255,220,90,0.98) 50%,rgba(212,168,67,0.4) 80%,transparent)',
+    grooveBg: 'linear-gradient(180deg,rgba(0,0,0,0.7) 0%,rgba(255,255,255,0.04) 40%,rgba(0,0,0,0.6) 100%)',
+    labelBg: 'linear-gradient(180deg,#1a2a4a 0%,#0e1830 40%,#081020 100%)', labelBorder: 'rgba(200,150,40,0.65)', labelText: 'linear-gradient(180deg,#fff6c0 0%,#e8c84a 40%,#c8960c 70%,#8c6b1f 100%)',
+    titleText: 'linear-gradient(180deg, #fff6c0 0%, #e8c84a 35%, #d4af37 55%, #c8960c 75%, #a07820 100%)',
+    spineShadow: '-5px 0 10px rgba(0,0,0,0.95),inset 4px 0 8px rgba(255,255,255,0.06),inset -3px 0 10px rgba(0,0,0,0.8),4px 0 0 rgba(0,0,0,0.9),inset 0 0 40px rgba(0,0,0,0.6)',
+    spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.5) 0%,rgba(255,255,255,0.08) 15%,transparent 35%,rgba(255,255,255,0.12) 50%,transparent 65%,rgba(0,0,0,0.3) 100%)',
+    bookColors: [{base:'#280808',mid:'#4e1010',hi:'#782020'},{base:'#2c0808',mid:'#541212',hi:'#802828'},{base:'#0a180a',mid:'#182c16',hi:'#2a5228'},{base:'#0c1c0c',mid:'#1c3018',hi:'#306030'},{base:'#080e1a',mid:'#101c2e',hi:'#1e3450'},{base:'#0a1020',mid:'#141e30',hi:'#22345a'},{base:'#1c0e04',mid:'#341c08',hi:'#583010'},{base:'#180c04',mid:'#2e1806',hi:'#4e2c0e'},{base:'#280808',mid:'#4e1010',hi:'#782020'},{base:'#0a180a',mid:'#182c16',hi:'#2a5228'}],
+  },
+  gothic: {
+    bodyBg: '#0d0d0f', bodyImg: 'linear-gradient(135deg,#0a0a0c 0%,#0e0e12 50%,#0c0c10 100%)', bodySize: 'auto', bodyPos: '0 0',
+    mainOverlay: 'linear-gradient(135deg,#0a0a0c 0%,#0e0e12 50%,#0c0c10 100%)',
+    headerBg: 'linear-gradient(180deg, #0a0a0c 0%, #111116 40%, #0d0d10 100%)', headerBorder: '#3a3040',
+    headerH1: '#c8c0d0', headerH1Shadow: '2px 2px 0 rgba(0,0,0,0.9),0 0 12px rgba(80,60,100,0.3)',
+    headerStrip: 'linear-gradient(180deg,#1c1820 0%,#161418 50%,#121014 100%)', headerStripBorderTop: '#2a2430', headerStripBorderBot: '#0a080c', headerStripText: '#7a7080',
+    plateBg: 'linear-gradient(135deg,#161418,#121014)', plateBorder: '#3a3040', plateText: '#8a8090',
+    statsBg: 'linear-gradient(180deg,#161418,#121014)', statsBorder: '#2a2430', statsBorderTop: '#3a3040',
+    statCellBg: 'linear-gradient(180deg,#1c1820,#161418)', statCellBorder: '#2a2430',
+    statNum: '#d0c8d8', statLabel: '#6a6070',
+    goalBg: 'linear-gradient(180deg,#161418,#121014)', goalTrack: '#0a080c',
+    tabBg: 'linear-gradient(180deg,#1c1820,#161418)', tabText: '#a09aa8', tabBorder: '#2a2430',
+    tabHover: 'linear-gradient(180deg,#221e28,#1c1820)',
+    tabActive: 'linear-gradient(180deg,#221e28,#1c1820)', tabActiveText: '#c8c0d0', tabActiveBotBorder: '#221e28',
+    inputBg: 'linear-gradient(180deg,#0f0d12,#0c0a0e)', inputBorder: '#2a2430', inputBorderTop: '#3a3040', inputText: '#c8c0d0', inputPlaceholder: '#6a6275',
+    controlsBg: 'linear-gradient(180deg,#161418,#121014)',
+    addBtnBg: 'linear-gradient(180deg,#1c1820,#161418)',
+    sectionNumBorder: 'rgba(80,60,100,0.4)', sectionNumText: '#c8c0d0', sectionTitle: '#c8c0d0', sectionSub: '#6a6070',
+    legendText: '#6a6070', viewBtnBg: '#161418', viewBtnActive: '#2a2430', viewBtnActiveText: '#c8c0d0',
+    sectionCountBg: 'rgba(40,35,55,0.9)', sectionCountText: '#c8c0d0', sectionCountBorder: 'rgba(80,70,100,0.6)',
+    shelfBg: 'linear-gradient(180deg, #080608 0%, #060406 60%, #040304 100%)', shelfBorder: '2px solid #2a2430', shelfBorderTop: '3px solid #3a3040', shelfShadow: 'inset 0 8px 20px rgba(0,0,0,0.95), inset 0 -6px 24px rgba(40,30,60,0.15)',
+    plankBg: 'linear-gradient(180deg, #0e0c12 0%, #0a0810 30%, #080608 100%)', plankBorder: '2px solid #3a3040', plankShadow: '0 4px 16px rgba(0,0,0,0.95)',
+    bandBg: 'linear-gradient(180deg,rgba(0,0,0,0.92) 0%,rgba(60,50,80,0.06) 30%,rgba(0,0,0,0.12) 55%,rgba(60,50,80,0.04) 75%,rgba(0,0,0,0.88) 100%)', bandShadow: '0 3px 8px rgba(0,0,0,0.95),inset 0 1px 0 rgba(80,70,100,0.08)', bandLine: 'linear-gradient(90deg,transparent,rgba(80,70,100,0.15) 20%,rgba(100,90,120,0.35) 50%,rgba(80,70,100,0.15) 80%,transparent)',
+    grooveBg: 'linear-gradient(180deg,rgba(0,0,0,0.85) 0%,rgba(40,30,60,0.04) 40%,rgba(0,0,0,0.8) 100%)',
+    labelBg: 'linear-gradient(180deg,#2a2632 0%,#201c28 40%,#181420 100%)', labelBorder: 'rgba(120,110,140,0.5)', labelText: 'linear-gradient(180deg,#e0d8e8 0%,#c8c0d0 40%,#b0a8b8 70%,#9890a0 100%)',
+    titleText: 'linear-gradient(180deg,#e0d8e8 0%,#c8c0d0 35%,#b0a8b8 55%,#9890a0 75%,#807888 100%)',
+    spineShadow: '-5px 0 10px rgba(0,0,0,0.99),inset 4px 0 8px rgba(60,50,80,0.04),inset -3px 0 10px rgba(0,0,0,0.95),4px 0 0 rgba(0,0,0,0.98),inset 0 0 40px rgba(0,0,0,0.8)',
+    spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.65) 0%,rgba(60,50,80,0.04) 15%,transparent 35%,rgba(60,50,80,0.05) 50%,transparent 65%,rgba(0,0,0,0.45) 100%)',
+    bookColors: [{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2c0a0a',mid:'#481212',hi:'#601818'},{base:'#081428',mid:'#102040',hi:'#182e58'},{base:'#0a1c0a',mid:'#142e14',hi:'#1c3e1c'},{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2a0808',mid:'#421010',hi:'#581818'},{base:'#081428',mid:'#102040',hi:'#182e58'},{base:'#1a1208',mid:'#2a1e0c',hi:'#382a10'},{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2c0a0a',mid:'#481212',hi:'#601818'}],
+  },
+  beatrix: {
+    bodyBg: '#ede8dc', bodyImg: `radial-gradient(circle, rgba(180,160,120,0.12) 1px, transparent 1px), radial-gradient(circle, rgba(160,180,140,0.1) 1px, transparent 1px)`, bodySize: '18px 18px, 18px 18px', bodyPos: '0 0, 9px 9px',
+    mainOverlay: `radial-gradient(circle, rgba(180,160,120,0.12) 1px, transparent 1px), radial-gradient(circle, rgba(160,180,140,0.1) 1px, transparent 1px)`,
+    headerBg: 'linear-gradient(180deg, #8aaa80 0%, #7a9a70 40%, #6a8a60 100%)', headerBorder: '#c8a870',
+    headerH1: '#f5f0e8', headerH1Shadow: '1px 1px 0 rgba(0,0,0,0.3),0 0 12px rgba(200,168,112,0.3)',
+    headerStrip: 'linear-gradient(180deg,#c8b888 0%,#b8a878 50%,#a89868 100%)', headerStripBorderTop: '#d8c898', headerStripBorderBot: '#988858', headerStripText: '#3a2408',
+    plateBg: 'linear-gradient(135deg,#f5f0e4,#e8e0d0)', plateBorder: '#b0a070', plateText: '#3a2408',
+    statsBg: 'linear-gradient(180deg,#d4c8a8,#c8bc98)', statsBorder: '#b09060', statsBorderTop: '#c8a870',
+    statCellBg: 'linear-gradient(180deg,#f0ebe0,#e8e0d0)', statCellBorder: '#c0a878',
+    statNum: '#3a2408', statLabel: '#6a5030',
+    goalBg: 'linear-gradient(180deg,#d4c8a8,#c8bc98)', goalTrack: '#e8e0d0',
+    tabBg: 'linear-gradient(180deg,#d8cca8,#c8bc98)', tabText: '#3a2408', tabBorder: '#b09060',
+    tabHover: 'linear-gradient(180deg,#e4d8b8,#d4c8a8)',
+    tabActive: 'linear-gradient(180deg,#f0ebe0,#e8e0d0)', tabActiveText: '#2a1808', tabActiveBotBorder: '#e8e0d0',
+    inputBg: 'linear-gradient(180deg,#f5f0e4,#eee8d8)', inputBorder: '#b09060', inputBorderTop: '#c8a870', inputText: '#2a1808', inputPlaceholder: '#8a7050',
+    controlsBg: 'linear-gradient(180deg,#f0ebe0,#e8e0d0)',
+    addBtnBg: 'linear-gradient(180deg,#8aaa80,#6a8a60)',
+    sectionNumBorder: 'rgba(200,168,112,0.4)', sectionNumText: '#3a2408', sectionTitle: '#3a2408', sectionSub: '#7a6040',
+    legendText: '#3a2408', viewBtnBg: '#e8e0d0', viewBtnActive: '#7a9a70', viewBtnActiveText: '#f5f0e8',
+    sectionCountBg: 'rgba(80,100,60,0.85)', sectionCountText: '#f5f0e8', sectionCountBorder: 'rgba(80,100,60,0.8)',
+    shelfBg: 'linear-gradient(180deg, #d4c8a8 0%, #c8bc98 60%, #c0b488 100%)', shelfBorder: '2px solid #b09060', shelfBorderTop: '3px solid #c8a870', shelfShadow: 'inset 0 8px 20px rgba(100,70,20,0.2), inset 0 -6px 24px rgba(180,140,60,0.15)',
+    plankBg: 'linear-gradient(180deg, #c8a870 0%, #b89458 40%, #c4a06a 100%)', plankBorder: '2px solid #d4b878', plankShadow: '0 4px 10px rgba(100,70,20,0.2), inset 0 1px 0 rgba(255,240,180,0.4)',
+    bandBg: 'linear-gradient(180deg,rgba(80,50,20,0.15) 0%,rgba(255,255,255,0.4) 30%,rgba(80,50,20,0.04) 55%,rgba(255,255,255,0.35) 75%,rgba(80,50,20,0.12) 100%)', bandShadow: '0 1px 3px rgba(80,50,10,0.1),inset 0 1px 0 rgba(255,255,255,0.6)', bandLine: 'linear-gradient(90deg,transparent,rgba(160,120,60,0.25) 20%,rgba(190,150,80,0.5) 50%,rgba(160,120,60,0.25) 80%,transparent)',
+    grooveBg: 'linear-gradient(180deg,rgba(80,50,20,0.15) 0%,rgba(255,255,255,0.2) 40%,rgba(80,50,20,0.12) 100%)',
+    labelBg: 'linear-gradient(180deg,#c8b888 0%,#b0a070 40%,#a09060 100%)', labelBorder: 'rgba(160,130,70,0.65)', labelText: 'linear-gradient(180deg,#3a2408 0%,#2a1804 40%,#1e1002 70%,#140c02 100%)',
+    titleText: 'linear-gradient(180deg,#3a2008 0%,#2a1604 35%,#1e1002 55%,#140c02 75%,#0e0802 100%)',
+    spineShadow: '-3px 0 6px rgba(80,50,10,0.3),inset 3px 0 6px rgba(255,255,255,0.2),inset -2px 0 6px rgba(80,50,10,0.2),3px 0 0 rgba(80,50,10,0.2),inset 0 0 20px rgba(80,50,10,0.1)',
+    spineAfter: 'linear-gradient(90deg,rgba(80,50,10,0.2) 0%,rgba(255,255,255,0.15) 15%,transparent 35%,rgba(255,255,255,0.2) 50%,transparent 65%,rgba(80,50,10,0.1) 100%)',
+    bookColors: [{base:'#8aaa80',mid:'#a0c090',hi:'#b0cc9e'},{base:'#c09098',mid:'#d4a8b0',hi:'#e0bcc4'},{base:'#7888b0',mid:'#8ea0c8',hi:'#a0b4d8'},{base:'#c0a870',mid:'#d4bc84',hi:'#e0cc98'},{base:'#9888b8',mid:'#b0a0cc',hi:'#c4b8dc'},{base:'#7a8858',mid:'#909c68',hi:'#a0ac78'},{base:'#c8a888',mid:'#dcc0a0',hi:'#e8d0b0'},{base:'#7aabb0',mid:'#8ec0c4',hi:'#a0d0d4'},{base:'#8aaa80',mid:'#a0c090',hi:'#b0cc9e'},{base:'#c09098',mid:'#d4a8b0',hi:'#e0bcc4'}],
+  },
+  japanese: {
+    bodyBg: '#f0e8d8', bodyImg: 'repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(100,60,20,0.05) 24px,rgba(100,60,20,0.05) 25px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(100,60,20,0.03) 40px,rgba(100,60,20,0.03) 41px)', bodySize: 'auto,auto', bodyPos: '0 0,0 0',
+    mainOverlay: 'repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(100,60,20,0.05) 24px,rgba(100,60,20,0.05) 25px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(100,60,20,0.03) 40px,rgba(100,60,20,0.03) 41px)',
+    headerBg: 'linear-gradient(180deg, #1a2a4a 0%, #0e1830 40%, #081020 100%)', headerBorder: '#c04030',
+    headerH1: '#f0e8d8', headerH1Shadow: '2px 2px 0 rgba(0,0,0,0.6),0 0 16px rgba(192,64,48,0.3)',
+    headerStrip: 'linear-gradient(180deg,#c04030 0%,#a03020 50%,#801810 100%)', headerStripBorderTop: '#d05040', headerStripBorderBot: '#601010', headerStripText: '#f0e8d8',
+    plateBg: 'linear-gradient(135deg,#f2ede4,#e8e0d0)', plateBorder: '#1a2a4a', plateText: '#1a2a4a',
+    statsBg: 'linear-gradient(180deg,#1a2a4a,#0e1830)', statsBorder: '#c04030', statsBorderTop: '#d05040',
+    statCellBg: 'linear-gradient(180deg,#223260,#1a2a4a)', statCellBorder: '#c04030',
+    statNum: '#f0e8d8', statLabel: '#c0a888',
+    goalBg: 'linear-gradient(180deg,#1a2a4a,#0e1830)', goalTrack: '#223260',
+    tabBg: 'linear-gradient(180deg,#223260,#1a2a4a)', tabText: '#f0e8d8', tabBorder: '#c04030',
+    tabHover: 'linear-gradient(180deg,#2a3a70,#1e3058)',
+    tabActive: 'linear-gradient(180deg,#f2ede4,#e8e0d0)', tabActiveText: '#1a2a4a', tabActiveBotBorder: '#e8e0d0',
+    inputBg: 'linear-gradient(180deg,#f2ede4,#e8e0d0)', inputBorder: '#1a2a4a', inputBorderTop: '#c04030', inputText: '#1a2a4a', inputPlaceholder: '#8090b0',
+    controlsBg: 'linear-gradient(180deg,#f2ede4,#e8e0d0)',
+    addBtnBg: 'linear-gradient(180deg,#c04030,#801810)',
+    sectionNumBorder: 'rgba(192,64,48,0.4)', sectionNumText: '#f0e8d8', sectionTitle: '#f0e8d8', sectionSub: '#8090b0',
+    legendText: '#1a2a4a', viewBtnBg: '#e8e0d0', viewBtnActive: '#1a2a4a', viewBtnActiveText: '#f0e8d8',
+    sectionCountBg: 'rgba(26,42,74,0.9)', sectionCountText: '#f0e8d8', sectionCountBorder: '#c04030',
+    shelfBg: 'linear-gradient(180deg, #0e1830 0%, #0a1428 60%, #081020 100%)', shelfBorder: '2px solid #c04030', shelfBorderTop: '3px solid #d05040', shelfShadow: 'inset 0 8px 20px rgba(0,0,0,0.8), inset 0 -6px 24px rgba(192,64,48,0.15)',
+    plankBg: '#1a2a4a', plankBorder: '2px solid #c04030', plankShadow: '0 4px 12px rgba(26,42,74,0.4)',
+    bandBg: 'linear-gradient(180deg,rgba(80,30,10,0.7) 0%,rgba(200,150,80,0.1) 30%,rgba(80,30,10,0.05) 55%,rgba(200,150,80,0.08) 75%,rgba(80,30,10,0.65) 100%)', bandShadow: '0 2px 6px rgba(0,0,0,0.5),inset 0 1px 0 rgba(200,160,80,0.2)', bandLine: 'linear-gradient(90deg,transparent,rgba(192,64,48,0.4) 20%,rgba(220,80,60,0.9) 50%,rgba(192,64,48,0.4) 80%,transparent)',
+    grooveBg: 'linear-gradient(180deg,rgba(0,0,0,0.7) 0%,rgba(192,64,48,0.06) 40%,rgba(0,0,0,0.65) 100%)',
+    labelBg: 'linear-gradient(180deg,#1a2a4a 0%,#0e1830 40%,#081020 100%)', labelBorder: 'rgba(192,64,48,0.65)', labelText: 'linear-gradient(180deg,#ffe8c0 0%,#f0c890 40%,#d4a060 70%,#b07840 100%)',
+    titleText: 'linear-gradient(180deg,#8a4820 0%,#5a2c10 35%,#3a1c08 55%,#5a2c10 75%,#8a4820 100%)',
+    spineShadow: '-3px 0 6px rgba(0,0,0,0.6),inset 3px 0 6px rgba(255,255,255,0.15),inset -2px 0 6px rgba(0,0,0,0.4),2px 0 0 rgba(0,0,0,0.5),inset 0 0 20px rgba(0,0,0,0.2)',
+    spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.45) 0%,rgba(255,255,255,0.07) 15%,transparent 35%,rgba(255,255,255,0.1) 50%,transparent 65%,rgba(0,0,0,0.25) 100%)',
+    bookColors: [{base:'#5a2818',mid:'#8a3820',hi:'#b04828'},{base:'#c8b890',mid:'#ddd0a8',hi:'#ede0be'},{base:'#c0b888',mid:'#d4cc9c',hi:'#e4dcb0'},{base:'#8a6030',mid:'#b08040',hi:'#c89850'},{base:'#4a6830',mid:'#6a9040',hi:'#88b050'},{base:'#8a9898',mid:'#a8b4b4',hi:'#c4cccc'},{base:'#6a4a28',mid:'#8a6838',hi:'#a88448'},{base:'#5a2818',mid:'#8a3820',hi:'#b04828'},{base:'#c8b890',mid:'#ddd0a8',hi:'#ede0be'},{base:'#4a6830',mid:'#6a9040',hi:'#88b050'}],
+  },
+};
+
+function applyTheme(name, save = true) {
+  currentTheme = name;
+  const t = THEMES[name];
+  const styleEl = document.getElementById('theme-dynamic-style') || (() => {
+    const s = document.createElement('style'); s.id = 'theme-dynamic-style'; document.head.appendChild(s); return s;
+  })();
+  styleEl.textContent = `
+    body { background-color: ${t.bodyBg} !important; background-image: ${t.bodyImg} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
+    .main-wrap::before { background: ${t.mainOverlay} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
+    header { background: ${t.headerBg} !important; border-bottom: 6px solid ${t.headerBorder} !important; }
+    header h1 { color: ${t.headerH1} !important; text-shadow: ${t.headerH1Shadow} !important; }
+    .header-label-strip { background: ${t.headerStrip} !important; border-top: 2px solid ${t.headerStripBorderTop} !important; border-bottom: 2px solid ${t.headerStripBorderBot} !important; color: ${t.headerStripText} !important; }
+    .catalogue-plate { background: ${t.plateBg} !important; border: 2px solid ${t.plateBorder} !important; color: ${t.plateText} !important; }
+    .stats-bar { background: ${t.statsBg} !important; border: 2px solid ${t.statsBorder} !important; border-top: 4px solid ${t.statsBorderTop} !important; box-shadow: none !important; }
+    .stat { background: ${t.statCellBg} !important; border: 1px solid ${t.statCellBorder} !important; border-top: 3px solid ${t.statsBorderTop} !important; }
+    .stat::after { background: ${t.statsBorderTop} !important; }
+    .stat-num { color: ${t.statNum} !important; -webkit-text-fill-color: ${t.statNum} !important; }
+    .stat-label { color: ${t.statLabel} !important; -webkit-text-fill-color: ${t.statLabel} !important; }
+    .goal-bar { background: ${t.goalBg} !important; border: 2px solid ${t.statsBorder} !important; border-top: 4px solid ${t.statsBorderTop} !important; box-shadow: none !important; }
+    .goal-label { color: ${t.statLabel} !important; }
+    .goal-track { background: ${t.goalTrack} !important; }
+    .dewey-section .section-header .section-number { color: ${t.sectionNumText} !important; border: 3px double ${t.sectionNumBorder} !important; }
+    .dewey-section .section-header .section-title { color: ${t.sectionTitle} !important; -webkit-text-fill-color: ${t.sectionTitle} !important; }
+    .dewey-section .section-header .section-sub { color: ${t.sectionSub} !important; }
+    .owner-tab { background: ${t.tabBg} !important; color: ${t.tabText} !important; border: 2px solid ${t.tabBorder} !important; border-bottom: 3px solid ${t.tabBorder} !important; }
+    .owner-tab:hover { background: ${t.tabHover} !important; }
+    .owner-tab.active { background: ${t.tabActive} !important; color: ${t.tabActiveText} !important; border-bottom: 3px solid ${t.tabActiveBotBorder} !important; }
+    .search-row input { background: ${t.inputBg} !important; border: 2px solid ${t.inputBorder} !important; border-top: 3px solid ${t.inputBorderTop} !important; color: ${t.inputText} !important; }
+    .search-row input::placeholder { color: ${t.inputPlaceholder} !important; }
+    .search-row select { background: ${t.tabBg} !important; border: 2px solid ${t.inputBorder} !important; color: ${t.tabText} !important; }
+    .controls { background: ${t.controlsBg} !important; border: 2px solid ${t.inputBorder} !important; border-top: 6px solid ${t.statsBorderTop} !important; }
+    .controls label { color: ${t.statLabel} !important; -webkit-text-fill-color: ${t.statLabel} !important; }
+    .controls input, .controls select { background: ${t.inputBg} !important; border-bottom: 2px solid ${t.inputBorder} !important; color: ${t.inputText} !important; -webkit-text-fill-color: ${t.inputText} !important; }
+    .controls input::placeholder { color: ${t.inputPlaceholder} !important; }
+    button.add-btn { background: ${t.addBtnBg} !important; border: 2px solid ${t.tabBorder} !important; color: ${t.headerH1} !important; }
+    .section-number { color: ${t.sectionNumText} !important; border: 3px double ${t.sectionNumBorder} !important; }
+    .section-title { color: ${t.sectionTitle} !important; -webkit-text-fill-color: ${t.sectionTitle} !important; }
+    .section-sub { color: ${t.sectionSub} !important; -webkit-text-fill-color: ${t.sectionSub} !important; }
+    .section-count { background: ${t.sectionCountBg} !important; color: ${t.sectionCountText} !important; border-color: ${t.sectionCountBorder} !important; -webkit-text-fill-color: ${t.sectionCountText} !important; }
+    .legend-item { color: ${t.legendText} !important; }
+    .view-btn { background: ${t.viewBtnBg} !important; border-color: ${t.tabBorder} !important; color: ${t.tabText} !important; }
+    .view-btn.active { background: ${t.viewBtnActive} !important; color: ${t.viewBtnActiveText} !important; border-color: ${t.viewBtnActive} !important; }
+    .bookshelf { background: ${t.shelfBg} !important; border: ${t.shelfBorder} !important; border-top: ${t.shelfBorderTop} !important; box-shadow: ${t.shelfShadow} !important; }
+    .bookshelf::after { background: ${t.plankBg} !important; border-top: ${t.plankBorder} !important; box-shadow: ${t.plankShadow} !important; }
+    .book-band-top { background: ${t.bandBg} !important; box-shadow: ${t.bandShadow} !important; }
+    .book-band-bottom { background: ${t.bandBg} !important; box-shadow: ${t.bandShadow} !important; }
+    .book-band-top::after, .book-band-bottom::after { background: ${t.bandLine} !important; }
+    .book-mid-groove { background: ${t.grooveBg} !important; }
+    .book-label { background: ${t.labelBg} !important; border-color: ${t.labelBorder} !important; box-shadow: 0 2px 6px rgba(0,0,0,0.95), inset 0 1px 0 rgba(255,255,255,0.1) !important; }
+    .book-label::before { border-color: ${t.labelBorder} !important; }
+    .book-label span { background: ${t.labelText} !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+    .book-title-spine { background: ${t.titleText} !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+    .book-spine { box-shadow: ${t.spineShadow} !important; }
+    .book-spine::after { background: ${t.spineAfter} !important; }
+  `;
+  // Switch the header stamp
+  const stamp = document.querySelector('.library-stamp');
+  if (stamp) {
+    stamp.className = 'library-stamp';
+    if (name === 'gothic') {
+      stamp.classList.add('stamp-gothic');
+      stamp.innerHTML = `<span style="font-size:0.6rem;letter-spacing:0.2em;opacity:0.8;">✦ ✦ ✦</span><span style="font-size:1.8rem;line-height:1.1;">☩</span><span class="stamp-text-large" style="font-size:0.75rem;">Obscura</span><span style="font-size:0.55rem;letter-spacing:0.15em;">Bibliotheca</span><span style="font-size:0.5rem;opacity:0.7;">Est. MMXXVI</span>`;
+    } else if (name === 'japanese') {
+      stamp.classList.add('stamp-japanese');
+      stamp.innerHTML = `<span style="font-size:0.5rem;letter-spacing:0.2em;margin-bottom:2px;">蔵書印</span><span style="font-size:2.2rem;line-height:1.1;font-weight:700;">蔵書</span><span style="font-size:0.45rem;letter-spacing:0.15em;margin-top:2px;">BOOK CLUB</span><span style="font-size:0.45rem;opacity:0.7;">二〇二六年</span>`;
+    } else if (name === 'beatrix') {
+      stamp.classList.add('stamp-beatrix');
+      stamp.innerHTML = `<span style="font-size:0.55rem;letter-spacing:0.1em;color:rgba(50,90,30,0.95);">✿ Coffee ✿</span><span style="font-size:1.6rem;line-height:1.1;">☕</span><span class="stamp-text-large" style="font-size:0.8rem;color:rgba(50,90,30,0.95);">Book Club</span><span style="font-size:0.5rem;font-style:italic;color:rgba(50,90,30,0.85);">Est. 2026</span>`;
+    } else {
+      stamp.innerHTML = `<span class="stamp-text-large">Coffee</span><span>Break</span><span class="stamp-text-large">Book</span><span>Club</span><span style="font-size:0.5rem;opacity:0.7;margin-top:2px;">Est. 2026</span>`;
+    }
+  }
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + name);
+  if (btn) btn.classList.add('active');
+  document.getElementById('theme-menu').classList.remove('open');
+  if (save && currentUserEmail) {
+    const key = currentUserEmail.replace(/[.@]/g,'_');
+    set(ref(db, `themes/${key}`), name).catch(()=>{});
+  }
+  document.body.getBoundingClientRect();
+  renderAll();
+}
+window.applyTheme = applyTheme;
+window.toggleThemeMenu = () => document.getElementById('theme-menu').classList.toggle('open');
+document.addEventListener('click', e => {
+  const ts = document.getElementById('theme-switcher');
+  if (ts && !ts.contains(e.target)) document.getElementById('theme-menu').classList.remove('open');
+});
+
 // ── Expose globals ────────────────────────────────────────────────────────────
 window.signInWithGoogle  = signInWithGoogle;
 window.signOut           = signOut;
@@ -1393,6 +1623,18 @@ document.getElementById('filter-status').addEventListener('change', renderAll);
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(r => r.forEach(x => x.unregister()));
 }
+// Apply default theme on load
+applyTheme('antique', false);
 </script>
+<!-- ── Theme Switcher ── -->
+<div id="theme-switcher">
+  <div id="theme-menu">
+    <button class="theme-btn active" onclick="window.applyTheme('antique')" id="btn-antique">🟤 Antique Leather</button>
+    <button class="theme-btn" onclick="window.applyTheme('gothic')" id="btn-gothic">🖤 Gothic</button>
+    <button class="theme-btn" onclick="window.applyTheme('beatrix')" id="btn-beatrix">🌿 Beatrix Potter</button>
+    <button class="theme-btn" onclick="window.applyTheme('japanese')" id="btn-japanese">🎋 Japanese Woodblock</button>
+  </div>
+  <button id="theme-toggle-btn" onclick="document.getElementById('theme-menu').classList.toggle('open')" title="Choose your personal theme">🎨 My Theme</button>
+</div>
 </body>
 </html>
