@@ -1096,14 +1096,17 @@ function setOwnerFilter(f) {
   ownerFilter = f;
   document.querySelectorAll('.owner-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + f).classList.add('active');
-  // Theme behaviour: All Members always antique, individual tabs load their saved theme
   if (f === 'all') {
+    // All Members always antique, no theme switcher
     applyTheme('antique', false);
     document.getElementById('theme-switcher').style.display = 'none';
   } else {
-    document.getElementById('theme-switcher').style.display = 'flex';
-    // Load this member's saved theme from Firebase
-    if (currentUserEmail) {
+    // Check if this tab belongs to the logged-in user
+    const tabMember = MEMBERS.find(m => m.key === f);
+    const isOwnTab = tabMember && tabMember.email === currentUserEmail;
+    if (isOwnTab) {
+      // Show theme switcher and load their saved theme
+      document.getElementById('theme-switcher').style.display = 'flex';
       const themeKey = currentUserEmail.replace(/[.@]/g,'_');
       get(ref(db, `themes/${themeKey}`)).then(snap => {
         const saved = snap.val();
@@ -1111,7 +1114,9 @@ function setOwnerFilter(f) {
         else applyTheme('antique', false);
       }).catch(() => applyTheme('antique', false));
     } else {
+      // Another member's tab — antique, no theme switcher
       applyTheme('antique', false);
+      document.getElementById('theme-switcher').style.display = 'none';
     }
   }
   renderAll();
@@ -1244,7 +1249,7 @@ function renderAll() {
               <a href="https://ottawa.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Ottawa Public Library</a>
               <a href="https://nelson.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Nelson Public Library</a>
               <a href="https://fulcolibrary.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Fulco Library</a>
-              <a href="https://londonlibrary.on.worldcat.org/search?queryString=${encodeURIComponent(b.title + ' ' + (b.author||''))}" target="_blank">London Library</a>
+              <a href="https://www.londonlibrary.co.uk" target="_blank">London Library</a>
             </div>
           </div>
         </div>
