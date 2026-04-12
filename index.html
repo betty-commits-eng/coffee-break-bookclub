@@ -1096,6 +1096,24 @@ function setOwnerFilter(f) {
   ownerFilter = f;
   document.querySelectorAll('.owner-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + f).classList.add('active');
+  // Theme behaviour: All Members always antique, individual tabs load their saved theme
+  if (f === 'all') {
+    applyTheme('antique', false);
+    document.getElementById('theme-switcher').style.display = 'none';
+  } else {
+    document.getElementById('theme-switcher').style.display = 'flex';
+    // Load this member's saved theme from Firebase
+    if (currentUserEmail) {
+      const themeKey = currentUserEmail.replace(/[.@]/g,'_');
+      get(ref(db, `themes/${themeKey}`)).then(snap => {
+        const saved = snap.val();
+        if (saved && THEMES[saved]) applyTheme(saved, false);
+        else applyTheme('antique', false);
+      }).catch(() => applyTheme('antique', false));
+    } else {
+      applyTheme('antique', false);
+    }
+  }
   renderAll();
 }
 window.setOwnerFilter = setOwnerFilter;
@@ -1226,7 +1244,7 @@ function renderAll() {
               <a href="https://ottawa.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Ottawa Public Library</a>
               <a href="https://nelson.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Nelson Public Library</a>
               <a href="https://fulcolibrary.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Fulco Library</a>
-              <a href="https://www.bl.uk/catalogues-and-collections/find-it-at-the-british-library/?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}" target="_blank">British Library</a>
+              <a href="https://londonlibrary.on.worldcat.org/search?queryString=${encodeURIComponent(b.title + ' ' + (b.author||''))}" target="_blank">London Library</a>
             </div>
           </div>
         </div>
@@ -1623,8 +1641,9 @@ document.getElementById('filter-status').addEventListener('change', renderAll);
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(r => r.forEach(x => x.unregister()));
 }
-// Apply default theme on load
+// Apply default theme on load — All Members starts with antique, switcher hidden
 applyTheme('antique', false);
+document.getElementById('theme-switcher').style.display = 'none';
 </script>
 <!-- ── Theme Switcher ── -->
 <div id="theme-switcher">
