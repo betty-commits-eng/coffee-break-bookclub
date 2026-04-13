@@ -1300,7 +1300,7 @@ function searchBooks(query) {
   if (!query || query.length < 4) { box.innerHTML = ''; return; }
   box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">Searching…</div>';
   searchTimer = setTimeout(() => {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6&printType=books`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6& printType=books&key=AIzaSyAQU2osIV_bI3OJ06ubqNqITVgI_feU1_o`)
       .then(r => r.json())
       .then(data => {
         if (!data.items) { box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">No results found.</div>'; return; }
@@ -1360,7 +1360,7 @@ window.findCover = function() {
   const title  = document.getElementById('edit-title').value.trim();
   const author = document.getElementById('edit-author').value.trim();
   if (!title) { alert('Please enter a title first.'); return; }
-  fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title + ' ' + author)}&maxResults=1&printType=books`)
+  fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title + ' ' + author)}&maxResults=1& printType=books&key=AIzaSyAQU2osIV_bI3OJ06ubqNqITVgI_feU1_o`)
     .then(r => r.json())
     .then(data => {
       if (!data.items) { alert('No cover found.'); return; }
