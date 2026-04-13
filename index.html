@@ -1297,7 +1297,7 @@ let searchTimer = null;
 function searchBooks(query) {
   clearTimeout(searchTimer);
   const box = document.getElementById('book-suggestions');
-  if (!query || query.length < 3) { box.innerHTML = ''; return; }
+  if (!query || query.length < 4) { box.innerHTML = ''; return; }
   box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">Searching…</div>';
   searchTimer = setTimeout(() => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6&printType=books`)
@@ -1330,7 +1330,7 @@ function searchBooks(query) {
         });
       })
       .catch(() => { box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">Search unavailable.</div>'; });
-  }, 400);
+  }, 800);
 }
 function selectBook(i) {
   const b = window._bookResults[i];
@@ -1572,7 +1572,7 @@ function applyTheme(name, save = true) {
     .section-sub { color: ${t.sectionSub} !important; -webkit-text-fill-color: ${t.sectionSub} !important; }
     .section-count { background: ${t.sectionCountBg} !important; color: ${t.sectionCountText} !important; border-color: ${t.sectionCountBorder} !important; -webkit-text-fill-color: ${t.sectionCountText} !important; }
     .legend-item { color: ${t.legendText} !important; }
-    .view-btn { background: ${t.viewBtnBg} !important; border-color: ${t.tabBorder} !important; color: ${t.inputText} !important; }
+    .view-btn { background: ${t.viewBtnBg} !important; border-color: ${t.tabBorder} !important; color: ${t.tabText} !important; }
     .view-btn.active { background: ${t.viewBtnActive} !important; color: ${t.viewBtnActiveText} !important; border-color: ${t.viewBtnActive} !important; }
     .bookshelf { background: ${t.shelfBg} !important; border: ${t.shelfBorder} !important; border-top: ${t.shelfBorderTop} !important; box-shadow: ${t.shelfShadow} !important; }
     .bookshelf::after { background: ${t.plankBg} !important; border-top: ${t.plankBorder} !important; box-shadow: ${t.plankShadow} !important; }
