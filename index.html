@@ -535,6 +535,15 @@
   }
 
   .spine-stars { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 7px; color: #f5d87a; text-shadow: 0 0 4px rgba(0,0,0,0.7); letter-spacing: 1px; flex-shrink: 0; z-index: 2; position: relative; padding: 2px 0; }
+  .recently-added { background:linear-gradient(180deg,#d4c090,#c4b080); border:2px solid #8a6530; border-top:4px solid #a07840; padding:14px 18px; margin-bottom:28px; box-shadow:3px 3px 0 rgba(0,0,0,0.3); }
+  .recently-added h3 { font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.18em; color:#3a2008; text-transform:uppercase; margin-bottom:10px; }
+  .recent-books { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
+  .recent-books::-webkit-scrollbar { display:none; }
+  .recent-book { flex-shrink:0; background:linear-gradient(135deg,#f5edd8,#ede0c4); border:1px solid #c4a060; padding:8px 10px; min-width:120px; max-width:140px; cursor:pointer; transition:transform 0.2s; }
+  .recent-book:hover { transform:translateY(-2px); }
+  .recent-book-title { font-family:'IM Fell English',serif; font-size:0.75rem; color:inherit; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
+  .recent-book-author { font-family:'Courier Prime',monospace; font-size:0.62rem; color:inherit; opacity:0.75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .recent-book-owner { font-family:'Courier Prime',monospace; font-size:0.58rem; color:inherit; opacity:0.65; margin-top:4px; }
   .goal-bar { background: linear-gradient(180deg, #d4c090, #c4b080); border: 2px solid #8a6530; border-top: 4px solid #a07840; padding: 14px 18px; margin-bottom: 28px; box-shadow: 3px 3px 0 rgba(0,0,0,0.3); }
   .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .goal-label { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); }
@@ -595,6 +604,55 @@
   #demo-banner.show { display:block; }
   #demo-banner a { color:#f5edd8; text-decoration:underline; cursor:pointer; margin-left:16px; opacity:0.85; font-style:italic; }
   body.demo-mode header { margin-top:34px; }
+
+  /* ── Jarvis overlay ── */
+  #jarvis-btn{background:rgba(0,0,0,0.5);color:#f0e8d0;border:1px solid rgba(212,168,67,0.5);padding:5px 12px;font-family:'Special Elite',cursive;font-size:0.6rem;letter-spacing:0.15em;cursor:pointer;border-radius:2px;transition:all 0.2s;margin-left:12px;}
+  #jarvis-btn:hover{background:rgba(0,0,0,0.8);border-color:#d4a843;}
+  #jarvis-overlay{display:none;position:fixed;inset:0;background:#b5975a;background-image:repeating-linear-gradient(92deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px),repeating-linear-gradient(180deg,transparent,transparent 3px,rgba(255,255,255,0.03) 3px,rgba(255,255,255,0.03) 4px),linear-gradient(135deg,#c4a265 0%,#a07840 25%,#b5975a 50%,#9a7035 75%,#b0904e 100%);z-index:600;overflow-y:auto;}
+  #jarvis-overlay.open{display:block;}
+  #jarvis-close{position:fixed;top:16px;right:20px;z-index:700;background:linear-gradient(180deg,#2a1a08,#3d2a10);color:#f5edd8;border:2px solid #8a6530;padding:8px 18px;font-family:'Special Elite',cursive;font-size:0.7rem;letter-spacing:0.15em;cursor:pointer;box-shadow:2px 2px 0 rgba(0,0,0,0.4);}
+  #jarvis-close:hover{background:linear-gradient(180deg,#3d2a10,#5a3a18);border-color:#c9a96e;}
+  #jv-body{padding:28px 32px;min-height:100vh;font-family:'Libre Baskerville',serif;color:#3a2008;}
+  .jv-header{background:linear-gradient(180deg,#2a1a08 0%,#3d2a10 40%,#2e1e0a 100%);border-bottom:6px solid #8a6530;padding:20px 32px;margin:-28px -32px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;position:relative;}
+  .jv-header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(180deg,#d4a843,#a07830,#c49838);}
+  .jv-title{font-family:'Special Elite',cursive;font-size:1.6rem;letter-spacing:0.2em;color:#f5edd8;text-shadow:1px 1px 0 rgba(0,0,0,0.6);}
+  .jv-title span{color:#c9a96e;font-size:0.85rem;margin-left:10px;font-family:'IM Fell English',serif;font-style:italic;letter-spacing:0.08em;}
+  .jv-meta{display:flex;gap:16px;align-items:center;}
+  .jv-status{font-size:0.62rem;letter-spacing:0.15em;color:#c9a96e;font-family:'Courier Prime',monospace;text-transform:uppercase;}
+  .jv-status .jvdot{color:#5ab85a;animation:jvblink 2s infinite;}
+  .jv-user{font-size:0.65rem;letter-spacing:0.1em;color:#c9a96e;display:flex;align-items:center;gap:8px;font-family:'Courier Prime',monospace;}
+  .jv-avatar{width:28px;height:28px;border-radius:50%;border:2px solid #8a6530;object-fit:cover;}
+  .jv-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;}
+  .jv-stat{background:linear-gradient(135deg,#f5edd8,#ede0c4);border:2px solid #c4a060;border-top:3px solid #a07840;padding:14px 12px;box-shadow:2px 2px 0 rgba(0,0,0,0.2);}
+  .jv-stat-label{font-size:0.52rem;letter-spacing:0.18em;color:#7b4f2e;text-transform:uppercase;margin-bottom:6px;font-family:'Courier Prime',monospace;}
+  .jv-stat-value{font-size:2.2rem;font-family:'Special Elite',cursive;color:#3d2314;line-height:1;}
+  .jv-stat-sub{font-size:0.52rem;color:#a07840;margin-top:4px;letter-spacing:0.08em;font-family:'Courier Prime',monospace;}
+  .jv-grid{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:16px;margin-bottom:16px;}
+  .jv-panel{background:linear-gradient(135deg,#f5edd8,#ede0c4);border:2px solid #c4a060;border-top:3px solid #a07840;padding:16px;box-shadow:2px 2px 0 rgba(0,0,0,0.2);}
+  .jv-panel-head{font-family:'Special Elite',cursive;font-size:0.72rem;letter-spacing:0.18em;color:#3d2314;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid #c4a060;padding-bottom:6px;}
+  .jv-feed-list{overflow:hidden;position:relative;height:220px;}
+  .feed-scroll-jv{animation:jvfeedScroll 30s linear infinite;}
+  .feed-scroll-jv:hover{animation-play-state:paused;}
+  .jv-feed-item{padding:7px 0;font-size:0.72rem;border-bottom:1px solid rgba(196,160,96,0.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:8px;color:#3a2008;font-family:'IM Fell English',serif;}
+  .fi-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,0.2);}
+  .fi-owner{font-size:0.58rem;color:#7b4f2e;flex-shrink:0;font-family:'Courier Prime',monospace;letter-spacing:0.06em;}
+  .jv-member-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(196,160,96,0.4);}
+  .jv-member-row:last-child{border-bottom:none;}
+  .jv-member-name{font-size:0.78rem;letter-spacing:0.06em;color:#3d2314;font-family:'Special Elite',cursive;}
+  .jv-member-stats{display:flex;gap:14px;}
+  .jv-member-stat{text-align:right;}
+  .jv-member-stat-val{font-size:1rem;font-family:'Special Elite',cursive;color:#3d2314;display:block;}
+  .jv-member-stat-lbl{font-size:0.45rem;letter-spacing:0.1em;color:#7b4f2e;font-family:'Courier Prime',monospace;}
+  .jv-member-bar{width:100%;height:4px;background:rgba(196,160,96,0.3);margin-top:4px;border-radius:2px;}
+  .jv-member-bar-fill{height:100%;background:linear-gradient(90deg,#a07840,#d4a843);transition:width 1s ease;border-radius:2px;}
+  .jv-bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0;}
+  .jv-log-panel{display:flex;flex-direction:column;gap:6px;}
+  .jv-log-line{font-size:0.7rem;letter-spacing:0.04em;color:rgba(61,35,20,0.35);min-height:18px;transition:color 0.4s;font-family:'Courier Prime',monospace;}
+  .jv-log-line.active{color:#3d2314;}
+  .jv-log-cursor{display:inline-block;width:7px;height:14px;background:#a07840;animation:jvblink 1s infinite;vertical-align:middle;margin-left:2px;}
+  @keyframes jvblink{0%,100%{opacity:1;}50%{opacity:0;}}
+  @keyframes jvfeedScroll{0%{transform:translateY(0);}100%{transform:translateY(-50%);}}
+  @media(max-width:600px){.jv-stats{grid-template-columns:repeat(3,1fr);}.jv-grid{grid-template-columns:1fr!important;}.jv-bottom{grid-template-columns:1fr!important;}}
 </style>
 </head>
 <body>
@@ -643,7 +701,7 @@
   <div class="header-label-strip">
     <span>Coffee Break Book Club</span>
     <span>Catalogue No. 001</span>
-    <span>Est. 2026</span>
+    <span>Est. 2026 <button id="jarvis-btn" onclick="document.getElementById('jarvis-overlay').classList.add('open');window.jarvisInit&&window.jarvisInit()">⬡ JARVIS</button></span>
   </div>
   <div class="header-inner">
     <div class="catalogue-plate">Book Club Collection</div>
@@ -714,6 +772,7 @@
     </div>
     <button class="add-btn" onclick="addBook()">+ Add to Collection</button>
   </div>
+  <div class="recently-added" id="recently-added"></div>
   <div class="stats-bar" id="stats-bar"></div>
   <div class="goal-bar" id="goal-bar"></div>
   <div class="owner-tabs">
@@ -1205,6 +1264,9 @@ function setMemberGoal(key, val) {
 }
 function renderGoal() {
   const year = new Date().getFullYear();
+  const el = document.getElementById('goal-bar');
+  if (ownerFilter === 'all') { el.style.display='none'; return; }
+  el.style.display='block';
   let totalRead = 0, totalGoal = 0;
   const _M = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
   const activeMembers = ownerFilter === 'all' ? _M : _M.filter(m => m.key === ownerFilter);
@@ -1240,6 +1302,26 @@ window._editGoal = function(key, current) {
 };
 
 // ── Render ────────────────────────────────────────────────────────────────────
+function renderRecentlyAdded() {
+  if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
+  const pool = ownerFilter === 'all' ? books : ownerFilteredBooks();
+  const recent = [...pool].filter(b => b.added).sort((a,b) => b.added.localeCompare(a.added)).slice(0,8);
+  const el = document.getElementById('recently-added');
+  if (!el) return;
+  if (recent.length === 0) { el.style.display='none'; return; }
+  el.style.display = 'block';
+  const _RM = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
+  const _t = THEMES[currentTheme];
+  const _tc = _t.statNum; const _sc = _t.statLabel;
+  el.innerHTML = `<h3 style="color:${_tc};-webkit-text-fill-color:${_tc};">📚 Recently Added</h3><div class="recent-books">${recent.map(b => {
+    const m = _RM.find(mb => mb.email === b.addedBy || mb.key === b.addedBy);
+    return `<div class="recent-book" style="background:${_t.statCellBg};border-color:${_t.statCellBorder};" onclick="window._openEdit('${b._key}',${b.addedBy!==currentUserEmail&&!window._isDemoMode})">
+      <div class="recent-book-title" style="color:${_tc};-webkit-text-fill-color:${_tc};">${b.title}</div>
+      <div class="recent-book-author" style="color:${_sc};-webkit-text-fill-color:${_sc};">${b.author||'—'}</div>
+      <div class="recent-book-owner" style="color:${_sc};-webkit-text-fill-color:${_sc};">❧ ${m?m.label:''}</div>
+    </div>`;
+  }).join('')}</div>`;
+}
 function renderStats() {
   if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
   const pool     = ownerFilteredBooks();
@@ -1259,8 +1341,10 @@ function renderStats() {
 
 function renderAll() {
   if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
+  window._spineBooks = books;
   renderStats();
   renderGoal();
+  renderRecentlyAdded();
   const fb  = filteredBooks();
   const lib = document.getElementById('library');
   const sectionsWithBooks = DEWEY_CLASSES.filter(cls => fb.some(b => String(b.dewey).substring(0,1)+'00' === cls.num || b.dewey === cls.num));
@@ -1617,15 +1701,19 @@ function applyTheme(name, save = true) {
     .stat::after { background: ${t.statsBorderTop} !important; }
     .stat-num { color: ${t.statNum} !important; -webkit-text-fill-color: ${t.statNum} !important; }
     .stat-label { color: ${t.statLabel} !important; -webkit-text-fill-color: ${t.statLabel} !important; }
+    .recently-added { background: ${t.goalBg} !important; border: 2px solid ${t.statsBorder} !important; border-top: 4px solid ${t.statsBorderTop} !important; box-shadow: none !important; color: ${t.statNum} !important; }
+    .recent-book { background: ${t.statCellBg} !important; border-color: ${t.statCellBorder} !important; color: ${t.statNum} !important; }
     .goal-bar { background: ${t.goalBg} !important; border: 2px solid ${t.statsBorder} !important; border-top: 4px solid ${t.statsBorderTop} !important; box-shadow: none !important; }
+    .goal-header .goal-fraction { color: ${t.statNum} !important; -webkit-text-fill-color: ${t.statNum} !important; }
+    .recently-added h3 { color: ${t.statNum} !important; -webkit-text-fill-color: ${t.statNum} !important; }
     .goal-label { color: ${t.statLabel} !important; }
     .goal-track { background: ${t.goalTrack} !important; }
     .dewey-section .section-header .section-number { color: ${t.sectionNumText} !important; border: 3px double ${t.sectionNumBorder} !important; }
     .dewey-section .section-header .section-title { color: ${t.sectionTitle} !important; -webkit-text-fill-color: ${t.sectionTitle} !important; }
     .dewey-section .section-header .section-sub { color: ${t.sectionSub} !important; }
-    .owner-tab { background: ${t.tabBg} !important; color: ${t.tabText} !important; border: 2px solid ${t.tabBorder} !important; border-bottom: 3px solid ${t.tabBorder} !important; }
+    .owner-tab { background: ${t.tabBg} !important; color: ${t.tabText} !important; -webkit-text-fill-color: ${t.tabText} !important; border: 2px solid ${t.tabBorder} !important; border-bottom: 3px solid ${t.tabBorder} !important; }
     .owner-tab:hover { background: ${t.tabHover} !important; }
-    .owner-tab.active { background: ${t.tabActive} !important; color: ${t.tabActiveText} !important; border-bottom: 3px solid ${t.tabActiveBotBorder} !important; }
+    .owner-tab.active { background: ${t.tabActive} !important; color: ${t.tabActiveText} !important; -webkit-text-fill-color: ${t.tabActiveText} !important; border-bottom: 3px solid ${t.tabActiveBotBorder} !important; }
     .search-row input { background: ${t.inputBg} !important; border: 2px solid ${t.inputBorder} !important; border-top: 3px solid ${t.inputBorderTop} !important; color: ${t.inputText} !important; }
     .search-row input::placeholder { color: ${t.inputPlaceholder} !important; }
     .search-row select { background: ${t.tabBg} !important; border: 2px solid ${t.inputBorder} !important; color: ${t.tabText} !important; }
@@ -1680,6 +1768,19 @@ function applyTheme(name, save = true) {
     set(ref(db, `themes/${key}`), name).catch(()=>{});
   }
   document.body.getBoundingClientRect();
+  // Fix view buttons inline
+  const _vshelf=document.getElementById('btn-shelf');
+  const _vlist=document.getElementById('btn-list');
+  if(_vshelf&&_vlist){
+    [_vshelf,_vlist].forEach(btn=>{
+      if(btn.classList.contains('active')){
+        btn.style.cssText=`background:${t.viewBtnActive}!important;color:${t.viewBtnActiveText}!important;-webkit-text-fill-color:${t.viewBtnActiveText}!important;border-color:${t.viewBtnActive}!important;`;
+      } else {
+        const _itxt=t.viewBtnInactiveText||t.tabText;
+        btn.style.cssText=`background:${t.viewBtnBg}!important;color:${_itxt}!important;-webkit-text-fill-color:${_itxt}!important;border-color:${t.tabBorder}!important;`;
+      }
+    });
+  }
   renderAll();
 }
 window.applyTheme = applyTheme;
@@ -1692,6 +1793,7 @@ document.addEventListener('click', e => {
 // ── Expose globals ────────────────────────────────────────────────────────────
 window.signInWithGoogle  = signInWithGoogle;
 window._setBooks = (b) => { books = b; window._spineBooks = b; };
+window._getSpineBooks = () => books;
 window.signOut           = signOut;
 window.addBook           = addBook;
 window.closeModal        = closeModal;
@@ -1727,6 +1829,49 @@ document.getElementById('theme-switcher').style.display = 'none';
     <button class="theme-btn" onclick="window.applyTheme('japanese')" id="btn-japanese">🎋 Japanese Woodblock</button>
   </div>
   <button id="theme-toggle-btn" onclick="document.getElementById('theme-menu').classList.toggle('open')" title="Choose your personal theme">🎨 My Theme</button>
+</div>
+
+
+<!-- ── Jarvis Overlay ── -->
+<div id="jarvis-overlay">
+  <button id="jarvis-close" onclick="document.getElementById('jarvis-overlay').classList.remove('open')">✕ CLOSE</button>
+  <div id="jv-body">
+    <div class="jv-header">
+      <div class="jv-title">CBBC <span>— Club Library Intelligence</span></div>
+      <div class="jv-meta">
+        <div class="jv-status"><span class="jvdot">●</span> Live &nbsp;·&nbsp; <span id="jv-date"></span></div>
+        <div class="jv-user"><img class="jv-avatar" id="jv-avatar" src="" alt=""><span id="jv-name"></span></div>
+      </div>
+    </div>
+    <div class="jv-stats">
+      <div class="jv-stat"><div class="jv-stat-label">Total Volumes</div><div class="jv-stat-value" id="jv-s-total">—</div><div class="jv-stat-sub">Club Catalogue</div></div>
+      <div class="jv-stat"><div class="jv-stat-label">Read</div><div class="jv-stat-value" id="jv-s-read">—</div><div class="jv-stat-sub">Completed</div></div>
+      <div class="jv-stat"><div class="jv-stat-label">Reading</div><div class="jv-stat-value" id="jv-s-reading">—</div><div class="jv-stat-sub">In Progress</div></div>
+      <div class="jv-stat"><div class="jv-stat-label">Unread</div><div class="jv-stat-value" id="jv-s-unread">—</div><div class="jv-stat-sub">Awaiting</div></div>
+      <div class="jv-stat"><div class="jv-stat-label">Wishlist</div><div class="jv-stat-value" id="jv-s-wishlist">—</div><div class="jv-stat-sub">Requested</div></div>
+    </div>
+    <div class="jv-grid">
+      <div class="jv-panel"><div class="jv-panel-head">Collection by Subject</div><div id="jv-dewey-bars"></div></div>
+      <div class="jv-panel"><div class="jv-panel-head">Recent Additions</div><div class="jv-feed-list"><div class="feed-scroll-jv" id="jv-feed-scroll"><div id="jv-feed-items"></div><div id="jv-feed-items-clone"></div></div></div></div>
+      <div class="jv-panel"><div class="jv-panel-head">Member Profiles</div><div id="jv-member-rows"></div></div>
+    </div>
+    <div class="jv-bottom">
+      <div class="jv-panel">
+        <div class="jv-panel-head">Club Reading Goals — <span id="jv-goal-year"></span></div>
+        <div id="jv-goal-rows" style="margin-top:8px;"></div>
+      </div>
+      <div class="jv-panel jv-log-panel">
+        <div class="jv-panel-head">System Log</div>
+        <div class="jv-log-line" id="jvl0">CBBC Library Intelligence</div>
+        <div class="jv-log-line" id="jvl1">Connecting to database...</div>
+        <div class="jv-log-line" id="jvl2">Authenticating member...</div>
+        <div class="jv-log-line" id="jvl3">Loading club catalogue...</div>
+        <div class="jv-log-line" id="jvl4">Indexing volumes...</div>
+        <div class="jv-log-line" id="jvl5">Rendering panels...</div>
+        <div class="jv-log-line" id="jvl6">All systems nominal.<span class="jv-log-cursor"></span></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1843,5 +1988,75 @@ window.exitDemo = function() {
   window.setOwnerFilter('all');
 };
 </script>
+
+<script>
+window.jarvisInit = function() {
+  const MEMBERS = (window._getMembersOverride ? window._getMembersOverride() : null) || [
+    {key:'betty',   email:'bettykwale@gmail.com',         label:'Betty'},
+    {key:'nirmala', email:'nirmalavisvanathan6@gmail.com', label:'Nirmala'},
+    {key:'lena',    email:'lenahorswill@gmail.com',        label:'Lena'},
+    {key:'janet',   email:'jemstrangeways@gmail.com',      label:'Janet'},
+    {key:'ruth',    email:'ruthlinstroud@aol.com',         label:'Ruth'},
+    {key:'delphine',email:'delphinegreene@msn.com',        label:'Delphine'},
+    {key:'lisa',    email:'lawooding@yahoo.com',           label:'Lisa'},
+  ];
+  const STATUS_COLORS = {read:'#2d8a2d',reading:'#e6a020',unread:'#555555',wishlist:'#6a4fcc'};
+  const bks = window._spineBooks || [];
+  const d = new Date();
+  document.getElementById('jv-date').textContent = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase().replace(/ /g,'.');
+  const uname = document.getElementById('user-name');
+  if (uname) document.getElementById('jv-name').textContent = (uname.textContent||'').split(' ')[0].toUpperCase();
+  const uavatar = document.getElementById('user-avatar');
+  if (uavatar && uavatar.src) document.getElementById('jv-avatar').src = uavatar.src;
+  function animCount(id, target) {
+    const el = document.getElementById(id); let cur=0;
+    const step = Math.max(1,Math.floor(target/20));
+    const t = setInterval(()=>{ cur=Math.min(target,cur+step); el.textContent=String(cur).padStart(2,'0'); if(cur>=target)clearInterval(t); },60);
+  }
+  animCount('jv-s-total', bks.length);
+  animCount('jv-s-read', bks.filter(b=>b.status==='read').length);
+  animCount('jv-s-reading', bks.filter(b=>b.status==='reading').length);
+  animCount('jv-s-unread', bks.filter(b=>b.status==='unread').length);
+  animCount('jv-s-wishlist', bks.filter(b=>b.status==='wishlist').length);
+  // Dewey bars
+  const deweyLabels = {'000':'Generalities','100':'Philosophy','200':'Religion','300':'Social Sci.','400':'Language','500':'Sciences','600':'Technology','700':'Arts','800':'Literature','900':'History'};
+  const deweyCounts = {};
+  bks.forEach(b => { const d = b.dewey ? b.dewey.toString().substring(0,1)+'00' : '000'; deweyCounts[d] = (deweyCounts[d]||0)+1; });
+  const maxD = Math.max(1,...Object.values(deweyCounts));
+  document.getElementById('jv-dewey-bars').innerHTML = Object.entries(deweyLabels).map(([d,name])=>{
+    const count = deweyCounts[d]||0;
+    const pct = Math.round((count/maxD)*100);
+    return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-family:'Courier Prime',monospace;font-size:0.58rem;color:#7b4f2e;min-width:28px;">${d}</span><div style="flex:1;background:rgba(196,160,96,0.25);height:10px;border-radius:2px;"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#a07840,#d4a843);border-radius:2px;transition:width 1s ease;"></div></div><span style="font-family:'Courier Prime',monospace;font-size:0.58rem;color:#3d2314;min-width:20px;text-align:right;">${count}</span></div>`;
+  }).join('');
+  // Feed
+  const items = [...bks].sort((a,b)=>(b.added||'').localeCompare(a.added||''));
+  const feedHtml = items.map(b => {
+    const owner = MEMBERS.find(m=>m.email===b.addedBy||m.key===b.addedBy);
+    return `<div class="jv-feed-item"><span class="fi-dot" style="background:${STATUS_COLORS[b.status]||'#555'}"></span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;">${b.title}${b.author?' — '+b.author.split(' ').pop():''}</span><span class="fi-owner">${owner?owner.label.toUpperCase():''}</span></div>`;
+  }).join('');
+  document.getElementById('jv-feed-items').innerHTML = feedHtml;
+  document.getElementById('jv-feed-items-clone').innerHTML = feedHtml;
+  // Member profiles
+  const maxB = Math.max(1,...MEMBERS.map(m=>bks.filter(b=>b.addedBy===m.email||b.addedBy===m.key).length));
+  document.getElementById('jv-member-rows').innerHTML = MEMBERS.map(m=>{
+    const mb = bks.filter(b=>b.addedBy===m.email||b.addedBy===m.key);
+    const pct = Math.round((mb.length/maxB)*100);
+    return `<div class="jv-member-row"><div style="flex:1;"><div class="jv-member-name">${m.label}</div><div class="jv-member-bar"><div class="jv-member-bar-fill" style="width:${pct}%"></div></div></div><div class="jv-member-stats"><div class="jv-member-stat"><span class="jv-member-stat-val">${String(mb.length).padStart(2,'0')}</span><span class="jv-member-stat-lbl">Total</span></div><div class="jv-member-stat"><span class="jv-member-stat-val">${String(mb.filter(b=>b.status==='read').length).padStart(2,'0')}</span><span class="jv-member-stat-lbl">Read</span></div></div></div>`;
+  }).join('');
+  // Per-member reading goals
+  const year = new Date().getFullYear();
+  document.getElementById('jv-goal-year').textContent = year;
+  document.getElementById('jv-goal-rows').innerHTML = MEMBERS.map(m => {
+    const goal = parseInt(localStorage.getItem('cbbc-goal-'+m.key)||'12');
+    const read = bks.filter(b=>(b.addedBy===m.email||b.addedBy===m.key)&&b.status==='read'&&b.readDate&&new Date(b.readDate).getFullYear()===year).length;
+    const pct = Math.min(100,Math.round((read/goal)*100));
+    const done = read >= goal;
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="font-family:'Special Elite',cursive;font-size:0.78rem;color:#3d2314;min-width:72px;">${m.label}</span><div style="flex:1;background:rgba(196,160,96,0.25);height:10px;border-radius:4px;"><div style="width:${pct}%;height:100%;background:${done?'linear-gradient(90deg,#2d8a2d,#4aaa4a)':'linear-gradient(90deg,#a07840,#d4a843)'};border-radius:4px;transition:width 1s ease;"></div></div><span style="font-family:'Courier Prime',monospace;font-size:0.68rem;color:#7b4f2e;min-width:44px;text-align:right;">${read}/${goal}${done?' 🎉':''}</span></div>`;
+  }).join('');
+  // Boot log
+  ['jvl0','jvl1','jvl2','jvl3','jvl4','jvl5','jvl6'].forEach((id,i)=>setTimeout(()=>{ const el=document.getElementById(id); if(el) el.classList.add('active'); },300+i*400));
+};
+</script>
+
 </body>
 </html>
