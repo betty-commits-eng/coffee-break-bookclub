@@ -1135,18 +1135,23 @@ function statusLabel(s) {
   return { read:'Read', reading:'Reading', unread:'Unread', wishlist:'Wishlist' }[s] || s;
 }
 function ownerFilteredBooks() {
+  if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
   if (ownerFilter === 'all') return books;
-  const owner = OWNERS.find(o => o.key === ownerFilter);
-  return owner ? books.filter(b => b.addedBy === owner.email) : books;
+  const _OW = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
+  const owner = _OW.find(o => o.key === ownerFilter);
+  return owner ? books.filter(b => b.addedBy === owner.email || b.addedBy === owner.key) : books;
 }
 function filteredBooks() {
+  // In demo mode, use demo books directly
+  if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
   const q  = document.getElementById('search').value.toLowerCase();
   const fs = document.getElementById('filter-status').value;
   return books.filter(b => {
     const mQ = !q  || b.title.toLowerCase().includes(q) || (b.author||'').toLowerCase().includes(q);
     const mS = !fs || b.status === fs;
-    const mO = ownerFilter === 'all' ||
-               (OWNERS.find(o => o.key === ownerFilter)?.email === b.addedBy);
+    const _OW2 = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
+    const _fo = _OW2.find(o => o.key === ownerFilter);
+    const mO = ownerFilter === 'all' || (_fo && (b.addedBy === _fo.email || b.addedBy === _fo.key));
     return mQ && mS && mO;
   });
 }
@@ -1201,7 +1206,7 @@ function setMemberGoal(key, val) {
 function renderGoal() {
   const year = new Date().getFullYear();
   let totalRead = 0, totalGoal = 0;
-  const _M = window._getMembersOverride ? window._getMembersOverride() : MEMBERS;
+  const _M = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
   const activeMembers = ownerFilter === 'all' ? _M : _M.filter(m => m.key === ownerFilter);
   const label = ownerFilter === 'all' ? 'Club' : (activeMembers[0] ? activeMembers[0].label + "'s" : 'Club');
   activeMembers.forEach(m => {
@@ -1236,6 +1241,7 @@ window._editGoal = function(key, current) {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderStats() {
+  if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
   const pool     = ownerFilteredBooks();
   const total    = pool.length;
   const read     = pool.filter(b => b.status==='read').length;
@@ -1252,11 +1258,12 @@ function renderStats() {
 }
 
 function renderAll() {
+  if (window._isDemoMode && window._demoBooks) books = window._demoBooks;
   renderStats();
   renderGoal();
   const fb  = filteredBooks();
   const lib = document.getElementById('library');
-  const sectionsWithBooks = DEWEY_CLASSES.filter(cls => fb.some(b => b.dewey === cls.num));
+  const sectionsWithBooks = DEWEY_CLASSES.filter(cls => fb.some(b => String(b.dewey).substring(0,1)+'00' === cls.num || b.dewey === cls.num));
   if (sectionsWithBooks.length === 0) {
     lib.innerHTML = `<div style="text-align:center;padding:60px;font-family:'IM Fell English',serif;font-style:italic;color:var(--parchment);font-size:1.1rem;">
       ${books.length === 0 ? 'Your library awaits its first volume…' : 'No books match your search.'}
@@ -1264,7 +1271,7 @@ function renderAll() {
     return;
   }
   lib.innerHTML = sectionsWithBooks.map(cls => {
-    const sectionBooks = fb.filter(b => b.dewey === cls.num);
+    const sectionBooks = fb.filter(b => String(b.dewey).substring(0,1)+'00' === cls.num || b.dewey === cls.num);
     const collapsed    = collapsedSections.has(cls.num);
     const vintageColors = THEMES[currentTheme].bookColors;
     const heights = [170, 190, 175, 195, 165, 185, 180, 172, 188, 168];
@@ -1736,9 +1743,10 @@ const DEMO_MEMBERS = [
 ];
 
 const DEMO_BOOKS = [
+  // 800s — Literature (the main club shelf)
   {_key:'d1',title:'The Midnight Library',author:'Matt Haig',dewey:'823',status:'read',year:2020,notes:'',rating:4,addedBy:'anne@demo.com',added:'2024-09-01T10:00:00Z',readDate:'2024-09-20T00:00:00Z',coverImage:null},
   {_key:'d2',title:'Lessons in Chemistry',author:'Bonnie Garmus',dewey:'813',status:'read',year:2022,notes:'Absolutely loved it.',rating:5,addedBy:'marie@demo.com',added:'2024-10-01T10:00:00Z',readDate:'2024-10-18T00:00:00Z',coverImage:null},
-  {_key:'d3',title:'Tomorrow, and Tomorrow, and Tomorrow',author:'Gabrielle Zevin',dewey:'813',status:'read',year:2022,notes:'',rating:4,addedBy:'suki@demo.com',added:'2024-11-01T10:00:00Z',readDate:'2024-11-22T00:00:00Z',coverImage:null},
+  {_key:'d3',title:'Tomorrow and Tomorrow and Tomorrow',author:'Gabrielle Zevin',dewey:'813',status:'read',year:2022,notes:'',rating:4,addedBy:'suki@demo.com',added:'2024-11-01T10:00:00Z',readDate:'2024-11-22T00:00:00Z',coverImage:null},
   {_key:'d4',title:'The Thursday Murder Club',author:'Richard Osman',dewey:'823',status:'read',year:2020,notes:'Funny and clever.',rating:4,addedBy:'grace@demo.com',added:'2024-12-01T10:00:00Z',readDate:'2024-12-19T00:00:00Z',coverImage:null},
   {_key:'d5',title:'Remarkably Bright Creatures',author:'Shelby Van Pelt',dewey:'813',status:'read',year:2022,notes:'The octopus narrator stole the show.',rating:5,addedBy:'jo@demo.com',added:'2025-01-05T10:00:00Z',readDate:'2025-01-24T00:00:00Z',coverImage:null},
   {_key:'d6',title:'The Women',author:'Kristin Hannah',dewey:'813',status:'read',year:2024,notes:'',rating:5,addedBy:'diana@demo.com',added:'2025-02-01T10:00:00Z',readDate:'2025-02-20T00:00:00Z',coverImage:null},
@@ -1748,12 +1756,36 @@ const DEMO_BOOKS = [
   {_key:'d10',title:'The Frozen River',author:'Ariel Lawhon',dewey:'813',status:'wishlist',year:2023,notes:'',rating:0,addedBy:'grace@demo.com',added:'2025-04-08T10:00:00Z',readDate:null,coverImage:null},
   {_key:'d11',title:'Small Things Like These',author:'Claire Keegan',dewey:'823',status:'read',year:2021,notes:'Quietly powerful.',rating:5,addedBy:'jo@demo.com',added:'2024-08-10T10:00:00Z',readDate:'2024-08-25T00:00:00Z',coverImage:null},
   {_key:'d12',title:'Demon Copperhead',author:'Barbara Kingsolver',dewey:'813',status:'read',year:2022,notes:'',rating:4,addedBy:'diana@demo.com',added:'2024-07-01T10:00:00Z',readDate:'2024-07-28T00:00:00Z',coverImage:null},
+  {_key:'d13',title:'Horse',author:'Geraldine Brooks',dewey:'813',status:'read',year:2022,notes:'',rating:4,addedBy:'anne@demo.com',added:'2024-06-01T10:00:00Z',readDate:'2024-06-20T00:00:00Z',coverImage:null},
+  {_key:'d14',title:'Birnam Wood',author:'Eleanor Catton',dewey:'823',status:'read',year:2023,notes:'',rating:3,addedBy:'marie@demo.com',added:'2024-05-01T10:00:00Z',readDate:'2024-05-22T00:00:00Z',coverImage:null},
+  {_key:'d15',title:'The Covenant of Water',author:'Abraham Verghese',dewey:'813',status:'read',year:2023,notes:'Epic and moving.',rating:5,addedBy:'suki@demo.com',added:'2024-04-01T10:00:00Z',readDate:'2024-04-28T00:00:00Z',coverImage:null},
+  {_key:'d16',title:'North Woods',author:'Daniel Mason',dewey:'813',status:'read',year:2023,notes:'',rating:4,addedBy:'grace@demo.com',added:'2024-03-01T10:00:00Z',readDate:'2024-03-25T00:00:00Z',coverImage:null},
+  {_key:'d17',title:'All the Colours of the Dark',author:'Chris Whitaker',dewey:'823',status:'read',year:2024,notes:'Could not put it down.',rating:5,addedBy:'jo@demo.com',added:'2024-02-01T10:00:00Z',readDate:'2024-02-20T00:00:00Z',coverImage:null},
+  {_key:'d18',title:'The Bee Sting',author:'Paul Murray',dewey:'823',status:'read',year:2023,notes:'',rating:4,addedBy:'diana@demo.com',added:'2024-01-05T10:00:00Z',readDate:'2024-01-28T00:00:00Z',coverImage:null},
+  // 900s — History & Biography
+  {_key:'d19',title:'Say Nothing',author:'Patrick Radden Keefe',dewey:'941',status:'read',year:2019,notes:'Gripping true crime history.',rating:5,addedBy:'anne@demo.com',added:'2024-09-15T10:00:00Z',readDate:'2024-10-05T00:00:00Z',coverImage:null},
+  {_key:'d20',title:'The Wager',author:'David Grann',dewey:'910',status:'read',year:2023,notes:'',rating:4,addedBy:'marie@demo.com',added:'2024-08-15T10:00:00Z',readDate:'2024-09-08T00:00:00Z',coverImage:null},
+  {_key:'d21',title:'Spare',author:'Prince Harry',dewey:'941',status:'read',year:2023,notes:'',rating:3,addedBy:'suki@demo.com',added:'2024-02-10T10:00:00Z',readDate:'2024-03-01T00:00:00Z',coverImage:null},
+  {_key:'d22',title:'The Light We Carry',author:'Michelle Obama',dewey:'920',status:'read',year:2022,notes:'Inspiring.',rating:4,addedBy:'grace@demo.com',added:'2023-11-01T10:00:00Z',readDate:'2023-11-22T00:00:00Z',coverImage:null},
+  // 100s — Psychology & Self-Help
+  {_key:'d23',title:'Atomic Habits',author:'James Clear',dewey:'158',status:'read',year:2018,notes:'Changed how I think about routines.',rating:5,addedBy:'jo@demo.com',added:'2024-01-15T10:00:00Z',readDate:'2024-02-05T00:00:00Z',coverImage:null},
+  {_key:'d24',title:'The Body Keeps the Score',author:'Bessel van der Kolk',dewey:'152',status:'read',year:2014,notes:'',rating:5,addedBy:'diana@demo.com',added:'2023-10-01T10:00:00Z',readDate:'2023-11-01T00:00:00Z',coverImage:null},
+  {_key:'d25',title:'Thinking Fast and Slow',author:'Daniel Kahneman',dewey:'153',status:'unread',year:2011,notes:'',rating:0,addedBy:'anne@demo.com',added:'2025-03-15T10:00:00Z',readDate:null,coverImage:null},
+  // 300s — Social Sciences
+  {_key:'d26',title:'Educated',author:'Tara Westover',dewey:'378',status:'read',year:2018,notes:'Unforgettable memoir.',rating:5,addedBy:'marie@demo.com',added:'2023-09-01T10:00:00Z',readDate:'2023-09-25T00:00:00Z',coverImage:null},
+  {_key:'d27',title:'The Warmth of Other Suns',author:'Isabel Wilkerson',dewey:'305',status:'read',year:2010,notes:'',rating:5,addedBy:'suki@demo.com',added:'2023-08-01T10:00:00Z',readDate:'2023-09-10T00:00:00Z',coverImage:null},
+  // 500s — Natural Sciences
+  {_key:'d28',title:'The Anthropocene Reviewed',author:'John Green',dewey:'508',status:'read',year:2021,notes:'Beautiful essays.',rating:5,addedBy:'grace@demo.com',added:'2023-07-01T10:00:00Z',readDate:'2023-07-20T00:00:00Z',coverImage:null},
+  {_key:'d29',title:'Braiding Sweetgrass',author:'Robin Wall Kimmerer',dewey:'580',status:'reading',year:2013,notes:'',rating:0,addedBy:'jo@demo.com',added:'2025-04-10T10:00:00Z',readDate:null,coverImage:null},
+  // 700s — Arts
+  {_key:'d30',title:'Big Magic',author:'Elizabeth Gilbert',dewey:'700',status:'read',year:2015,notes:'Great for creative block.',rating:4,addedBy:'diana@demo.com',added:'2023-06-01T10:00:00Z',readDate:'2023-06-18T00:00:00Z',coverImage:null},
 ];
 
 window.startDemo = function() {
   window._isDemoMode = true;
-  if (window._setBooks) window._setBooks(DEMO_BOOKS);
+  window._demoBooks = DEMO_BOOKS;
   window._spineBooks = DEMO_BOOKS;
+  if (window._setBooks) window._setBooks(DEMO_BOOKS);
   document.getElementById('login-screen').classList.remove('show');
   document.getElementById('demo-banner').classList.add('show');
   document.body.classList.add('demo-mode');
@@ -1788,8 +1820,9 @@ window.startDemo = function() {
 window.exitDemo = function() {
   window._isDemoMode = false;
   window._getMembersOverride = null;
-  if (window._setBooks) window._setBooks([]);
+  window._demoBooks = null;
   window._spineBooks = [];
+  if (window._setBooks) window._setBooks([]);
   document.getElementById('demo-banner').classList.remove('show');
   document.body.classList.remove('demo-mode');
   document.getElementById('login-screen').classList.add('show');
