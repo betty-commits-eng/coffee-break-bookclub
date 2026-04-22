@@ -1854,8 +1854,16 @@ document.addEventListener('click', e => {
   fc.style.top = '-9999px';
   fc.style.display = 'block';
   const cardH = fc.offsetHeight;
-  let top = bookRect.top - cardH - 10;
-  if (top < 8) top = bookRect.bottom + 10;
+  // Prefer above the book; if not enough room, place below the entire shelf row
+  let top = bookRect.top - cardH - 16;
+  if (top < 60) {
+    // Find the bookshelf parent and place below it
+    const shelf = book.closest('.bookshelf');
+    const shelfRect = shelf ? shelf.getBoundingClientRect() : bookRect;
+    top = shelfRect.bottom + 12;
+  }
+  // Clamp to viewport
+  top = Math.max(60, Math.min(top, window.innerHeight - cardH - 12));
   fc.style.top = top + 'px';
   const origCard = book.querySelector('.book-card');
   if (origCard) {
