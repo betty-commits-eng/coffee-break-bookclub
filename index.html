@@ -589,10 +589,17 @@
   .book-label { background:linear-gradient(180deg,#1a2a4a 0%,#0e1830 40%,#081020 100%) !important; padding:2px 3px; text-align:center; width:calc(100% - 16px); letter-spacing:0.04em; line-height:1.4; border-radius:3px; border:1px solid rgba(200,150,40,0.65); box-shadow:0 2px 6px rgba(0,0,0,0.95),inset 0 1px 0 rgba(255,215,80,0.15); position:relative; z-index:4; flex-shrink:0; color:transparent; -webkit-text-fill-color:transparent; }
   .book-label::before { content:''; position:absolute; inset:2px; border-radius:2px; border:1px solid rgba(200,155,40,0.3); pointer-events:none; }
   .book-label span { background:linear-gradient(180deg,#fff6c0 0%,#e8c84a 40%,#c8960c 70%,#8c6b1f 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 0 3px rgba(255,200,60,0.4)); display:block; font-size:5px; font-family:'Courier Prime',monospace; font-weight:700; }
+
+  /* ── Demo Mode Banner ── */
+  #demo-banner { display:none; position:fixed; top:0; left:0; right:0; z-index:9999; background:linear-gradient(90deg,#6a1010,#8b2020,#6a1010); color:#f5edd8; text-align:center; padding:7px 16px; font-family:'Special Elite',cursive; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
+  #demo-banner.show { display:block; }
+  #demo-banner a { color:#f5edd8; text-decoration:underline; cursor:pointer; margin-left:16px; opacity:0.85; font-style:italic; }
+  body.demo-mode header { margin-top:34px; }
 </style>
 </head>
 <body>
 <!-- Login Screen -->
+<div id="demo-banner">☕ Demo Mode — Sample Data &nbsp;·&nbsp; No login required &nbsp;·&nbsp; Changes are not saved <a onclick="exitDemo()">✕ Exit Demo</a></div>
 <div id="login-screen">
   <div class="login-card">
     <div class="login-hero-ornament">
@@ -621,8 +628,12 @@
         <div class="login-feature-text"><strong>Reading Goals</strong>Track your annual reading progress</div>
       </div>
     </div>
-    <button class="google-btn" onclick="signInWithGoogle()" style="font-size:1.05rem;padding:16px 28px;letter-spacing:0.08em;">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+    <button class="google-btn" onclick="startDemo()" style="background:linear-gradient(180deg,#5a3a1a,#3d2314);border:2px solid #8a6530;font-size:1.05rem;padding:16px 28px;letter-spacing:0.08em;margin-bottom:10px;">
+      ☕ &nbsp;Try Demo — No Login Needed
+    </button>
+    <div class="login-divider"><div class="rule"></div><span>or sign in with your account</span><div class="rule"></div></div>
+    <button class="google-btn" onclick="signInWithGoogle()" style="background:rgba(61,35,20,0.08);color:var(--dark-brown);border:1px solid #c4a060;font-size:0.85rem;padding:11px 28px;">
+      <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
       Sign in to Your Club
     </button>
     <div class="login-error" id="login-error">Access denied. Your account is not on the allowed list.</div>
@@ -864,6 +875,7 @@ let currentEditKey = null; // track which book is open in modal
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
 onAuthStateChanged(auth, (user) => {
+  if (window._isDemoMode) return;
   if (user && (ALLOWED_EMAILS.length === 0 || ALLOWED_EMAILS.includes(user.email))) {
     currentUserEmail = user.email;
     document.getElementById('login-screen').classList.remove('show');
@@ -1034,7 +1046,12 @@ function addBook() {
   if (!title || !dewey) { alert('Please enter a title and select a Dewey class.'); return; }
   const currentUser = auth.currentUser;
   const addedBy = currentUser ? currentUser.email : '';
-  fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null });
+  if (window._isDemoMode) {
+    const demoBook={_key:'d'+Date.now(),title,author,dewey,status,year:year?parseInt(year):null,notes:'',addedBy,coverImage:window._pendingCover||null,added:new Date().toISOString(),readDate:status==='read'?new Date().toISOString():null,rating:0};
+    books.push(demoBook);window._spineBooks=books;renderAll();
+  } else {
+    fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null });
+  }
   window._pendingCover = null;
   document.getElementById('inp-title').value  = '';
   document.getElementById('inp-author').value = '';
@@ -1044,6 +1061,7 @@ function addBook() {
 
 function deleteBook(key) {
   if (!confirm('Remove this book from your collection?')) return;
+  if(window._isDemoMode){books=books.filter(b=>b._key!==key);window._spineBooks=books;renderAll();return;}
   fbDelete(key);
 }
 
@@ -1089,6 +1107,11 @@ function closeModal() {
 function saveEdit() {
   const key = document.getElementById('edit-id').value;
   const status = document.getElementById('edit-status').value;
+  if (window._isDemoMode) {
+    const idx=books.findIndex(b=>b._key===key);
+    if(idx>=0){books[idx]={...books[idx],title:document.getElementById('edit-title').value.trim(),author:document.getElementById('edit-author').value.trim(),dewey:document.getElementById('edit-dewey').value,status,year:document.getElementById('edit-year').value?parseInt(document.getElementById('edit-year').value):null,rating:parseInt(document.getElementById('edit-rating').value)||0,readDate:status==='read'?(document.getElementById('edit-readdate').value?new Date(document.getElementById('edit-readdate').value).toISOString():new Date().toISOString()):null,coverImage:document.getElementById('edit-cover').value||null};window._spineBooks=books;}
+    closeModal();renderAll();return;
+  }
   fbUpdate(key, {
     title:  document.getElementById('edit-title').value.trim(),
     author: document.getElementById('edit-author').value.trim(),
@@ -1178,7 +1201,8 @@ function setMemberGoal(key, val) {
 function renderGoal() {
   const year = new Date().getFullYear();
   let totalRead = 0, totalGoal = 0;
-  const activeMembers = ownerFilter === 'all' ? MEMBERS : MEMBERS.filter(m => m.key === ownerFilter);
+  const _M = window._getMembersOverride ? window._getMembersOverride() : MEMBERS;
+  const activeMembers = ownerFilter === 'all' ? _M : _M.filter(m => m.key === ownerFilter);
   const label = ownerFilter === 'all' ? 'Club' : (activeMembers[0] ? activeMembers[0].label + "'s" : 'Club');
   activeMembers.forEach(m => {
     const read = books.filter(b =>
@@ -1660,6 +1684,7 @@ document.addEventListener('click', e => {
 
 // ── Expose globals ────────────────────────────────────────────────────────────
 window.signInWithGoogle  = signInWithGoogle;
+window._setBooks = (b) => { books = b; window._spineBooks = b; };
 window.signOut           = signOut;
 window.addBook           = addBook;
 window.closeModal        = closeModal;
@@ -1696,5 +1721,94 @@ document.getElementById('theme-switcher').style.display = 'none';
   </div>
   <button id="theme-toggle-btn" onclick="document.getElementById('theme-menu').classList.toggle('open')" title="Choose your personal theme">🎨 My Theme</button>
 </div>
+
+<script>
+// ── CBBC Demo Mode ────────────────────────────────────────────────────────────
+window._isDemoMode = false;
+
+const DEMO_MEMBERS = [
+  {key:'anne',  email:'anne@demo.com',   label:'Anne'},
+  {key:'marie', email:'marie@demo.com',  label:'Marie'},
+  {key:'suki',  email:'suki@demo.com',   label:'Suki'},
+  {key:'grace', email:'grace@demo.com',  label:'Grace'},
+  {key:'jo',    email:'jo@demo.com',     label:'Jo'},
+  {key:'diana', email:'diana@demo.com',  label:'Diana'},
+];
+
+const DEMO_BOOKS = [
+  {_key:'d1',title:'The Midnight Library',author:'Matt Haig',dewey:'823',status:'read',year:2020,notes:'',rating:4,addedBy:'anne@demo.com',added:'2024-09-01T10:00:00Z',readDate:'2024-09-20T00:00:00Z',coverImage:null},
+  {_key:'d2',title:'Lessons in Chemistry',author:'Bonnie Garmus',dewey:'813',status:'read',year:2022,notes:'Absolutely loved it.',rating:5,addedBy:'marie@demo.com',added:'2024-10-01T10:00:00Z',readDate:'2024-10-18T00:00:00Z',coverImage:null},
+  {_key:'d3',title:'Tomorrow, and Tomorrow, and Tomorrow',author:'Gabrielle Zevin',dewey:'813',status:'read',year:2022,notes:'',rating:4,addedBy:'suki@demo.com',added:'2024-11-01T10:00:00Z',readDate:'2024-11-22T00:00:00Z',coverImage:null},
+  {_key:'d4',title:'The Thursday Murder Club',author:'Richard Osman',dewey:'823',status:'read',year:2020,notes:'Funny and clever.',rating:4,addedBy:'grace@demo.com',added:'2024-12-01T10:00:00Z',readDate:'2024-12-19T00:00:00Z',coverImage:null},
+  {_key:'d5',title:'Remarkably Bright Creatures',author:'Shelby Van Pelt',dewey:'813',status:'read',year:2022,notes:'The octopus narrator stole the show.',rating:5,addedBy:'jo@demo.com',added:'2025-01-05T10:00:00Z',readDate:'2025-01-24T00:00:00Z',coverImage:null},
+  {_key:'d6',title:'The Women',author:'Kristin Hannah',dewey:'813',status:'read',year:2024,notes:'',rating:5,addedBy:'diana@demo.com',added:'2025-02-01T10:00:00Z',readDate:'2025-02-20T00:00:00Z',coverImage:null},
+  {_key:'d7',title:'James',author:'Percival Everett',dewey:'813',status:'read',year:2024,notes:'Brilliant reimagining.',rating:5,addedBy:'anne@demo.com',added:'2025-03-01T10:00:00Z',readDate:'2025-03-22T00:00:00Z',coverImage:null},
+  {_key:'d8',title:'The God of the Woods',author:'Liz Moore',dewey:'813',status:'reading',year:2024,notes:'',rating:0,addedBy:'marie@demo.com',added:'2025-04-01T10:00:00Z',readDate:null,coverImage:null},
+  {_key:'d9',title:'Intermezzo',author:'Sally Rooney',dewey:'823',status:'unread',year:2024,notes:'',rating:0,addedBy:'suki@demo.com',added:'2025-04-05T10:00:00Z',readDate:null,coverImage:null},
+  {_key:'d10',title:'The Frozen River',author:'Ariel Lawhon',dewey:'813',status:'wishlist',year:2023,notes:'',rating:0,addedBy:'grace@demo.com',added:'2025-04-08T10:00:00Z',readDate:null,coverImage:null},
+  {_key:'d11',title:'Small Things Like These',author:'Claire Keegan',dewey:'823',status:'read',year:2021,notes:'Quietly powerful.',rating:5,addedBy:'jo@demo.com',added:'2024-08-10T10:00:00Z',readDate:'2024-08-25T00:00:00Z',coverImage:null},
+  {_key:'d12',title:'Demon Copperhead',author:'Barbara Kingsolver',dewey:'813',status:'read',year:2022,notes:'',rating:4,addedBy:'diana@demo.com',added:'2024-07-01T10:00:00Z',readDate:'2024-07-28T00:00:00Z',coverImage:null},
+];
+
+window.startDemo = function() {
+  window._isDemoMode = true;
+  if (window._setBooks) window._setBooks(DEMO_BOOKS);
+  window._spineBooks = DEMO_BOOKS;
+  document.getElementById('login-screen').classList.remove('show');
+  document.getElementById('demo-banner').classList.add('show');
+  document.body.classList.add('demo-mode');
+  document.getElementById('user-bar').style.display = 'flex';
+  document.getElementById('user-name').textContent = 'Anne (Demo)';
+  document.getElementById('user-avatar').src = '';
+  document.getElementById('sync-status').textContent = '☕ Demo Mode';
+  document.getElementById('sync-status').className = 'sync connecting';
+
+  // Rebuild tabs with demo member names
+  const tabsEl = document.querySelector('.owner-tabs');
+  if (tabsEl) {
+    tabsEl.innerHTML = `
+      <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
+      <button class="owner-tab" id="tab-anne"  onclick="setOwnerFilter('anne')"><span class="tab-icon">❧</span> Anne</button>
+      <button class="owner-tab" id="tab-marie" onclick="setOwnerFilter('marie')"><span class="tab-icon">❧</span> Marie</button>
+      <button class="owner-tab" id="tab-suki"  onclick="setOwnerFilter('suki')"><span class="tab-icon">❧</span> Suki</button>
+      <button class="owner-tab" id="tab-grace" onclick="setOwnerFilter('grace')"><span class="tab-icon">❧</span> Grace</button>
+      <button class="owner-tab" id="tab-jo"    onclick="setOwnerFilter('jo')"><span class="tab-icon">❧</span> Jo</button>
+      <button class="owner-tab" id="tab-diana" onclick="setOwnerFilter('diana')"><span class="tab-icon">❧</span> Diana</button>`;
+  }
+
+  // Override MEMBERS for filtering
+  window._demoMembersActive = true;
+  const origMembers = window._getCBBCMembers ? window._getCBBCMembers() : [];
+  window._getMembersOverride = () => DEMO_MEMBERS;
+
+  window.applyTheme('antique', false);
+  window.setOwnerFilter('all');
+};
+
+window.exitDemo = function() {
+  window._isDemoMode = false;
+  window._getMembersOverride = null;
+  if (window._setBooks) window._setBooks([]);
+  window._spineBooks = [];
+  document.getElementById('demo-banner').classList.remove('show');
+  document.body.classList.remove('demo-mode');
+  document.getElementById('login-screen').classList.add('show');
+  document.getElementById('user-bar').style.display = 'none';
+  // Restore real tabs
+  const tabsEl = document.querySelector('.owner-tabs');
+  if (tabsEl) {
+    tabsEl.innerHTML = `
+      <button class="owner-tab active" id="tab-all"      onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
+      <button class="owner-tab" id="tab-betty"    onclick="setOwnerFilter('betty')"><span class="tab-icon">❧</span> Betty</button>
+      <button class="owner-tab" id="tab-nirmala"  onclick="setOwnerFilter('nirmala')"><span class="tab-icon">❧</span> Nirmala</button>
+      <button class="owner-tab" id="tab-lena"     onclick="setOwnerFilter('lena')"><span class="tab-icon">❧</span> Lena</button>
+      <button class="owner-tab" id="tab-janet"    onclick="setOwnerFilter('janet')"><span class="tab-icon">❧</span> Janet</button>
+      <button class="owner-tab" id="tab-ruth"     onclick="setOwnerFilter('ruth')"><span class="tab-icon">❧</span> Ruth</button>
+      <button class="owner-tab" id="tab-delphine" onclick="setOwnerFilter('delphine')"><span class="tab-icon">❧</span> Delphine</button>
+      <button class="owner-tab" id="tab-lisa"     onclick="setOwnerFilter('lisa')"><span class="tab-icon">❧</span> Lisa</button>`;
+  }
+  window.setOwnerFilter('all');
+};
+</script>
 </body>
 </html>
