@@ -1136,8 +1136,9 @@ function statusLabel(s) {
 }
 function ownerFilteredBooks() {
   if (ownerFilter === 'all') return books;
-  const owner = OWNERS.find(o => o.key === ownerFilter);
-  return owner ? books.filter(b => b.addedBy === owner.email) : books;
+  const _OW = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
+  const owner = _OW.find(o => o.key === ownerFilter);
+  return owner ? books.filter(b => b.addedBy === owner.email || b.addedBy === owner.key) : books;
 }
 function filteredBooks() {
   const q  = document.getElementById('search').value.toLowerCase();
@@ -1145,8 +1146,9 @@ function filteredBooks() {
   return books.filter(b => {
     const mQ = !q  || b.title.toLowerCase().includes(q) || (b.author||'').toLowerCase().includes(q);
     const mS = !fs || b.status === fs;
-    const mO = ownerFilter === 'all' ||
-               (OWNERS.find(o => o.key === ownerFilter)?.email === b.addedBy);
+    const _OW2 = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
+    const _fo = _OW2.find(o => o.key === ownerFilter);
+    const mO = ownerFilter === 'all' || (_fo && (b.addedBy === _fo.email || b.addedBy === _fo.key));
     return mQ && mS && mO;
   });
 }
@@ -1201,7 +1203,7 @@ function setMemberGoal(key, val) {
 function renderGoal() {
   const year = new Date().getFullYear();
   let totalRead = 0, totalGoal = 0;
-  const _M = window._getMembersOverride ? window._getMembersOverride() : MEMBERS;
+  const _M = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
   const activeMembers = ownerFilter === 'all' ? _M : _M.filter(m => m.key === ownerFilter);
   const label = ownerFilter === 'all' ? 'Club' : (activeMembers[0] ? activeMembers[0].label + "'s" : 'Club');
   activeMembers.forEach(m => {
