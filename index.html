@@ -328,9 +328,8 @@
   .book-status-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.8); flex-shrink: 0; position: relative; z-index: 4; margin-bottom: 3px; box-shadow: 0 2px 6px rgba(0,0,0,0.98), inset 0 1px 0 rgba(255,255,255,0.35), 0 0 0 2px rgba(0,0,0,0.6), 0 0 0 3px rgba(180,130,30,0.25); }
   .book-mid-groove { width: 100%; height: 5px; flex-shrink: 0; position: relative; z-index: 2; background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(255,255,255,0.04) 40%, rgba(0,0,0,0.6) 100%); border-top: 1px solid rgba(0,0,0,0.9); border-bottom: 1px solid rgba(0,0,0,0.9); }
   .book-author-tag { display: none; }
-  .book-card { display: none; position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%) rotate(1deg); background: #f5edd8; border: 2px solid var(--brown); padding: 14px; width: 260px; z-index: 1000; box-shadow: 4px 4px 0 var(--dark-brown); text-align: left; isolation: isolate; }
+  .book-card { display: none; position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: #f5edd8; border: 2px solid var(--brown); padding: 14px; width: 260px; z-index: 1000; box-shadow: 4px 4px 0 var(--dark-brown); text-align: left; isolation: isolate; }
   .book-card::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 12px; background: transparent; }
-  .book:hover .book-card { display: block; }
   .book-card::before { content: ''; position: absolute; bottom: -8px; left: 50%; width: 12px; height: 12px; background: var(--cream); border-right: 2px solid var(--brown); border-bottom: 2px solid var(--brown); transform: translateX(-50%) rotate(45deg); }
   .book-card h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--ink); margin-bottom: 4px; border-bottom: 1px solid var(--tan); padding-bottom: 6px; }
   .book-card .bc-author { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.82rem; color: var(--brown); margin-bottom: 6px; }
@@ -1380,12 +1379,12 @@ function renderAll() {
           <h4>${b.title}</h4>
           <div class="bc-author">${b.author || 'Unknown Author'}</div>
           <div class="bc-meta">Dewey: ${b.dewey} · ${b.year || 'n.d.'}</div>
-          <div class="bc-meta bc-owner">${(()=>{ const o = OWNERS.find(o=>o.email===b.addedBy); return o ? '❧ '+o.label : ''; })()}</div>
+          <div class="bc-meta bc-owner">${(()=>{ const _OC = window._getMembersOverride ? window._getMembersOverride() : OWNERS; const o = _OC.find(o=>o.email===b.addedBy||o.key===b.addedBy); return o ? '❧ '+o.label : ''; })()}</div>
           <div class="bc-meta"><span style="background:${statusColor(b.status)};color:#fff;font-size:0.68rem;padding:2px 8px;letter-spacing:0.06em;text-transform:uppercase;">${statusLabel(b.status)}</span></div>
           ${b.rating ? `<div class="bc-stars" style="font-size:1rem;margin-top:4px;">${'★'.repeat(b.rating)}<span style="color:#ddd;">${'★'.repeat(5-b.rating)}</span></div>` : '<div class="bc-stars" style="font-size:1rem;margin-top:4px;color:#ddd;">☆☆☆☆☆</div>'}
           ${noteCount > 0 ? `<div class="bc-has-notes">💬 ${noteCount} discussion note${noteCount !== 1 ? 's' : ''}</div>` : ''}
           <div class="bc-actions">
-            ${b.addedBy === currentUserEmail ? `
+            ${(b.addedBy === currentUserEmail || window._isDemoMode) ? `
             <button onclick="event.stopPropagation();window._openEdit('${b._key}', false)">Edit</button>
             <button class="delete" onclick="event.stopPropagation();window._deleteBook('${b._key}')">Remove</button>
             ` : `
@@ -1806,6 +1805,67 @@ window.postDiscussionNote = postDiscussionNote;
 
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target === document.getElementById('modal')) closeModal();
+});
+// ── Smart floating book card (tap/click) ─────────────────────────────────
+let activeCard = null;
+document.addEventListener('click', e => {
+  if (activeCard && !e.target.closest('.book') && !e.target.closest('#floating-card')) {
+    const fc = document.getElementById('floating-card');
+    if (fc) fc.style.display = 'none';
+    activeCard = null;
+    return;
+  }
+  const book = e.target.closest('.book');
+  if (!book) return;
+  if (e.target.closest('button') || e.target.closest('a')) return;
+  const card = book.querySelector('.book-card');
+  if (!card) return;
+  e.stopPropagation();
+  let fc = document.getElementById('floating-card');
+  if (!fc) {
+    fc = document.createElement('div');
+    fc.id = 'floating-card';
+    fc.style.cssText = 'position:fixed;z-index:9999;display:none;';
+    document.body.appendChild(fc);
+  }
+  if (activeCard === book) {
+    fc.style.display = 'none';
+    activeCard = null;
+    return;
+  }
+  activeCard = book;
+  fc.innerHTML = card.innerHTML;
+  fc.className = card.className + ' visible';
+  fc.style.display = 'block';
+  fc.style.position = 'fixed';
+  fc.style.zIndex = '9999';
+  fc.style.background = '#f5edd8';
+  fc.style.border = '2px solid #7b4f2e';
+  fc.style.padding = '14px';
+  fc.style.width = Math.min(260, window.innerWidth * 0.88) + 'px';
+  fc.style.maxWidth = '90vw';
+  fc.style.boxShadow = '4px 4px 0 #3d2314';
+  fc.style.fontFamily = 'Libre Baskerville, serif';
+  const bookRect = book.getBoundingClientRect();
+  const cardW = parseInt(fc.style.width);
+  let left = bookRect.left + bookRect.width / 2 - cardW / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - cardW - 8));
+  fc.style.left = left + 'px';
+  fc.style.top = '-9999px';
+  fc.style.display = 'block';
+  const cardH = fc.offsetHeight;
+  let top = bookRect.top - cardH - 10;
+  if (top < 8) top = bookRect.bottom + 10;
+  fc.style.top = top + 'px';
+  const origCard = book.querySelector('.book-card');
+  if (origCard) {
+    const origBtns = origCard.querySelectorAll('button');
+    const fcBtns = fc.querySelectorAll('button');
+    origBtns.forEach((ob, i) => { if (fcBtns[i]) fcBtns[i].onclick = ob.onclick; });
+    const origLinks = origCard.querySelectorAll('a');
+    const fcLinks = fc.querySelectorAll('a');
+    origLinks.forEach((ol, i) => { if (fcLinks[i]) { fcLinks[i].href = ol.href; fcLinks[i].target = '_blank'; }});
+  }
 });
 document.getElementById('inp-title').addEventListener('keydown', e => {
   if (e.key === 'Enter') addBook();
