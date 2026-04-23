@@ -1871,11 +1871,16 @@ document.addEventListener('click', e => {
   fc.style.top = '-9999px';
   fc.style.display = 'block';
   const cardH = fc.offsetHeight;
-  const vh = window.innerHeight;
-  // Find the highest fixed UI element above the shelf to avoid overlapping
-  // Always centre the card vertically in the viewport — cleanest solution
-  const vh = window.innerHeight;
-  const top = Math.max(80, Math.round((vh - cardH) / 2));
+  // Position above the whole shelf, not just the book
+  const shelf = book.closest('.bookshelf') || book;
+  const shelfRect = shelf.getBoundingClientRect();
+  let top = shelfRect.top - cardH - 12;
+  if (top < 8) {
+    top = shelfRect.bottom + 12;
+    if (top + cardH > window.innerHeight - 8) {
+      top = Math.max(8, (window.innerHeight - cardH) / 2);
+    }
+  }
   fc.style.top = top + 'px';
   const origCard = book.querySelector('.book-card');
   if (origCard) {
