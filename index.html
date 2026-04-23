@@ -1873,20 +1873,9 @@ document.addEventListener('click', e => {
   const cardH = fc.offsetHeight;
   const vh = window.innerHeight;
   // Find the highest fixed UI element above the shelf to avoid overlapping
-  const section = book.closest('.dewey-section') || book.closest('.bookshelf') || book;
-  const sectionRect = section.getBoundingClientRect();
-  // Place card above the dewey section (which includes the header)
-  let top = sectionRect.top - cardH - 12;
-  if (top < 80) {
-    // Not enough room above — place below the shelf
-    const shelf = book.closest('.bookshelf') || book;
-    const shelfRect = shelf.getBoundingClientRect();
-    top = shelfRect.bottom + 12;
-    if (top + cardH > vh - 8) {
-      // Centre in viewport as last resort
-      top = Math.max(80, (vh - cardH) / 2);
-    }
-  }
+  // Always centre the card vertically in the viewport — cleanest solution
+  const vh = window.innerHeight;
+  const top = Math.max(80, Math.round((vh - cardH) / 2));
   fc.style.top = top + 'px';
   const origCard = book.querySelector('.book-card');
   if (origCard) {
