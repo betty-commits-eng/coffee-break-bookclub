@@ -657,7 +657,7 @@
 <body>
 <!-- Login Screen -->
 <div id="demo-banner">☕ Demo Mode — Sample Data &nbsp;·&nbsp; No login required &nbsp;·&nbsp; Changes are not saved <a onclick="exitDemo()">✕ Exit Demo</a></div>
-<div id="login-screen">
+<div id="login-screen" class="show">
   <div class="login-card">
     <div class="login-hero-ornament">
       <div class="rule"></div>
@@ -1862,26 +1862,16 @@ document.addEventListener('click', e => {
   fc.style.boxShadow = '4px 4px 0 #3d2314';
   fc.style.fontFamily = 'Libre Baskerville, serif';
   if (backdrop) backdrop.style.display = 'block';
-  // Use Spine's proven approach: explicit width, then measure height
-  const bookRect = book.getBoundingClientRect();
-  const cardW = parseInt(fc.style.width);
-  let left = bookRect.left + bookRect.width / 2 - cardW / 2;
-  left = Math.max(8, Math.min(left, window.innerWidth - cardW - 8));
-  fc.style.left = left + 'px';
+  // Measure card dimensions
+  fc.style.left = '-9999px';
   fc.style.top = '-9999px';
   fc.style.display = 'block';
+  const cardW = parseInt(fc.style.width);
   const cardH = fc.offsetHeight;
-  // Position above the whole shelf, not just the book
-  const shelf = book.closest('.bookshelf') || book;
-  const shelfRect = shelf.getBoundingClientRect();
-  let top = shelfRect.top - cardH - 12;
-  if (top < 8) {
-    top = shelfRect.bottom + 12;
-    if (top + cardH > window.innerHeight - 8) {
-      top = Math.max(8, (window.innerHeight - cardH) / 2);
-    }
-  }
-  fc.style.top = top + 'px';
+  // Find the highest fixed UI element above the shelf to avoid overlapping
+  // Centre card in viewport
+  fc.style.top = Math.max(80, Math.round((window.innerHeight - cardH) / 2)) + 'px';
+  fc.style.left = Math.max(8, Math.round((window.innerWidth - cardW) / 2)) + 'px';
   const origCard = book.querySelector('.book-card');
   if (origCard) {
     const origBtns = origCard.querySelectorAll('button');
