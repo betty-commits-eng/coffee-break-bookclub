@@ -1809,78 +1809,52 @@ window.postDiscussionNote = postDiscussionNote;
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target === document.getElementById('modal')) closeModal();
 });
-// ── Smart floating book card (tap/click) ─────────────────────────────────
+// ── Smart floating book card ─────────────────────────────────────────────
 let activeCard = null;
+// Create persistent backdrop + card elements on load
+const _bd = document.createElement('div');
+_bd.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99998;display:none;cursor:pointer;';
+document.body.appendChild(_bd);
+const _fc = document.createElement('div');
+_fc.id = 'floating-card';
+_fc.style.cssText = 'position:fixed;z-index:99999;display:none;background:#f5edd8;border:2px solid #7b4f2e;padding:14px;box-shadow:4px 4px 0 #3d2314;font-family:Libre Baskerville,serif;';
+document.body.appendChild(_fc);
+function _closeCard() { _fc.style.display='none'; _bd.style.display='none'; activeCard=null; }
+_bd.addEventListener('click', _closeCard);
 document.addEventListener('click', e => {
-  if (activeCard && !e.target.closest('.book') && !e.target.closest('#floating-card')) {
-    const fc = document.getElementById('floating-card');
-    if (fc) fc.style.display = 'none';
-    const bd = document.getElementById('floating-card-backdrop');
-    if (bd) bd.style.display = 'none';
-    activeCard = null;
-    return;
-  }
+  if (e.target === _bd) return;
+  if (activeCard && !e.target.closest('.book') && !e.target.closest('#floating-card')) { _closeCard(); return; }
   const book = e.target.closest('.book');
   if (!book) return;
   if (e.target.closest('button') || e.target.closest('a')) return;
   const card = book.querySelector('.book-card');
   if (!card) return;
   e.stopPropagation();
-  let backdrop = document.getElementById('floating-card-backdrop');
-  if (!backdrop) {
-    backdrop = document.createElement('div');
-    backdrop.id = 'floating-card-backdrop';
-    backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99998;display:none;';
-    backdrop.onclick = () => { backdrop.style.display='none'; const fc2=document.getElementById('floating-card'); if(fc2) fc2.style.display='none'; activeCard=null; };
-    document.body.appendChild(backdrop);
-  }
-  let fc = document.getElementById('floating-card');
-  if (!fc) {
-    fc = document.createElement('div');
-    fc.id = 'floating-card';
-    fc.style.cssText = 'position:fixed;z-index:99999;display:none;';
-    document.body.appendChild(fc);
-  }
-  if (activeCard === book) {
-    fc.style.display = 'none';
-    const bd2 = document.getElementById('floating-card-backdrop');
-    if (bd2) bd2.style.display = 'none';
-    activeCard = null;
-    return;
-  }
+  if (activeCard === book) { _closeCard(); return; }
   activeCard = book;
-  fc.innerHTML = card.innerHTML;
-  fc.className = card.className + ' visible';
-  fc.style.display = 'block';
-  fc.style.position = 'fixed';
-  fc.style.zIndex = '99999';
-  fc.style.background = '#f5edd8';
-  fc.style.border = '2px solid #7b4f2e';
-  fc.style.padding = '14px';
-  fc.style.width = Math.min(260, window.innerWidth * 0.88) + 'px';
-  fc.style.maxWidth = '90vw';
-  fc.style.boxShadow = '4px 4px 0 #3d2314';
-  fc.style.fontFamily = 'Libre Baskerville, serif';
-  if (backdrop) backdrop.style.display = 'block';
-  // Measure card dimensions
-  fc.style.left = '-9999px';
-  fc.style.top = '-9999px';
-  fc.style.display = 'block';
-  const cardW = parseInt(fc.style.width);
-  const cardH = fc.offsetHeight;
-  // Find the highest fixed UI element above the shelf to avoid overlapping
-  // Centre card in viewport
-  fc.style.top = Math.max(80, Math.round((window.innerHeight - cardH) / 2)) + 'px';
-  fc.style.left = Math.max(8, Math.round((window.innerWidth - cardW) / 2)) + 'px';
-  const origCard = book.querySelector('.book-card');
-  if (origCard) {
-    const origBtns = origCard.querySelectorAll('button');
-    const fcBtns = fc.querySelectorAll('button');
-    origBtns.forEach((ob, i) => { if (fcBtns[i]) fcBtns[i].onclick = ob.onclick; });
-    const origLinks = origCard.querySelectorAll('a');
-    const fcLinks = fc.querySelectorAll('a');
-    origLinks.forEach((ol, i) => { if (fcLinks[i]) { fcLinks[i].href = ol.href; fcLinks[i].target = '_blank'; }});
-  }
+  // Set content
+  _fc.innerHTML = card.innerHTML;
+  _fc.style.width = Math.min(280, window.innerWidth * 0.9) + 'px';
+  // Show backdrop
+  _bd.style.display = 'block';
+  // Measure height with visibility hidden
+  _fc.style.visibility = 'hidden';
+  _fc.style.display = 'block';
+  _fc.style.left = '0px';
+  _fc.style.top = '0px';
+  const cH = _fc.offsetHeight;
+  const cW = _fc.offsetWidth;
+  // Centre in viewport
+  _fc.style.left = Math.max(8, Math.round((window.innerWidth - cW) / 2)) + 'px';
+  _fc.style.top = Math.max(70, Math.round((window.innerHeight - cH) / 2)) + 'px';
+  _fc.style.visibility = 'visible';
+  // Wire up buttons and links
+  const origBtns = card.querySelectorAll('button');
+  const fcBtns = _fc.querySelectorAll('button');
+  origBtns.forEach((ob, i) => { if (fcBtns[i]) fcBtns[i].onclick = ob.onclick; });
+  const origLinks = card.querySelectorAll('a');
+  const fcLinks = _fc.querySelectorAll('a');
+  origLinks.forEach((ol, i) => { if (fcLinks[i]) { fcLinks[i].href = ol.href; fcLinks[i].target = '_blank'; }});
 });
 document.getElementById('inp-title').addEventListener('keydown', e => {
   if (e.key === 'Enter') addBook();
