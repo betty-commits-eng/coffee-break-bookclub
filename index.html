@@ -1812,6 +1812,8 @@ document.addEventListener('click', e => {
   if (activeCard && !e.target.closest('.book') && !e.target.closest('#floating-card')) {
     const fc = document.getElementById('floating-card');
     if (fc) fc.style.display = 'none';
+    const bd = document.getElementById('floating-card-backdrop');
+    if (bd) bd.style.display = 'none';
     activeCard = null;
     return;
   }
@@ -1821,15 +1823,25 @@ document.addEventListener('click', e => {
   const card = book.querySelector('.book-card');
   if (!card) return;
   e.stopPropagation();
+  let backdrop = document.getElementById('floating-card-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.id = 'floating-card-backdrop';
+    backdrop.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99998;display:none;';
+    backdrop.onclick = () => { backdrop.style.display='none'; const fc2=document.getElementById('floating-card'); if(fc2) fc2.style.display='none'; activeCard=null; };
+    document.body.appendChild(backdrop);
+  }
   let fc = document.getElementById('floating-card');
   if (!fc) {
     fc = document.createElement('div');
     fc.id = 'floating-card';
-    fc.style.cssText = 'position:fixed;z-index:9999;display:none;';
+    fc.style.cssText = 'position:fixed;z-index:99999;display:none;';
     document.body.appendChild(fc);
   }
   if (activeCard === book) {
     fc.style.display = 'none';
+    const bd2 = document.getElementById('floating-card-backdrop');
+    if (bd2) bd2.style.display = 'none';
     activeCard = null;
     return;
   }
@@ -1846,25 +1858,30 @@ document.addEventListener('click', e => {
   fc.style.maxWidth = '90vw';
   fc.style.boxShadow = '4px 4px 0 #3d2314';
   fc.style.fontFamily = 'Libre Baskerville, serif';
+  if (backdrop) backdrop.style.display = 'block';
   const bookRect = book.getBoundingClientRect();
   const cardW = parseInt(fc.style.width);
+  // Always center horizontally, clamped to viewport
   let left = bookRect.left + bookRect.width / 2 - cardW / 2;
   left = Math.max(8, Math.min(left, window.innerWidth - cardW - 8));
   fc.style.left = left + 'px';
   fc.style.top = '-9999px';
   fc.style.display = 'block';
   const cardH = fc.offsetHeight;
-  // Prefer above the book; if not enough room, place below the entire shelf row
+  const vh = window.innerHeight;
+  // Try above the book first
   let top = bookRect.top - cardH - 16;
-  if (top < 60) {
-    // Find the bookshelf parent and place below it
-    const shelf = book.closest('.bookshelf');
-    const shelfRect = shelf ? shelf.getBoundingClientRect() : bookRect;
-    top = shelfRect.bottom + 12;
+  if (top >= 60) {
+    // Fits above — use it
+  } else {
+    // Try below the book
+    top = bookRect.bottom + 16;
+    if (top + cardH > vh - 12) {
+      // Doesn't fit below either — center vertically in viewport
+      top = Math.max(60, (vh - cardH) / 2);
+    }
   }
-  // Clamp to viewport
-  top = Math.max(60, Math.min(top, window.innerHeight - cardH - 12));
-  fc.style.top = top + 'px';
+  fc.style.top = Math.round(top) + 'px';
   const origCard = book.querySelector('.book-card');
   if (origCard) {
     const origBtns = origCard.querySelectorAll('button');
