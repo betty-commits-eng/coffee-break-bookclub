@@ -1668,7 +1668,7 @@ const THEMES = {
     controlsBg: 'linear-gradient(180deg,#f2ede4,#e8e0d0)',
     addBtnBg: 'linear-gradient(180deg,#c04030,#801810)',
     sectionNumBorder: 'rgba(192,64,48,0.4)', sectionNumText: '#f0e8d8', sectionTitle: '#f0e8d8', sectionSub: '#8090b0',
-    legendText: '#1a2a4a', viewBtnBg: '#e8e0d0', viewBtnActive: '#1a2a4a', viewBtnActiveText: '#f0e8d8', viewBtnInactiveText: '#1a2a4a', tabInactiveText: '#f0e8d8',
+    legendText: '#1a2a4a', viewBtnBg: '#e8e0d0', viewBtnActive: '#1a2a4a', viewBtnActiveText: '#f0e8d8', viewBtnInactiveText: '#1a2a4a', tabInactiveText: '#f0e8d8', uiFont: "'Noto Serif JP',serif",
     sectionCountBg: 'rgba(26,42,74,0.9)', sectionCountText: '#f0e8d8', sectionCountBorder: '#c04030',
     shelfBg: 'linear-gradient(180deg, #0e1830 0%, #0a1428 60%, #081020 100%)', shelfBorder: '2px solid #c04030', shelfBorderTop: '3px solid #d05040', shelfShadow: 'inset 0 8px 20px rgba(0,0,0,0.8), inset 0 -6px 24px rgba(192,64,48,0.15)',
     plankBg: '#1a2a4a', plankBorder: '2px solid #c04030', plankShadow: '0 4px 12px rgba(26,42,74,0.4)',
@@ -1710,7 +1710,10 @@ function applyTheme(name, save = true) {
     .dewey-section .section-header .section-number { color: ${t.sectionNumText} !important; border: 3px double ${t.sectionNumBorder} !important; }
     .dewey-section .section-header .section-title { color: ${t.sectionTitle} !important; -webkit-text-fill-color: ${t.sectionTitle} !important; }
     .dewey-section .section-header .section-sub { color: ${t.sectionSub} !important; }
-    .owner-tab { background: ${t.tabBg} !important; color: ${t.tabInactiveText||t.tabText} !important; -webkit-text-fill-color: ${t.tabInactiveText||t.tabText} !important; border: 2px solid ${t.tabBorder} !important; border-bottom: 3px solid ${t.tabBorder} !important; }
+    .owner-tab { background: ${t.tabBg} !important; color: ${t.tabInactiveText||t.tabText} !important; -webkit-text-fill-color: ${t.tabInactiveText||t.tabText} !important; border: 2px solid ${t.tabBorder} !important; border-bottom: 3px solid ${t.tabBorder} !important; ${t.uiFont?'font-family:'+t.uiFont+'!important;':''} }
+    .stat-label { color: ${t.statLabel} !important; -webkit-text-fill-color: ${t.statLabel} !important; ${t.uiFont?'font-family:'+t.uiFont+'!important;letter-spacing:0.08em!important;':''} }
+    .recently-added h3 { color: ${t.statNum} !important; -webkit-text-fill-color: ${t.statNum} !important; ${t.uiFont?'font-family:'+t.uiFont+'!important;':''} }
+    .section-title { color: ${t.sectionTitle} !important; -webkit-text-fill-color: ${t.sectionTitle} !important; ${t.uiFont?'font-family:'+t.uiFont+'!important;':''} }
     .owner-tab:hover { background: ${t.tabHover} !important; }
     .owner-tab.active { background: ${t.tabActive} !important; color: ${t.tabActiveText} !important; -webkit-text-fill-color: ${t.tabActiveText} !important; border-bottom: 3px solid ${t.tabActiveBotBorder} !important; }
     .search-row input { background: ${t.inputBg} !important; border: 2px solid ${t.inputBorder} !important; border-top: 3px solid ${t.inputBorderTop} !important; color: ${t.inputText} !important; }
