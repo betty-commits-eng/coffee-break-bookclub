@@ -1859,7 +1859,14 @@ document.addEventListener('click', e => {
   fc.style.boxShadow = '4px 4px 0 #3d2314';
   fc.style.fontFamily = 'Libre Baskerville, serif';
   if (backdrop) backdrop.style.display = 'block';
-  // Measure card dimensions first, off-screen
+  // Get book's natural (resting) position — ignore CSS transform from hover
+  const bookStyle = window.getComputedStyle(book);
+  const matrix = new DOMMatrix(bookStyle.transform);
+  const bookRect = book.getBoundingClientRect();
+  // Subtract the transform offset to get the untransformed centre
+  const bookCentreX = bookRect.left + bookRect.width / 2 - matrix.m41;
+  const bookBaseY = bookRect.bottom - matrix.m42;
+  // Measure card off-screen first
   fc.style.left = '-9999px';
   fc.style.top = '-9999px';
   fc.style.display = 'block';
@@ -1867,20 +1874,20 @@ document.addEventListener('click', e => {
   const cardH = fc.offsetHeight;
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  const bookRect = book.getBoundingClientRect();
-  // Center horizontally near the book, clamped to viewport
-  let left = bookRect.left + bookRect.width / 2 - cardW / 2;
+  // Snap left to nearest 8px grid, centred on book
+  let left = Math.round((bookCentreX - cardW / 2) / 8) * 8;
   left = Math.max(12, Math.min(left, vw - cardW - 12));
-  // Vertical: try above book, then below, then center screen
-  let top = bookRect.top - cardH - 16;
+  // Vertical: above book base, then below, then centre screen
+  let top = bookBaseY - bookRect.height - cardH - 8;
   if (top < 60) {
-    top = bookRect.bottom + 16;
+    top = bookBaseY + 8;
     if (top + cardH > vh - 12) {
-      top = Math.max(60, Math.round((vh - cardH) / 2));
+      top = Math.max(60, Math.round((vh - cardH) / 2 / 8) * 8);
     }
   }
-  fc.style.left = Math.round(left) + 'px';
-  fc.style.top = Math.round(top) + 'px';
+  top = Math.round(top / 8) * 8;
+  fc.style.left = left + 'px';
+  fc.style.top = top + 'px';
   const origCard = book.querySelector('.book-card');
   if (origCard) {
     const origBtns = origCard.querySelectorAll('button');
