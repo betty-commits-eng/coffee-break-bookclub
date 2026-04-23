@@ -255,9 +255,9 @@
     border: 2px solid #8a6530;
     border-bottom: 3px solid #6a4a20;
     padding: 10px 16px 12px;
-    font-family: 'Special Elite', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 0.8rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.06em;
     cursor: pointer;
     transition: all 0.15s;
     text-align: center;
@@ -348,7 +348,7 @@
   .stat { background: linear-gradient(180deg, #f5edd8, #ede0c4); border: 1px solid #c4a060; border-top: 3px solid #d4b070; padding: 12px 16px; text-align: center; flex: 1; min-width: 90px; position: relative; font-family: 'Courier Prime', monospace; }
   .stat::after { content: ''; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 30px; height: 3px; background: #a07840; }
   .stat-num { font-family: 'Special Elite', cursive; font-size: 1.8rem; font-weight: 700; color: var(--dark-brown); display: block; line-height: 1; }
-  .stat-label { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); margin-top: 4px; display: block; }
+  .stat-label { font-family: 'Libre Baskerville', serif; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown); margin-top: 4px; display: block; }
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal {
@@ -535,14 +535,14 @@
 
   .spine-stars { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 7px; color: #f5d87a; text-shadow: 0 0 4px rgba(0,0,0,0.7); letter-spacing: 1px; flex-shrink: 0; z-index: 2; position: relative; padding: 2px 0; }
   .recently-added { background:linear-gradient(180deg,#d4c090,#c4b080); border:2px solid #8a6530; border-top:4px solid #a07840; padding:14px 18px; margin-bottom:28px; box-shadow:3px 3px 0 rgba(0,0,0,0.3); }
-  .recently-added h3 { font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.18em; color:#3a2008; text-transform:uppercase; margin-bottom:10px; }
+  .recently-added h3 { font-family:'Playfair Display',serif; font-size:0.78rem; letter-spacing:0.12em; color:#3a2008; text-transform:uppercase; margin-bottom:10px; font-weight:700; }
   .recent-books { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
   .recent-books::-webkit-scrollbar { display:none; }
   .recent-book { flex-shrink:0; background:linear-gradient(135deg,#f5edd8,#ede0c4); border:1px solid #c4a060; padding:8px 10px; min-width:120px; max-width:140px; cursor:pointer; transition:transform 0.2s; }
   .recent-book:hover { transform:translateY(-2px); }
-  .recent-book-title { font-family:'IM Fell English',serif; font-size:0.75rem; color:inherit; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
-  .recent-book-author { font-family:'Courier Prime',monospace; font-size:0.62rem; color:inherit; opacity:0.75; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .recent-book-owner { font-family:'Courier Prime',monospace; font-size:0.58rem; color:inherit; opacity:0.65; margin-top:4px; }
+  .recent-book-title { font-family:'Playfair Display',serif; font-size:0.78rem; color:inherit; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
+  .recent-book-author { font-family:'Libre Baskerville',serif; font-size:0.62rem; font-style:italic; color:inherit; opacity:0.85; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .recent-book-owner { font-family:'Libre Baskerville',serif; font-size:0.58rem; color:inherit; opacity:0.75; margin-top:4px; }
   .goal-bar { background: linear-gradient(180deg, #d4c090, #c4b080); border: 2px solid #8a6530; border-top: 4px solid #a07840; padding: 14px 18px; margin-bottom: 28px; box-shadow: 3px 3px 0 rgba(0,0,0,0.3); }
   .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .goal-label { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown); }
