@@ -2022,6 +2022,7 @@ window.startDemo = function() {
 
   const th = document.getElementById('theme-hint');
   if (th) th.textContent = '✦ Try a theme ✦';
+  document.getElementById('theme-switcher').style.display = 'flex';
   window.applyTheme('antique', false);
   window.setOwnerFilter('all');
 };
