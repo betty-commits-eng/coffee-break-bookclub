@@ -1230,13 +1230,13 @@ function setOwnerFilter(f) {
   document.querySelectorAll('.owner-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + f).classList.add('active');
   if (f === 'all') {
-    // All Members always antique, no theme switcher
+    // All Members always antique, no theme switcher (unless demo mode)
     applyTheme('antique', false);
-    document.getElementById('theme-switcher').style.display = 'none';
+    document.getElementById('theme-switcher').style.display = window._isDemoMode ? 'flex' : 'none';
   } else {
     // Check if this tab belongs to the logged-in user
     const tabMember = MEMBERS.find(m => m.key === f);
-    const isOwnTab = tabMember && tabMember.email === currentUserEmail;
+    const isOwnTab = tabMember && (tabMember.email === currentUserEmail || window._isDemoMode);
     if (isOwnTab) {
       // Show theme switcher and load their saved theme
       document.getElementById('theme-switcher').style.display = 'flex';
@@ -1247,9 +1247,9 @@ function setOwnerFilter(f) {
         else applyTheme('antique', false);
       }).catch(() => applyTheme('antique', false));
     } else {
-      // Another member's tab — antique, no theme switcher
+      // Another member's tab — antique, no theme switcher (unless demo mode)
       applyTheme('antique', false);
-      document.getElementById('theme-switcher').style.display = 'none';
+      document.getElementById('theme-switcher').style.display = window._isDemoMode ? 'flex' : 'none';
     }
   }
   renderAll();
