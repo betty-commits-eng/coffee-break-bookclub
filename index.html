@@ -1879,7 +1879,7 @@ if ('serviceWorker' in navigator) {
 }
 // Apply default theme on load — All Members starts with antique, switcher hidden
 applyTheme('antique', false);
-document.getElementById('theme-switcher').style.display = 'none';
+if (!window._isDemoMode) document.getElementById('theme-switcher').style.display = 'none';
 </script>
 <!-- ── Theme Switcher ── -->
 <div id="theme-switcher">
