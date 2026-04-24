@@ -658,8 +658,8 @@
     .controls-toggle { display:flex; justify-content:space-between; align-items:center; width:100%; background:linear-gradient(135deg,#f5edd8,#e8d8b0); border:2px solid #8a6530; padding:12px 20px; font-family:'Playfair Display',serif; font-size:0.85rem; letter-spacing:0.12em; color:#3a2008; cursor:pointer; margin-bottom:8px; }
     .controls-toggle .arrow { transition: transform 0.3s; }
     .controls-toggle.open .arrow { transform: rotate(180deg); }
-    .controls { display:none !important; }
-    .controls.open { display:flex !important; }
+    #add-form { display:none !important; }
+    #add-form.open { display:flex !important; }
   }
 </style>
 </head>
@@ -1889,6 +1889,7 @@ document.getElementById('theme-switcher').style.display = 'none';
     <button class="theme-btn" onclick="window.applyTheme('beatrix')" id="btn-beatrix">🌿 Beatrix Potter</button>
     <button class="theme-btn" onclick="window.applyTheme('japanese')" id="btn-japanese">🎋 Japanese Woodblock</button>
   </div>
+  <div style="font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.12em;color:rgba(255,255,255,0.5);text-align:right;margin-bottom:2px;" id="theme-hint"></div>
   <button id="theme-toggle-btn" onclick="document.getElementById('theme-menu').classList.toggle('open')" title="Choose your personal theme">🎨 My Theme</button>
 </div>
 
@@ -2019,6 +2020,8 @@ window.startDemo = function() {
   const origMembers = window._getCBBCMembers ? window._getCBBCMembers() : [];
   window._getMembersOverride = () => DEMO_MEMBERS;
 
+  const th = document.getElementById('theme-hint');
+  if (th) th.textContent = '✦ Try a theme ✦';
   window.applyTheme('antique', false);
   window.setOwnerFilter('all');
 };
