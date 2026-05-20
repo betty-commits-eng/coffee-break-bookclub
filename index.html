@@ -652,6 +652,28 @@
   @keyframes jvblink{0%,100%{opacity:1;}50%{opacity:0;}}
   @keyframes jvfeedScroll{0%{transform:translateY(0);}100%{transform:translateY(-50%);}}
   @media(max-width:600px){.jv-stats{grid-template-columns:repeat(3,1fr);}.jv-grid{grid-template-columns:1fr!important;}.jv-bottom{grid-template-columns:1fr!important;}}
+  /* ── Club Reads ── */
+  #club-reads { display:none; }
+  #club-reads.active { display:block; }
+  .cr-header { font-family:'Playfair Display',serif; font-size:0.78rem; letter-spacing:0.14em; color:var(--parchment); text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+  .cr-header .cr-rule { flex:1; height:1px; background:linear-gradient(90deg,rgba(245,237,216,0.4),transparent); }
+  .cr-header .cr-count { font-family:'Courier Prime',monospace; font-size:0.65rem; color:var(--tan); opacity:0.8; }
+  .cr-list { display:flex; flex-direction:column; gap:10px; }
+  .cr-item { background:linear-gradient(180deg,#f8f0dc,#f0e4c4); border:1px solid #c4a060; border-left:4px solid #2d8a2d; padding:12px 16px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:transform 0.15s,box-shadow 0.15s; box-shadow:2px 2px 0 rgba(0,0,0,0.18); }
+  .cr-item:hover { transform:translateX(3px); box-shadow:3px 3px 0 rgba(0,0,0,0.25); }
+  .cr-num { font-family:'Special Elite',cursive; font-size:1.3rem; color:rgba(61,35,20,0.25); min-width:32px; text-align:center; line-height:1; }
+  .cr-cover { width:36px; height:52px; object-fit:cover; border:1px solid #c4a060; flex-shrink:0; box-shadow:1px 2px 4px rgba(0,0,0,0.2); }
+  .cr-cover-placeholder { width:36px; height:52px; background:linear-gradient(135deg,#c9a96e,#a07840); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+  .cr-body { flex:1; min-width:0; }
+  .cr-title { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:#3d2314; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px; }
+  .cr-author { font-family:'Libre Baskerville',serif; font-style:italic; font-size:0.75rem; color:#7b4f2e; margin-bottom:5px; }
+  .cr-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .cr-readers { font-family:'Courier Prime',monospace; font-size:0.62rem; letter-spacing:0.06em; color:#7b4f2e; }
+  .cr-stars { color:#c8960c; font-size:0.8rem; letter-spacing:1px; }
+  .cr-date { font-family:'Courier Prime',monospace; font-size:0.6rem; color:#a08060; letter-spacing:0.06em; }
+  .cr-empty { font-family:'IM Fell English',serif; font-style:italic; color:var(--parchment); font-size:1rem; text-align:center; padding:48px 20px; opacity:0.7; }
+  @media(max-width:700px) { .cr-num { display:none; } .cr-title { font-size:0.88rem; } }
+
   /* ── Collapsible add form on mobile ── */
   .controls-toggle { display:none; }
   @media(max-width:700px) {
@@ -790,6 +812,9 @@
     <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')">
       <span class="tab-icon">⊞</span> All Members
     </button>
+    <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);">
+      <span class="tab-icon">☕</span> Club Reads
+    </button>
     <button class="owner-tab" id="tab-betty" onclick="setOwnerFilter('betty')">
       <span class="tab-icon">❧</span> Betty's Library
     </button>
@@ -835,6 +860,7 @@
     <div class="legend-item"><div class="legend-dot status-wishlist"></div> Wishlist</div>
   </div>
   <div id="library"></div>
+  <div id="club-reads"></div>
 </div>
 
 <!-- Edit / View / Details Modal -->
@@ -1228,17 +1254,45 @@ function filteredBooks() {
 function setOwnerFilter(f) {
   ownerFilter = f;
   document.querySelectorAll('.owner-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + f).classList.add('active');
+  const activeTab = document.getElementById('tab-' + f);
+  if (activeTab) activeTab.classList.add('active');
+
+  const libEl = document.getElementById('library');
+  const crEl  = document.getElementById('club-reads');
+  const searchRow = document.querySelector('.search-row');
+  const viewToggleRow = document.querySelector('.view-toggle-row');
+  const legendEl = document.querySelector('.legend');
+
+  if (f === 'clubreads') {
+    // Show club reads panel, hide main library UI
+    if (libEl) libEl.style.display = 'none';
+    if (crEl)  crEl.classList.add('active');
+    if (searchRow) searchRow.style.display = 'none';
+    if (viewToggleRow) viewToggleRow.style.display = 'none';
+    if (legendEl) legendEl.style.display = 'none';
+    applyTheme('antique', false);
+    document.getElementById('theme-switcher').style.display = 'none';
+    renderStats();
+    renderGoal();
+    renderRecentlyAdded();
+    renderClubReads();
+    return;
+  }
+
+  // Restore normal library UI
+  if (libEl) libEl.style.display = '';
+  if (crEl)  crEl.classList.remove('active');
+  if (searchRow) searchRow.style.display = '';
+  if (viewToggleRow) viewToggleRow.style.display = '';
+  if (legendEl) legendEl.style.display = '';
+
   if (f === 'all') {
-    // All Members always antique, no theme switcher (unless demo mode)
     applyTheme('antique', false);
     document.getElementById('theme-switcher').style.display = window._isDemoMode ? 'flex' : 'none';
   } else {
-    // Check if this tab belongs to the logged-in user
     const tabMember = MEMBERS.find(m => m.key === f);
     const isOwnTab = tabMember && (tabMember.email === currentUserEmail || window._isDemoMode);
     if (isOwnTab) {
-      // Show theme switcher and load their saved theme
       document.getElementById('theme-switcher').style.display = 'flex';
       const themeKey = currentUserEmail.replace(/[.@]/g,'_');
       get(ref(db, `themes/${themeKey}`)).then(snap => {
@@ -1247,7 +1301,6 @@ function setOwnerFilter(f) {
         else applyTheme('antique', false);
       }).catch(() => applyTheme('antique', false));
     } else {
-      // Another member's tab — antique, no theme switcher (unless demo mode)
       applyTheme('antique', false);
       document.getElementById('theme-switcher').style.display = window._isDemoMode ? 'flex' : 'none';
     }
@@ -1443,7 +1496,82 @@ function renderAll() {
   }).join('');
 }
 
-function toggleSection(num) {
+function renderClubReads() {
+  const el = document.getElementById('club-reads');
+  const libEl = document.getElementById('library');
+  if (!el) return;
+
+  const _M = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
+
+  // Group all "read" books by normalised title+author key
+  const byTitle = {};
+  books.filter(b => b.status === 'read').forEach(b => {
+    const key = (b.title || '').toLowerCase().trim() + '||' + (b.author || '').toLowerCase().trim();
+    if (!byTitle[key]) byTitle[key] = [];
+    byTitle[key].push(b);
+  });
+
+  // Only books read by 2+ distinct members
+  const clubReads = Object.values(byTitle)
+    .filter(group => {
+      const emails = new Set(group.map(b => b.addedBy));
+      return emails.size >= 2;
+    })
+    .map(group => {
+      // Pick the most recently read copy for display metadata
+      const sorted = [...group].sort((a, b) => (b.readDate || b.added || '').localeCompare(a.readDate || a.added || ''));
+      const rep = sorted[0];
+      const readers = [...new Set(group.map(b => b.addedBy))].map(email => {
+        const m = _M.find(m => m.email === email || m.key === email);
+        return m ? m.label : email.split('@')[0];
+      });
+      const ratings = group.map(b => b.rating).filter(r => r && r > 0);
+      const avgRating = ratings.length ? Math.round(ratings.reduce((s, r) => s + r, 0) / ratings.length) : 0;
+      const latestRead = group.map(b => b.readDate || b.added || '').sort().reverse()[0];
+      return { rep, readers, avgRating, latestRead, count: group.length };
+    })
+    .sort((a, b) => (b.latestRead || '').localeCompare(a.latestRead || ''));
+
+  if (clubReads.length === 0) {
+    el.innerHTML = `<div class="cr-empty">Once two or more members have read the same book, it will appear here…</div>`;
+  } else {
+    el.innerHTML = `
+      <div class="cr-header">
+        <div class="cr-rule"></div>
+        <span>Books read by 2 or more members</span>
+        <span class="cr-count">${clubReads.length} title${clubReads.length !== 1 ? 's' : ''}</span>
+        <div class="cr-rule" style="background:linear-gradient(90deg,transparent,rgba(245,237,216,0.4));"></div>
+      </div>
+      <div class="cr-list">
+        ${clubReads.map((cr, i) => {
+          const b = cr.rep;
+          const viewOnly = b.addedBy !== currentUserEmail && !window._isDemoMode;
+          const starsHtml = cr.avgRating
+            ? `<span class="cr-stars">${'★'.repeat(cr.avgRating)}<span style="color:#ddd;">${'★'.repeat(5 - cr.avgRating)}</span></span>`
+            : '';
+          const dateStr = cr.latestRead
+            ? new Date(cr.latestRead).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+            : '';
+          return `<div class="cr-item" onclick="window._openEdit('${b._key}', ${viewOnly})">
+            <div class="cr-num">${String(i + 1).padStart(2, '0')}</div>
+            ${b.coverImage
+              ? `<img class="cr-cover" src="${b.coverImage}" alt="Cover">`
+              : `<div class="cr-cover-placeholder">📖</div>`}
+            <div class="cr-body">
+              <div class="cr-title">${b.title}</div>
+              <div class="cr-author">${b.author || 'Unknown Author'}</div>
+              <div class="cr-meta">
+                <span class="cr-readers">❧ ${cr.readers.join(', ')}</span>
+                ${starsHtml}
+                ${dateStr ? `<span class="cr-date">${dateStr}</span>` : ''}
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+  }
+}
+
   collapsedSections.has(num) ? collapsedSections.delete(num) : collapsedSections.add(num);
   renderAll();
 }
@@ -2042,6 +2170,7 @@ window.exitDemo = function() {
   if (tabsEl) {
     tabsEl.innerHTML = `
       <button class="owner-tab active" id="tab-all"      onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
+      <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
       <button class="owner-tab" id="tab-betty"    onclick="setOwnerFilter('betty')"><span class="tab-icon">❧</span> Betty</button>
       <button class="owner-tab" id="tab-nirmala"  onclick="setOwnerFilter('nirmala')"><span class="tab-icon">❧</span> Nirmala</button>
       <button class="owner-tab" id="tab-lena"     onclick="setOwnerFilter('lena')"><span class="tab-icon">❧</span> Lena</button>
