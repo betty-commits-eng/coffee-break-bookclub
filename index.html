@@ -734,8 +734,7 @@
   </div>
   <div class="header-inner">
     <div class="catalogue-plate">Book Club Collection</div>
-    <h1>Spine</h1>
-    <div class="subtitle">Coffee Break Book Club</div>
+  <h1>CBBC</h1>    <div class="subtitle">Coffee Break Book Club</div>
     <div class="catalogue-tabs-strip">
       <div class="catalogue-tab-chip">A–D</div>
       <div class="catalogue-tab-chip">E–H</div>
@@ -1213,7 +1212,7 @@ function saveEdit() {
     dewey:  document.getElementById('edit-dewey').value,
     status,
     year:   document.getElementById('edit-year').value ? parseInt(document.getElementById('edit-year').value) : null,
-    notes:  '',
+    
     rating: parseInt(document.getElementById('edit-rating').value) || 0,
     readDate: status === 'read'
       ? (document.getElementById('edit-readdate').value ? new Date(document.getElementById('edit-readdate').value).toISOString() : new Date().toISOString())
