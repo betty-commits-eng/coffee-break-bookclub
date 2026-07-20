@@ -986,6 +986,7 @@ onAuthStateChanged(auth, (user) => {
       else applyTheme('antique', false);
     }).catch(() => applyTheme('antique', false));
     if (!dbUnsubscribe) startListening();
+    loadGoals();
   } else if (user) {
     fbSignOut(auth);
     document.getElementById('login-screen').classList.add('show');
@@ -1371,11 +1372,29 @@ const MEMBERS = [
   { key: 'lisa',    email: 'lawooding@yahoo.com',            label: 'Lisa' },
 ];
 const OWNERS = MEMBERS;
+let memberGoals = {};   // { betty: { 2026: 15 }, ... } — synced from Firebase
+function loadGoals() {
+  if (window._isDemoMode) return;
+  get(ref(db, 'goals')).then(snap => {
+    memberGoals = snap.val() || {};
+    renderGoal();
+  }).catch(err => console.error('Could not load goals:', err));
+}
 function getMemberGoal(key) {
-  return parseInt(localStorage.getItem(`cbbc-goal-${key}`) || '12');
+  const year = new Date().getFullYear();
+  const g = memberGoals[key] && memberGoals[key][year];
+  return parseInt(g) || 12;
 }
 function setMemberGoal(key, val) {
-  if (val > 0) localStorage.setItem(`cbbc-goal-${key}`, val);
+  if (!(val > 0) || window._isDemoMode) return;
+  const year = new Date().getFullYear();
+  set(ref(db, `goals/${key}/${year}`), val)
+    .then(() => {
+      if (!memberGoals[key]) memberGoals[key] = {};
+      memberGoals[key][year] = val;
+      renderGoal();
+    })
+    .catch(e => alert('Could not save goal: ' + e.message));
 }
 function renderGoal() {
   const year = new Date().getFullYear();
@@ -1413,7 +1432,7 @@ function renderGoal() {
 }
 window._editGoal = function(key, current) {
   const newVal = parseInt(prompt(`Set your ${new Date().getFullYear()} goal:`, current));
-  if (newVal > 0) { setMemberGoal(key, newVal); renderGoal(); }
+  if (newVal > 0) setMemberGoal(key, newVal);
 };
 
 // ── Render ────────────────────────────────────────────────────────────────────
@@ -1923,6 +1942,7 @@ window._deleteBook       = deleteBook;
 window._toggleSection    = toggleSection;
 window.postDiscussionNote = postDiscussionNote;
 window._esc = escapeHtml;
+window._getMemberGoal = getMemberGoal;
 
 document.getElementById('modal').addEventListener('click', e => {
   if (e.target === document.getElementById('modal')) closeModal();
@@ -2220,7 +2240,7 @@ window.jarvisInit = function() {
   const year = new Date().getFullYear();
   document.getElementById('jv-goal-year').textContent = year;
   document.getElementById('jv-goal-rows').innerHTML = MEMBERS.map(m => {
-    const goal = parseInt(localStorage.getItem('cbbc-goal-'+m.key)||'12');
+    const goal = window._getMemberGoal ? window._getMemberGoal(m.key) : 12;
     const read = bks.filter(b=>(b.addedBy===m.email||b.addedBy===m.key)&&b.status==='read'&&b.readDate&&new Date(b.readDate).getFullYear()===year).length;
     const pct = Math.min(100,Math.round((read/goal)*100));
     const done = read >= goal;
