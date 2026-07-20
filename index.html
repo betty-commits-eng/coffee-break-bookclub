@@ -1038,7 +1038,7 @@ function startListening() {
     });
   }
   loadBooks();
-  dbUnsubscribe = setInterval(loadBooks, 3000);
+  dbUnsubscribe = setInterval(() => { loadBooks(); loadGoals(); }, 3000);
 }
 
 function signInWithGoogle() {
@@ -1376,7 +1376,9 @@ let memberGoals = {};   // { betty: { 2026: 15 }, ... } — synced from Firebase
 function loadGoals() {
   if (window._isDemoMode) return;
   get(ref(db, 'goals')).then(snap => {
-    memberGoals = snap.val() || {};
+    const fresh = snap.val() || {};
+    if (JSON.stringify(fresh) === JSON.stringify(memberGoals)) return;
+    memberGoals = fresh;
     renderGoal();
   }).catch(err => console.error('Could not load goals:', err));
 }
