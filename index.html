@@ -733,7 +733,7 @@
   <div class="header-label-strip">
     <span>Coffee Break Book Club</span>
     <span>Catalogue No. 001</span>
-    <span>Est. 2026 <button id="jarvis-btn" onclick="document.getElementById('jarvis-overlay').classList.add('open');window.jarvisInit&&window.jarvisInit()">⬡ JARVIS</button></span>
+    <span>Est. 2026 <button id="jarvis-btn" onclick="document.getElementById('jarvis-overlay').classList.add('open');window.jarvisInit&&window.jarvisInit()">⬡ THE LEDGER</button></span>
   </div>
   <div class="header-inner">
     <div class="catalogue-plate">Book Club Collection</div>
@@ -1738,20 +1738,20 @@ const THEMES = {
     mainOverlay: 'linear-gradient(135deg,#0a0a0c 0%,#0e0e12 50%,#0c0c10 100%)',
     headerBg: 'linear-gradient(180deg, #0a0a0c 0%, #111116 40%, #0d0d10 100%)', headerBorder: '#3a3040',
     headerH1: '#c8c0d0', headerH1Shadow: '2px 2px 0 rgba(0,0,0,0.9),0 0 12px rgba(80,60,100,0.3)',
-    headerStrip: 'linear-gradient(180deg,#1c1820 0%,#161418 50%,#121014 100%)', headerStripBorderTop: '#2a2430', headerStripBorderBot: '#0a080c', headerStripText: '#7a7080',
-    plateBg: 'linear-gradient(135deg,#161418,#121014)', plateBorder: '#3a3040', plateText: '#8a8090',
+    headerStrip: 'linear-gradient(180deg,#1c1820 0%,#161418 50%,#121014 100%)', headerStripBorderTop: '#2a2430', headerStripBorderBot: '#0a080c', headerStripText: '#968ca0',
+    plateBg: 'linear-gradient(135deg,#161418,#121014)', plateBorder: '#3a3040', plateText: '#a29aae',
     statsBg: 'linear-gradient(180deg,#161418,#121014)', statsBorder: '#2a2430', statsBorderTop: '#3a3040',
     statCellBg: 'linear-gradient(180deg,#1c1820,#161418)', statCellBorder: '#2a2430',
-    statNum: '#d0c8d8', statLabel: '#6a6070',
+    statNum: '#d0c8d8', statLabel: '#8d8598',
     goalBg: 'linear-gradient(180deg,#161418,#121014)', goalTrack: '#0a080c',
     tabBg: 'linear-gradient(180deg,#1c1820,#161418)', tabText: '#a09aa8', tabBorder: '#2a2430',
     tabHover: 'linear-gradient(180deg,#221e28,#1c1820)',
     tabActive: 'linear-gradient(180deg,#221e28,#1c1820)', tabActiveText: '#c8c0d0', tabActiveBotBorder: '#221e28',
-    inputBg: 'linear-gradient(180deg,#0f0d12,#0c0a0e)', inputBorder: '#2a2430', inputBorderTop: '#3a3040', inputText: '#c8c0d0', inputPlaceholder: '#6a6275',
+    inputBg: 'linear-gradient(180deg,#0f0d12,#0c0a0e)', inputBorder: '#2a2430', inputBorderTop: '#3a3040', inputText: '#c8c0d0', inputPlaceholder: '#847c92',
     controlsBg: 'linear-gradient(180deg,#161418,#121014)',
     addBtnBg: 'linear-gradient(180deg,#1c1820,#161418)',
-    sectionNumBorder: 'rgba(80,60,100,0.4)', sectionNumText: '#c8c0d0', sectionTitle: '#c8c0d0', sectionSub: '#6a6070',
-    legendText: '#6a6070', viewBtnBg: '#161418', viewBtnActive: '#2a2430', viewBtnActiveText: '#c8c0d0',
+    sectionNumBorder: 'rgba(80,60,100,0.4)', sectionNumText: '#c8c0d0', sectionTitle: '#c8c0d0', sectionSub: '#8d8598',
+    legendText: '#8d8598', viewBtnBg: '#161418', viewBtnActive: '#2a2430', viewBtnActiveText: '#c8c0d0',
     sectionCountBg: 'rgba(40,35,55,0.9)', sectionCountText: '#c8c0d0', sectionCountBorder: 'rgba(80,70,100,0.6)',
     shelfBg: 'linear-gradient(180deg, #080608 0%, #060406 60%, #040304 100%)', shelfBorder: '2px solid #2a2430', shelfBorderTop: '3px solid #3a3040', shelfShadow: 'inset 0 8px 20px rgba(0,0,0,0.95), inset 0 -6px 24px rgba(40,30,60,0.15)',
     plankBg: 'linear-gradient(180deg, #0e0c12 0%, #0a0810 30%, #080608 100%)', plankBorder: '2px solid #3a3040', plankShadow: '0 4px 16px rgba(0,0,0,0.95)',
@@ -1761,7 +1761,7 @@ const THEMES = {
     titleText: 'linear-gradient(180deg,#e0d8e8 0%,#c8c0d0 35%,#b0a8b8 55%,#9890a0 75%,#807888 100%)',
     spineShadow: '-5px 0 10px rgba(0,0,0,0.99),inset 4px 0 8px rgba(60,50,80,0.04),inset -3px 0 10px rgba(0,0,0,0.95),4px 0 0 rgba(0,0,0,0.98),inset 0 0 40px rgba(0,0,0,0.8)',
     spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.65) 0%,rgba(60,50,80,0.04) 15%,transparent 35%,rgba(60,50,80,0.05) 50%,transparent 65%,rgba(0,0,0,0.45) 100%)',
-    bookColors: [{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2c0a0a',mid:'#481212',hi:'#601818'},{base:'#081428',mid:'#102040',hi:'#182e58'},{base:'#0a1c0a',mid:'#142e14',hi:'#1c3e1c'},{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2a0808',mid:'#421010',hi:'#581818'},{base:'#081428',mid:'#102040',hi:'#182e58'},{base:'#1a1208',mid:'#2a1e0c',hi:'#382a10'},{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2c0a0a',mid:'#481212',hi:'#601818'}],
+    bookColors: [{base:'#1a0830',mid:'#2e1055',hi:'#4f2492'},{base:'#2c0a0a',mid:'#481212',hi:'#7c2626'},{base:'#081428',mid:'#102040',hi:'#264278'},{base:'#0a1c0a',mid:'#142e14',hi:'#2b562b'},{base:'#1a0830',mid:'#2e1055',hi:'#4f2492'},{base:'#2a0808',mid:'#421010',hi:'#742525'},{base:'#081428',mid:'#102040',hi:'#264278'},{base:'#1a1208',mid:'#2a1e0c',hi:'#4e3c1a'},{base:'#1a0830',mid:'#2e1055',hi:'#4f2492'},{base:'#2c0a0a',mid:'#481212',hi:'#7c2626'}],
   },
   beatrix: {
     bodyBg: '#ede8dc', bodyImg: `radial-gradient(circle, rgba(180,160,120,0.12) 1px, transparent 1px), radial-gradient(circle, rgba(160,180,140,0.1) 1px, transparent 1px)`, bodySize: '18px 18px, 18px 18px', bodyPos: '0 0, 9px 9px',
@@ -2033,7 +2033,7 @@ if (!window._isDemoMode) document.getElementById('theme-switcher').style.display
   <button id="jarvis-close" onclick="document.getElementById('jarvis-overlay').classList.remove('open')">✕ CLOSE</button>
   <div id="jv-body">
     <div class="jv-header">
-      <div class="jv-title">CBBC <span>— Club Library Intelligence</span></div>
+      <div class="jv-title">CBBC <span>— The Librarian’s Ledger</span></div>
       <div class="jv-meta">
         <div class="jv-status"><span class="jvdot">●</span> Live &nbsp;·&nbsp; <span id="jv-date"></span></div>
         <div class="jv-user"><img class="jv-avatar" id="jv-avatar" src="" alt=""><span id="jv-name"></span></div>
@@ -2057,8 +2057,8 @@ if (!window._isDemoMode) document.getElementById('theme-switcher').style.display
         <div id="jv-goal-rows" style="margin-top:8px;"></div>
       </div>
       <div class="jv-panel jv-log-panel">
-        <div class="jv-panel-head">System Log</div>
-        <div class="jv-log-line" id="jvl0">CBBC Library Intelligence</div>
+        <div class="jv-panel-head">Librarian’s Log</div>
+        <div class="jv-log-line" id="jvl0">The Librarian’s Ledger</div>
         <div class="jv-log-line" id="jvl1">Connecting to database...</div>
         <div class="jv-log-line" id="jvl2">Authenticating member...</div>
         <div class="jv-log-line" id="jvl3">Loading club catalogue...</div>
