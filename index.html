@@ -1959,72 +1959,60 @@ window.postDiscussionNote = postDiscussionNote;
     const ctx = getAudioCtx();
     const now = ctx.currentTime;
 
-    // Deep resonant bass hum — old library wood
-    const bass = ctx.createOscillator();
-    const bassGain = ctx.createGain();
-    bass.type = 'sine';
-    bass.frequency.setValueAtTime(48, now);
-    bass.frequency.linearRampToValueAtTime(52, now + 0.4);
-    bassGain.gain.setValueAtTime(0, now);
-    bassGain.gain.linearRampToValueAtTime(0.04, now + 0.1);
-    bassGain.gain.linearRampToValueAtTime(0.02, now + 0.5);
-    bassGain.gain.linearRampToValueAtTime(0, now + 0.8);
-    bass.connect(bassGain);
-    bassGain.connect(ctx.destination);
-    bass.start(now);
-    bass.stop(now + 0.8);
-
-    // Warm mid shimmer — magical dust motes
-    [220, 330, 440, 528, 660].forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq + Math.random() * 8, now);
-      osc.frequency.linearRampToValueAtTime(freq * 1.02, now + 0.6);
-      const startTime = now + i * 0.04;
-      gain.gain.setValueAtTime(0, startTime);
-      gain.gain.linearRampToValueAtTime(0.018 - i * 0.002, startTime + 0.08);
-      gain.gain.linearRampToValueAtTime(0, startTime + 0.6);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(startTime);
-      osc.stop(startTime + 0.7);
-    });
-
-    // Soft high sparkle — spell-like overtones
-    [880, 1056, 1320, 1760].forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now + i * 0.06);
-      gain.gain.setValueAtTime(0, now + i * 0.06);
-      gain.gain.linearRampToValueAtTime(0.008, now + i * 0.06 + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.06 + 0.5);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(now + i * 0.06);
-      osc.stop(now + i * 0.06 + 0.6);
-    });
-
-    // Gentle page rustle — filtered noise
-    const bufferSize = ctx.sampleRate * 0.3;
+    // Soft whoosh — air displaced by turning page
+    const bufferSize = ctx.sampleRate * 0.35;
     const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.3;
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
     const noise = ctx.createBufferSource();
     noise.buffer = noiseBuffer;
     const filter = ctx.createBiquadFilter();
     filter.type = 'bandpass';
-    filter.frequency.value = 800;
-    filter.Q.value = 0.5;
+    filter.frequency.setValueAtTime(1200, now);
+    filter.frequency.linearRampToValueAtTime(600, now + 0.2);
+    filter.Q.value = 0.8;
     const noiseGain = ctx.createGain();
     noiseGain.gain.setValueAtTime(0, now);
-    noiseGain.gain.linearRampToValueAtTime(0.012, now + 0.05);
-    noiseGain.gain.linearRampToValueAtTime(0, now + 0.3);
+    noiseGain.gain.linearRampToValueAtTime(0.08, now + 0.03);
+    noiseGain.gain.linearRampToValueAtTime(0.04, now + 0.15);
+    noiseGain.gain.linearRampToValueAtTime(0, now + 0.35);
     noise.connect(filter);
     filter.connect(noiseGain);
     noiseGain.connect(ctx.destination);
     noise.start(now);
+
+    // Soft papery crinkle — high freq texture
+    const bufferSize2 = ctx.sampleRate * 0.15;
+    const noiseBuffer2 = ctx.createBuffer(1, bufferSize2, ctx.sampleRate);
+    const data2 = noiseBuffer2.getChannelData(0);
+    for (let i = 0; i < bufferSize2; i++) data2[i] = (Math.random() * 2 - 1) * 0.5;
+    const noise2 = ctx.createBufferSource();
+    noise2.buffer = noiseBuffer2;
+    const filter2 = ctx.createBiquadFilter();
+    filter2.type = 'highpass';
+    filter2.frequency.value = 3000;
+    const noiseGain2 = ctx.createGain();
+    noiseGain2.gain.setValueAtTime(0, now + 0.02);
+    noiseGain2.gain.linearRampToValueAtTime(0.035, now + 0.06);
+    noiseGain2.gain.linearRampToValueAtTime(0, now + 0.2);
+    noise2.connect(filter2);
+    filter2.connect(noiseGain2);
+    noiseGain2.connect(ctx.destination);
+    noise2.start(now + 0.02);
+
+    // Warm thump — book spine settling
+    const thump = ctx.createOscillator();
+    const thumpGain = ctx.createGain();
+    thump.type = 'sine';
+    thump.frequency.setValueAtTime(120, now + 0.1);
+    thump.frequency.exponentialRampToValueAtTime(40, now + 0.3);
+    thumpGain.gain.setValueAtTime(0, now + 0.1);
+    thumpGain.gain.linearRampToValueAtTime(0.06, now + 0.13);
+    thumpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+    thump.connect(thumpGain);
+    thumpGain.connect(ctx.destination);
+    thump.start(now + 0.1);
+    thump.stop(now + 0.4);
   }
 
   function onShelfScroll() {
