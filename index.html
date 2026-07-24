@@ -1564,6 +1564,8 @@ function renderAll() {
         </div>
       </div>`;
   }).join('');
+  // Re-attach scroll sounds to newly rendered shelves
+  setTimeout(() => { if (window._attachScrollSounds) window._attachScrollSounds(); }, 100);
 }
 
 function toggleSection(num) {
@@ -1942,9 +1944,118 @@ window._deleteBook       = deleteBook;
 window._toggleSection    = toggleSection;
 window.postDiscussionNote = postDiscussionNote;
 
-document.getElementById('modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('modal')) closeModal();
-});
+// ── Magical Shelf Scroll Sound ────────────────────────────────────────────────
+(function() {
+  let audioCtx = null;
+  let scrollSoundTimer = null;
+  let lastScrollTime = 0;
+
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playLibraryAmbience() {
+    const ctx = getAudioCtx();
+    const now = ctx.currentTime;
+
+    // Deep resonant bass hum — old library wood
+    const bass = ctx.createOscillator();
+    const bassGain = ctx.createGain();
+    bass.type = 'sine';
+    bass.frequency.setValueAtTime(48, now);
+    bass.frequency.linearRampToValueAtTime(52, now + 0.4);
+    bassGain.gain.setValueAtTime(0, now);
+    bassGain.gain.linearRampToValueAtTime(0.04, now + 0.1);
+    bassGain.gain.linearRampToValueAtTime(0.02, now + 0.5);
+    bassGain.gain.linearRampToValueAtTime(0, now + 0.8);
+    bass.connect(bassGain);
+    bassGain.connect(ctx.destination);
+    bass.start(now);
+    bass.stop(now + 0.8);
+
+    // Warm mid shimmer — magical dust motes
+    [220, 330, 440, 528, 660].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq + Math.random() * 8, now);
+      osc.frequency.linearRampToValueAtTime(freq * 1.02, now + 0.6);
+      const startTime = now + i * 0.04;
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.018 - i * 0.002, startTime + 0.08);
+      gain.gain.linearRampToValueAtTime(0, startTime + 0.6);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + 0.7);
+    });
+
+    // Soft high sparkle — spell-like overtones
+    [880, 1056, 1320, 1760].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + i * 0.06);
+      gain.gain.setValueAtTime(0, now + i * 0.06);
+      gain.gain.linearRampToValueAtTime(0.008, now + i * 0.06 + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.06 + 0.5);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.06);
+      osc.stop(now + i * 0.06 + 0.6);
+    });
+
+    // Gentle page rustle — filtered noise
+    const bufferSize = ctx.sampleRate * 0.3;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.3;
+    const noise = ctx.createBufferSource();
+    noise.buffer = noiseBuffer;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 800;
+    filter.Q.value = 0.5;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0, now);
+    noiseGain.gain.linearRampToValueAtTime(0.012, now + 0.05);
+    noiseGain.gain.linearRampToValueAtTime(0, now + 0.3);
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+    noise.start(now);
+  }
+
+  function onShelfScroll() {
+    const now = Date.now();
+    // Throttle — play at most every 400ms
+    if (now - lastScrollTime < 400) return;
+    lastScrollTime = now;
+    clearTimeout(scrollSoundTimer);
+    scrollSoundTimer = setTimeout(() => {
+      try { playLibraryAmbience(); } catch(e) {}
+    }, 50);
+  }
+
+  // Attach to shelf rows — now and after any renderAll
+  function attachScrollSounds() {
+    document.querySelectorAll('.shelf-rows-wrap').forEach(el => {
+      if (!el._soundAttached) {
+        el.addEventListener('scroll', onShelfScroll, { passive: true });
+        el._soundAttached = true;
+      }
+    });
+  }
+
+  // Re-attach after every renderAll since DOM is rebuilt
+  const origRenderAll = window.renderAll;
+  const _attachInterval = setInterval(attachScrollSounds, 1000);
+  attachScrollSounds();
+  window._attachScrollSounds = attachScrollSounds;
+})();
+
+
 // ── Smart floating book card ─────────────────────────────────────────────
 let activeCard = null;
 // Create persistent backdrop + card elements on load
