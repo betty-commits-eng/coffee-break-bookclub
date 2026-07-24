@@ -310,7 +310,7 @@
   .bookshelf { background: linear-gradient(180deg, #1a0e06 0%, #140a04 60%, #100804 100%); border: 2px solid #5a3010; border-top: 3px solid #7a4818; border-radius: 2px; padding: 16px 20px 0; position: relative; min-height: 100px; box-shadow: inset 0 8px 20px rgba(0,0,0,0.8), inset 0 -6px 24px rgba(160,90,15,0.2); overflow: hidden; }
   .bookshelf::before { display:none; }
   .bookshelf::after { display:none; }
-  .shelf-plank { width: 100%; height: 38px; background: linear-gradient(180deg, #2a1608 0%, #3a2010 20%, #4a2c14 45%, #5a3818 60%, #4a2c14 80%, #362010 100%); border-top: 2px solid #8a5828; flex-shrink: 0; box-shadow: 0 6px 16px rgba(0,0,0,0.9), inset 0 1px 0 rgba(220,160,60,0.25); z-index: 1; margin: 0 -20px; width: calc(100% + 40px); }
+  .shelf-plank { height: 38px; background: linear-gradient(180deg, #2a1608 0%, #3a2010 20%, #4a2c14 45%, #5a3818 60%, #4a2c14 80%, #362010 100%); border-top: 2px solid #8a5828; box-shadow: 0 6px 16px rgba(0,0,0,0.9), inset 0 1px 0 rgba(220,160,60,0.25); z-index: 1; margin: 0 -20px; width: calc(100% + 40px); }
   .shelf-rows-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; cursor: grab; }
   .shelf-rows-wrap::-webkit-scrollbar { display: none; }
   .shelf-rows-wrap:active { cursor: grabbing; }
@@ -583,7 +583,6 @@
   .bc-stars .dim { color: #ccc; }
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
-  /* ── Club Reads ── */
   #club-reads { display:none; padding: 16px 0; }
   #club-reads.active { display:block; }
   .cr-header { font-family:'Playfair Display',serif; font-size:0.78rem; letter-spacing:0.14em; color:var(--parchment); text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
@@ -1259,13 +1258,11 @@ function setOwnerFilter(f) {
   document.querySelectorAll('.owner-tab').forEach(t => t.classList.remove('active'));
   const activeTab = document.getElementById('tab-' + f);
   if (activeTab) activeTab.classList.add('active');
-
   const libEl = document.getElementById('library');
   const crEl  = document.getElementById('club-reads');
   const searchRow = document.querySelector('.search-row');
   const viewToggleRow = document.querySelector('.view-toggle-row');
   const legendEl = document.querySelector('.legend');
-
   if (f === 'clubreads') {
     if (libEl) libEl.style.display = 'none';
     if (crEl)  crEl.classList.add('active');
@@ -1277,13 +1274,11 @@ function setOwnerFilter(f) {
     renderClubReads();
     return;
   }
-
   if (libEl) libEl.style.display = '';
   if (crEl)  crEl.classList.remove('active');
   if (searchRow) searchRow.style.display = '';
   if (viewToggleRow) viewToggleRow.style.display = '';
   if (legendEl) legendEl.style.display = '';
-
   if (f === 'all') {
     applyTheme('antique', false);
     document.getElementById('theme-switcher').style.display = window._isDemoMode ? 'flex' : 'none';
@@ -1331,7 +1326,6 @@ function renderClubReads() {
       return { rep, readers, avgRating, latestRead };
     })
     .sort((a,b) => (b.latestRead||'').localeCompare(a.latestRead||''));
-
   if (clubReads.length === 0) {
     el.innerHTML = `<div class="cr-empty">Once two or more members have read the same book, it will appear here…</div>`;
   } else {
@@ -1488,20 +1482,20 @@ function renderAll() {
       const spineGrad = `linear-gradient(90deg, rgba(0,0,0,0.6) 0%, ${vc.base} 8%, ${vc.mid} 30%, ${vc.hi} 48%, ${vc.hi} 52%, ${vc.mid} 68%, ${vc.base} 88%, rgba(0,0,0,0.7) 100%)`;
       const noteCount = b.discussion ? Object.keys(b.discussion).length : 0;
       return `
-      <div class="book" title="${escapeHtml(b.title)}">
+      <div class="book" title="${b.title}">
         <div class="book-spine" style="background:${spineGrad}; height:${h}px;">
           <div class="book-band-top"></div>
-          <div class="book-label"><span>${b.dewey}<br>${escapeHtml((b.author||'').split(' ').pop().substring(0,4).toUpperCase())||'—'}</span></div>
-          <div class="book-title-spine">${escapeHtml(b.title)}</div>
+          <div class="book-label"><span>${b.dewey}<br>${(b.author||'').split(' ').pop().substring(0,4).toUpperCase()||'—'}</span></div>
+          <div class="book-title-spine">${b.title}</div>
           <div class="book-mid-groove"></div>
           <div class="book-status-dot" style="background:${statusColor(b.status)};"></div>
           <div class="book-band-bottom"></div>
         </div>
-        <div class="book-author-tag">${escapeHtml((b.author||'').split(' ').pop().substring(0,4).toUpperCase())||'—'}</div>
+        <div class="book-author-tag">${(b.author||'').split(' ').pop().substring(0,4).toUpperCase()||'—'}</div>
         <div class="book-card">
-          ${b.coverImage ? `<img src="${escapeHtml(b.coverImage)}" alt="Cover" style="width:80px;float:right;margin:0 0 8px 10px;border:1px solid #c8a96e;box-shadow:2px 2px 4px rgba(0,0,0,0.2);">` : ''}
-          <h4>${escapeHtml(b.title)}</h4>
-          <div class="bc-author">${escapeHtml(b.author) || 'Unknown Author'}</div>
+          ${b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="width:80px;float:right;margin:0 0 8px 10px;border:1px solid #c8a96e;box-shadow:2px 2px 4px rgba(0,0,0,0.2);">` : ''}
+          <h4>${b.title}</h4>
+          <div class="bc-author">${b.author || 'Unknown Author'}</div>
           <div class="bc-meta">Dewey: ${b.dewey} · ${b.year || 'n.d.'}</div>
           <div class="bc-meta bc-owner">${(()=>{ const _OC = window._getMembersOverride ? window._getMembersOverride() : OWNERS; const o = _OC.find(o=>o.email===b.addedBy||o.key===b.addedBy); return o ? '❧ '+o.label : ''; })()}</div>
           <div class="bc-meta"><span style="background:${statusColor(b.status)};color:#fff;font-size:0.68rem;padding:2px 8px;letter-spacing:0.06em;text-transform:uppercase;">${statusLabel(b.status)}</span></div>
@@ -1528,8 +1522,7 @@ function renderAll() {
             </div>
           </div>
         </div>
-      </div>`;
-    };
+      </div>`};
     const row1spines = row1Books.map((b, i) => makeSpine(b, i)).join('');
     const row2spines = row2Books.length > 0 ? row2Books.map((b, i) => makeSpine(b, mid + i)).join('') : null;
     const listRows = sectionBooks.map(b => `
@@ -1550,22 +1543,17 @@ function renderAll() {
           <div class="section-count">${sectionBooks.length} vol${sectionBooks.length!==1?'s':''}.</div>
         </div>
         <div class="bookshelf shelf-view ${viewMode==='list'?'hide':''}">
-          <div class="shelf-rows-wrap" id="shelf-wrap-${cls.num}">
+          <div class="shelf-rows-wrap">
             <div class="books-row">${row1spines||'<div class="empty-shelf">No volumes in this section.</div>'}</div>
           </div>
           <div class="shelf-plank"></div>
-          ${row2spines ? `<div class="shelf-rows-wrap" id="shelf-wrap-${cls.num}-2">
-            <div class="books-row">${row2spines}</div>
-          </div>
-          <div class="shelf-plank"></div>` : ''}
+          ${row2spines ? `<div class="shelf-rows-wrap"><div class="books-row">${row2spines}</div></div><div class="shelf-plank"></div>` : ''}
         </div>
         <div class="list-view ${viewMode==='list'?'show':''}">
           ${listRows}
         </div>
       </div>`;
   }).join('');
-  // Re-attach scroll sounds to newly rendered shelves
-  setTimeout(() => { if (window._attachScrollSounds) window._attachScrollSounds(); }, 100);
 }
 
 function toggleSection(num) {
@@ -1944,70 +1932,9 @@ window._deleteBook       = deleteBook;
 window._toggleSection    = toggleSection;
 window.postDiscussionNote = postDiscussionNote;
 
-// ── Magical Shelf Scroll Sound ────────────────────────────────────────────────
-(function() {
-  let audioCtx = null;
-  let scrollSoundTimer = null;
-  let lastScrollTime = 0;
-
-  function getAudioCtx() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    return audioCtx;
-  }
-
-  function playLibraryAmbience() {
-    const ctx = getAudioCtx();
-    const now = ctx.currentTime;
-
-    // Soft airy flutter — owl feather brushing past
-    const sz = ctx.sampleRate * 0.4;
-    const buf = ctx.createBuffer(1, sz, ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < sz; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / sz);
-    const n = ctx.createBufferSource(); n.buffer = buf;
-    const f = ctx.createBiquadFilter(); f.type = 'bandpass';
-    f.frequency.setValueAtTime(800, now); f.frequency.linearRampToValueAtTime(1600, now + 0.15); f.frequency.linearRampToValueAtTime(900, now + 0.4);
-    f.Q.value = 2;
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(0.07, now + 0.05); g.gain.linearRampToValueAtTime(0.03, now + 0.25); g.gain.linearRampToValueAtTime(0, now + 0.4);
-    n.connect(f); f.connect(g); g.connect(ctx.destination); n.start(now);
-
-    // Warm undertone — gentle wingbeat resonance
-    const o = ctx.createOscillator(); const og = ctx.createGain();
-    o.type = 'sine'; o.frequency.setValueAtTime(180, now + 0.1); o.frequency.linearRampToValueAtTime(160, now + 0.35);
-    og.gain.setValueAtTime(0, now + 0.1); og.gain.linearRampToValueAtTime(0.025, now + 0.18); og.gain.linearRampToValueAtTime(0, now + 0.38);
-    o.connect(og); og.connect(ctx.destination); o.start(now + 0.1); o.stop(now + 0.4);
-  }
-
-  function onShelfScroll() {
-    const now = Date.now();
-    // Throttle — play at most every 400ms
-    if (now - lastScrollTime < 400) return;
-    lastScrollTime = now;
-    clearTimeout(scrollSoundTimer);
-    scrollSoundTimer = setTimeout(() => {
-      try { playLibraryAmbience(); } catch(e) {}
-    }, 50);
-  }
-
-  // Attach to shelf rows — now and after any renderAll
-  function attachScrollSounds() {
-    document.querySelectorAll('.shelf-rows-wrap').forEach(el => {
-      if (!el._soundAttached) {
-        el.addEventListener('scroll', onShelfScroll, { passive: true });
-        el._soundAttached = true;
-      }
-    });
-  }
-
-  // Re-attach after every renderAll since DOM is rebuilt
-  const origRenderAll = window.renderAll;
-  const _attachInterval = setInterval(attachScrollSounds, 1000);
-  attachScrollSounds();
-  window._attachScrollSounds = attachScrollSounds;
-})();
-
-
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal')) closeModal();
+});
 // ── Smart floating book card ─────────────────────────────────────────────
 let activeCard = null;
 // Create persistent backdrop + card elements on load
@@ -2241,6 +2168,62 @@ window.exitDemo = function() {
   }
   window.setOwnerFilter('all');
 };
+
+// ── Magical Shelf Scroll Sound ────────────────────────────────────────────────
+(function() {
+  let audioCtx = null;
+  let scrollSoundTimer = null;
+  let lastScrollTime = 0;
+
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playLibraryAmbience() {
+    const ctx = getAudioCtx();
+    const now = ctx.currentTime;
+    const sz = ctx.sampleRate * 0.6;
+    const buf = ctx.createBuffer(1, sz, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < sz; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / sz);
+    const n = ctx.createBufferSource(); n.buffer = buf;
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass';
+    f.frequency.setValueAtTime(600, now); f.frequency.linearRampToValueAtTime(1000, now + 0.25); f.frequency.linearRampToValueAtTime(700, now + 0.6);
+    f.Q.value = 3;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.028, now + 0.12);
+    g.gain.linearRampToValueAtTime(0.015, now + 0.4);
+    g.gain.linearRampToValueAtTime(0, now + 0.6);
+    n.connect(f); f.connect(g); g.connect(ctx.destination); n.start(now);
+    const o = ctx.createOscillator(); const og = ctx.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(160, now + 0.15); o.frequency.linearRampToValueAtTime(145, now + 0.5);
+    og.gain.setValueAtTime(0, now + 0.15); og.gain.linearRampToValueAtTime(0.01, now + 0.25); og.gain.linearRampToValueAtTime(0, now + 0.55);
+    o.connect(og); og.connect(ctx.destination); o.start(now + 0.15); o.stop(now + 0.6);
+  }
+
+  function onShelfScroll() {
+    const now = Date.now();
+    if (now - lastScrollTime < 500) return;
+    lastScrollTime = now;
+    clearTimeout(scrollSoundTimer);
+    scrollSoundTimer = setTimeout(() => { try { playLibraryAmbience(); } catch(e) {} }, 50);
+  }
+
+  function attachScrollSounds() {
+    document.querySelectorAll('.shelf-rows-wrap').forEach(el => {
+      if (!el._soundAttached) {
+        el.addEventListener('scroll', onShelfScroll, { passive: true });
+        el._soundAttached = true;
+      }
+    });
+  }
+
+  setInterval(attachScrollSounds, 1000);
+  attachScrollSounds();
+  window._attachScrollSounds = attachScrollSounds;
+})();
 </script>
 
 <script>
