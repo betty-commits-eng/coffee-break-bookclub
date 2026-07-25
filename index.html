@@ -583,6 +583,8 @@
   .bc-stars .dim { color: #ccc; }
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
+  .local-badge { position:absolute; top:4px; right:2px; font-size:0.55rem; background:rgba(45,110,58,0.92); color:#e8f5e9; padding:1px 3px; border-radius:2px; letter-spacing:0.04em; font-family:'Courier Prime',monospace; z-index:5; writing-mode:horizontal-tb; transform:none; line-height:1.4; }
+  .cr-local-tag { display:inline-block; background:#2d6e3a; color:#e8f5e9; font-size:0.6rem; font-family:'Courier Prime',monospace; padding:1px 6px; border-radius:2px; letter-spacing:0.06em; margin-left:6px; vertical-align:middle; }
   #club-reads { display:none; padding: 16px 0; }
   #club-reads.active { display:block; }
   .cr-header { font-family:'Playfair Display',serif; font-size:0.78rem; letter-spacing:0.14em; color:var(--parchment); text-transform:uppercase; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
@@ -805,6 +807,10 @@
       <label>Year</label>
       <input type="number" id="inp-year" placeholder="e.g. 1984" min="1000" max="2099">
     </div>
+    <div class="field" style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+      <input type="checkbox" id="inp-local" style="width:16px;height:16px;accent-color:#2d6e3a;cursor:pointer;">
+      <label for="inp-local" style="margin:0;cursor:pointer;font-size:0.8rem;">🍁 Local/Independent Author</label>
+    </div>
     <button class="add-btn" onclick="addBook()">+ Add to Collection</button>
   </div>
   <div class="stats-bar" id="stats-bar"></div>
@@ -852,6 +858,7 @@
       <option value="reading">Reading</option>
       <option value="unread">Unread</option>
       <option value="wishlist">Wishlist</option>
+      <option value="local">🍁 Local Authors</option>
     </select>
   </div>
   <div class="legend">
@@ -903,6 +910,10 @@
     <input type="hidden" id="edit-cover" value="">
     <label>Publication Year</label>
     <input type="number" id="edit-year" min="1000" max="2099">
+    <div style="display:flex;align-items:center;gap:8px;margin:6px 0;">
+      <input type="checkbox" id="edit-local" style="width:16px;height:16px;accent-color:#2d6e3a;cursor:pointer;">
+      <label for="edit-local" style="margin:0;cursor:pointer;font-size:0.8rem;font-family:'Libre Baskerville',serif;">🍁 Local/Independent Author</label>
+    </div>
     <label>Your Rating</label>
     <div class="star-picker" id="edit-stars">
       <span class="star" data-val="1">★</span>
@@ -1141,20 +1152,22 @@ function addBook() {
   const dewey  = document.getElementById('inp-dewey').value;
   const status = document.getElementById('inp-status').value;
   const year   = document.getElementById('inp-year').value;
+  const localAuthor = document.getElementById('inp-local').checked;
   if (!title || !dewey) { alert('Please enter a title and select a Dewey class.'); return; }
   const currentUser = auth.currentUser;
   const addedBy = currentUser ? currentUser.email : '';
   if (window._isDemoMode) {
-    const demoBook={_key:'d'+Date.now(),title,author,dewey,status,year:year?parseInt(year):null,notes:'',addedBy,coverImage:window._pendingCover||null,added:new Date().toISOString(),readDate:status==='read'?new Date().toISOString():null,rating:0};
+    const demoBook={_key:'d'+Date.now(),title,author,dewey,status,year:year?parseInt(year):null,notes:'',addedBy,coverImage:window._pendingCover||null,added:new Date().toISOString(),readDate:status==='read'?new Date().toISOString():null,rating:0,localAuthor};
     books.push(demoBook);window._spineBooks=books;renderAll();
   } else {
-    fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null });
+    fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null, localAuthor });
   }
   window._pendingCover = null;
   document.getElementById('inp-title').value  = '';
   document.getElementById('inp-author').value = '';
   document.getElementById('inp-dewey').value  = '';
   document.getElementById('inp-year').value   = '';
+  document.getElementById('inp-local').checked = false;
 }
 
 function deleteBook(key) {
@@ -1173,6 +1186,8 @@ function openEdit(key, viewOnly = false) {
   document.getElementById('edit-dewey').value  = b.dewey;
   document.getElementById('edit-status').value = b.status;
   document.getElementById('edit-year').value   = b.year || '';
+  document.getElementById('edit-local').checked = b.localAuthor || false;
+  document.getElementById('edit-local').disabled = viewOnly;
 
   const rating = b.rating || 0;
   document.getElementById('edit-rating').value = rating;
@@ -1205,9 +1220,10 @@ function closeModal() {
 function saveEdit() {
   const key = document.getElementById('edit-id').value;
   const status = document.getElementById('edit-status').value;
+  const localAuthor = document.getElementById('edit-local').checked;
   if (window._isDemoMode) {
     const idx=books.findIndex(b=>b._key===key);
-    if(idx>=0){books[idx]={...books[idx],title:document.getElementById('edit-title').value.trim(),author:document.getElementById('edit-author').value.trim(),dewey:document.getElementById('edit-dewey').value,status,year:document.getElementById('edit-year').value?parseInt(document.getElementById('edit-year').value):null,rating:parseInt(document.getElementById('edit-rating').value)||0,readDate:status==='read'?(document.getElementById('edit-readdate').value?new Date(document.getElementById('edit-readdate').value).toISOString():new Date().toISOString()):null,coverImage:document.getElementById('edit-cover').value||null};window._spineBooks=books;}
+    if(idx>=0){books[idx]={...books[idx],title:document.getElementById('edit-title').value.trim(),author:document.getElementById('edit-author').value.trim(),dewey:document.getElementById('edit-dewey').value,status,year:document.getElementById('edit-year').value?parseInt(document.getElementById('edit-year').value):null,rating:parseInt(document.getElementById('edit-rating').value)||0,readDate:status==='read'?(document.getElementById('edit-readdate').value?new Date(document.getElementById('edit-readdate').value).toISOString():new Date().toISOString()):null,coverImage:document.getElementById('edit-cover').value||null,localAuthor};window._spineBooks=books;}
     closeModal();renderAll();return;
   }
   fbUpdate(key, {
@@ -1222,6 +1238,7 @@ function saveEdit() {
       ? (document.getElementById('edit-readdate').value ? new Date(document.getElementById('edit-readdate').value).toISOString() : new Date().toISOString())
       : null,
     coverImage: document.getElementById('edit-cover').value || null,
+    localAuthor,
   });
   closeModal();
 }
@@ -1246,10 +1263,10 @@ function filteredBooks() {
   const fs = document.getElementById('filter-status').value;
   return books.filter(b => {
     const mQ = !q  || b.title.toLowerCase().includes(q) || (b.author||'').toLowerCase().includes(q);
-    const mS = !fs || b.status === fs;
+    const mS = !fs || (fs === 'local' ? b.localAuthor : b.status === fs);
     const _OW2 = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
     const _fo = _OW2.find(o => o.key === ownerFilter);
-    const mO = ownerFilter === 'all' || (_fo && (b.addedBy === _fo.email || b.addedBy === _fo.key));
+    const mO = ownerFilter === 'all' || ownerFilter === 'clubreads' || (_fo && (b.addedBy === _fo.email || b.addedBy === _fo.key));
     return mQ && mS && mO;
   });
 }
@@ -1346,7 +1363,7 @@ function renderClubReads() {
             ${b.coverImage ? `<img class="cr-cover" src="${escapeHtml(b.coverImage)}" alt="Cover">` : `<div class="cr-cover-placeholder">📖</div>`}
             <div class="cr-body">
               <div class="cr-title">${escapeHtml(b.title)}</div>
-              <div class="cr-author">${escapeHtml(b.author)||'Unknown Author'}</div>
+              <div class="cr-author">${escapeHtml(b.author)||'Unknown Author'}${b.localAuthor ? '<span class="cr-local-tag">🍁 LOCAL</span>' : ''}</div>
               <div class="cr-meta">
                 <span class="cr-readers">❧ ${escapeHtml(cr.readers.join(', '))}</span>
                 ${starsHtml}
@@ -1491,6 +1508,7 @@ function renderAll() {
           <div class="book-status-dot" style="background:${statusColor(b.status)};"></div>
           <div class="book-band-bottom"></div>
         </div>
+        ${b.localAuthor ? '<div class="local-badge">🍁 LOCAL</div>' : ''}
         <div class="book-author-tag">${(b.author||'').split(' ').pop().substring(0,4).toUpperCase()||'—'}</div>
         <div class="book-card">
           ${b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="width:80px;float:right;margin:0 0 8px 10px;border:1px solid #c8a96e;box-shadow:2px 2px 4px rgba(0,0,0,0.2);">` : ''}
@@ -1528,7 +1546,7 @@ function renderAll() {
     const listRows = sectionBooks.map(b => `
       <div class="book-list-item" onclick="window._openEdit('${b._key}')" style="border-left-color:${cls.color};">
         <div class="bli-call">${b.dewey}</div>
-        <div class="bli-title">${b.title}</div>
+        <div class="bli-title">${b.title}${b.localAuthor ? ' <span style="font-size:0.65rem;background:#2d6e3a;color:#e8f5e9;padding:1px 5px;border-radius:2px;vertical-align:middle;">🍁</span>' : ''}</div>
         <div class="bli-author">${b.author || '—'}</div>
         <div class="bli-status" style="background:${statusColor(b.status)};color:#fff;">${statusLabel(b.status)}</div>
       </div>`).join('');
