@@ -730,6 +730,38 @@
       Sign in to Your Club
     </button>
     <div class="login-error" id="login-error">Access denied. Your account is not on the allowed list.</div>
+    <div style="margin-top:20px;text-align:center;">
+      <button onclick="document.getElementById('contact-modal').style.display='flex'" style="background:none;border:none;color:var(--brown);font-family:'Courier Prime',monospace;font-size:0.72rem;letter-spacing:0.1em;cursor:pointer;text-decoration:underline;opacity:0.7;">✉ Get in touch</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div id="contact-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:linear-gradient(180deg,#f8f0dc,#f0e4c4);border:2px solid #c4a060;border-top:4px solid #8a5828;padding:32px;max-width:460px;width:100%;position:relative;box-shadow:8px 8px 0 rgba(0,0,0,0.4);">
+    <button onclick="document.getElementById('contact-modal').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#7b4f2e;">×</button>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#3d2314;margin:0 0 6px;">Get in touch</h3>
+    <p style="font-family:'Courier Prime',monospace;font-size:0.72rem;color:#7b4f2e;margin:0 0 20px;letter-spacing:0.06em;">Questions about IndieShelf? We'd love to hear from you.</p>
+    <form id="contact-form" action="https://formspree.io/f/xqernkwe" method="POST">
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-family:'Libre Baskerville',serif;font-size:0.78rem;color:#3d2314;margin-bottom:4px;">Your name</label>
+        <input type="text" name="name" required style="width:100%;padding:8px 12px;border:1px solid #c4a060;background:#fffdf5;font-family:'Libre Baskerville',serif;font-size:0.85rem;color:#3d2314;box-sizing:border-box;">
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="display:block;font-family:'Libre Baskerville',serif;font-size:0.78rem;color:#3d2314;margin-bottom:4px;">Your email</label>
+        <input type="email" name="email" required style="width:100%;padding:8px 12px;border:1px solid #c4a060;background:#fffdf5;font-family:'Libre Baskerville',serif;font-size:0.85rem;color:#3d2314;box-sizing:border-box;">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="display:block;font-family:'Libre Baskerville',serif;font-size:0.78rem;color:#3d2314;margin-bottom:4px;">Message</label>
+        <textarea name="message" required rows="4" style="width:100%;padding:8px 12px;border:1px solid #c4a060;background:#fffdf5;font-family:'Libre Baskerville',serif;font-size:0.85rem;color:#3d2314;box-sizing:border-box;resize:vertical;"></textarea>
+      </div>
+      <button type="submit" style="width:100%;padding:12px;background:linear-gradient(180deg,#5a3a1a,#3d2314);color:#f0e4c4;border:none;font-family:'Playfair Display',serif;font-size:0.95rem;letter-spacing:0.08em;cursor:pointer;">Send Message</button>
+      <p id="contact-success" style="display:none;margin-top:12px;text-align:center;font-family:'Libre Baskerville',serif;font-size:0.85rem;color:#2d6e3a;">✓ Message sent! We'll be in touch soon.</p>
+    </form>
+  </div>
+</div>
+
+<div style="display:none"><!-- login card closed above -->
   </div>
 </div>
 <header>
@@ -2188,7 +2220,25 @@ window.exitDemo = function() {
   window.setOwnerFilter('all');
 };
 
-// ── Magical Shelf Scroll Sound ────────────────────────────────────────────────
+// ── Contact Form ──────────────────────────────────────────────────────────────
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  try {
+    const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+    if (res.ok) {
+      form.reset();
+      document.getElementById('contact-success').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('contact-modal').style.display = 'none';
+        document.getElementById('contact-success').style.display = 'none';
+      }, 3000);
+    }
+  } catch(e) {}
+});
+
+
 (function() {
   let audioCtx = null;
   let scrollSoundTimer = null;
