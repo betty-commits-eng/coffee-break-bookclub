@@ -61,9 +61,9 @@
   header::after { content:''; position:absolute; bottom:-6px; left:0; right:0; height:6px; background:linear-gradient(180deg,#c49838,#a07830,#d4a843); z-index:2; }
   .header-inner { padding:28px 40px 24px; position:relative; }
   .header-nameplate { display:none; }
-  .header-label-strip { background:linear-gradient(180deg,#d4a843 0%,#c49030 50%,#b88020 100%); border-top:2px solid #e8c060; border-bottom:2px solid #8a5a10; padding:6px 40px; display:flex; justify-content:space-between; align-items:center; font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#3a2008; box-shadow:inset 0 1px 2px rgba(255,255,255,0.3),inset 0 -1px 2px rgba(0,0,0,0.2); }
+  .header-label-strip { background:linear-gradient(180deg,#d4a843 0%,#c49030 50%,#b88020 100%); border-top:2px solid #e8c060; border-bottom:2px solid #8a5a10; padding:6px 40px; display:flex; justify-content:space-between; align-items:center; font-family:'Courier Prime',monospace; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:#3a2008; box-shadow:inset 0 1px 2px rgba(255,255,255,0.3),inset 0 -1px 2px rgba(0,0,0,0.2); }
   .header-label-strip span { opacity:0.8; }
-  .catalogue-plate { display:inline-block; background:linear-gradient(135deg,#f5edd8,#e8d8b0); border:2px solid #8a6530; padding:4px 20px; font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:#3a2008; text-transform:uppercase; box-shadow:2px 2px 0 rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.6); margin-bottom:12px; }
+  .catalogue-plate { display:inline-block; background:linear-gradient(135deg,#f5edd8,#e8d8b0); border:2px solid #8a6530; padding:4px 20px; font-family:'Courier Prime',monospace; font-size:0.65rem; letter-spacing:0.16em; color:#3a2008; text-transform:uppercase; box-shadow:2px 2px 0 rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.6); margin-bottom:12px; }
   header h1 { font-family:'Special Elite',cursive; font-size:2.4rem; color:var(--cream); letter-spacing:0.12em; text-shadow:2px 2px 0 rgba(0,0,0,0.6),0 0 20px rgba(212,168,67,0.2); text-transform:uppercase; }
   header .subtitle { font-family:'Courier Prime',monospace; font-style:italic; color:#c9a96e; font-size:0.85rem; margin-top:4px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.85; }
   .library-stamp { position:absolute; top:50%; left:18%; transform:translateY(-50%) rotate(-6deg); width:110px; height:110px; border:3px solid rgba(180,60,40,0.5); border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:rgba(180,60,40,0.5); font-family:'Special Elite',cursive; font-size:0.55rem; letter-spacing:0.12em; text-transform:uppercase; line-height:1.7; text-align:center; padding:8px; transition:all 0.4s ease; }
@@ -123,7 +123,7 @@
     padding: 18px;
   }
   .landing-preview-label {
-    font-family: 'Special Elite', cursive; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase;
     color: #8a6530; text-align: center; margin-bottom: 12px;
   }
   .lp-toolbar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -191,7 +191,7 @@
   .login-features { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:28px; text-align:left; }
   .login-feature { background:rgba(139,100,40,0.1); border:1px solid rgba(139,100,40,0.35); box-shadow:2px 2px 0 rgba(0,0,0,0.12); padding:10px 12px; display:flex; align-items:flex-start; gap:8px; transition:box-shadow 0.15s, transform 0.15s; }
   .login-feature:hover { box-shadow:3px 3px 0 rgba(0,0,0,0.18); transform:translateY(-1px); }
-  .login-feature-icon { font-size:1rem; flex-shrink:0; margin-top:1px; }
+  .login-feature-icon { font-size:1.15rem; flex-shrink:0; margin-top:1px; color:#8a6530; }
   .login-feature-text { font-family:'Libre Baskerville',serif; font-size:0.7rem; color:var(--dark-brown); letter-spacing:0.01em; line-height:1.5; }
   .login-feature-text strong { font-family:'Courier Prime',monospace; display:block; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:2px; }
   .login-divider { display:flex; align-items:center; gap:10px; margin:20px 0 16px; }
@@ -251,12 +251,12 @@
     position: relative;
   }
   .controls::before {
-    content: 'NEW ENTRY';
+    content: 'ADD A BOOK';
     position: absolute;
     top: 10px; right: 14px;
-    font-family: 'Special Elite', cursive;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
     color: rgba(139,32,32,0.4);
     border: 2px solid rgba(139,32,32,0.3);
     padding: 2px 8px;
@@ -614,6 +614,16 @@
     .section-sub { font-size: 0.72rem; }
     .bli-author { display: none; }
     .bli-call { min-width: 44px; font-size: 0.85rem; }
+    /* The banner's actual height is measured in JS and written to
+       --demo-banner-h, so the header margin always clears it even when
+       this longer text wraps to two lines on a narrow phone. */
+    #demo-banner { font-size: 0.6rem; letter-spacing: 0.05em; padding: 6px 10px; line-height: 1.5; }
+    #demo-banner a { margin-left: 8px; display: inline-block; }
+    /* The fixed theme switcher can otherwise sit right on top of the last
+       book on a shelf row at phone widths — shrink its footprint there. */
+    #theme-switcher { bottom: 10px; right: 10px; }
+    #theme-toggle-btn { padding: 8px 12px; font-size: 0.68rem; }
+    .theme-btn { padding: 6px 10px; font-size: 0.62rem; }
   }
 
   .spine-stars { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 7px; color: #f5d87a; text-shadow: 0 0 4px rgba(0,0,0,0.7); letter-spacing: 1px; flex-shrink: 0; z-index: 2; position: relative; padding: 2px 0; }
@@ -694,6 +704,7 @@
   .theme-btn { background:rgba(0,0,0,0.7); color:#f0e8d0; border:1px solid rgba(255,255,255,0.15); padding:7px 14px; font-family:'Courier Prime',monospace; font-size:0.68rem; letter-spacing:0.1em; cursor:pointer; border-radius:3px; text-align:right; backdrop-filter:blur(4px); transition:all 0.2s; white-space:nowrap; }
   .theme-btn:hover { background:rgba(0,0,0,0.9); border-color:rgba(255,255,255,0.35); }
   .theme-btn.active { border-color:rgba(255,220,100,0.6); color:#f0d060; }
+  .theme-swatch { display:inline-block; width:9px; height:9px; border-radius:1px; border:1px solid rgba(255,255,255,0.55); margin-right:5px; vertical-align:middle; }
   .stamp-gothic { border-color:rgba(80,70,100,0.65) !important; color:rgba(80,70,100,0.65) !important; border-radius:50% !important; width:120px !important; height:120px !important; transform:translateY(-50%) rotate(-4deg) !important; font-family:'Libre Baskerville',serif !important; border-width:3px !important; }
   .stamp-gothic::before { border-color:rgba(80,70,100,0.3) !important; border-radius:50% !important; border-style:solid !important; }
   .stamp-japanese { border-color:rgba(192,64,48,0.8) !important; color:rgba(192,64,48,0.8) !important; border-radius:4px !important; transform:translateY(-50%) rotate(4deg) !important; font-family:'Noto Serif JP',serif !important; border-width:4px !important; width:110px !important; height:110px !important; }
@@ -705,17 +716,17 @@
   .book-label span { background:linear-gradient(180deg,#fff6c0 0%,#e8c84a 40%,#c8960c 70%,#8c6b1f 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 0 3px rgba(255,200,60,0.4)); display:block; font-size:5px; font-family:'Courier Prime',monospace; font-weight:700; }
 
   /* ── Demo Mode Banner ── */
-  #demo-banner { display:none; position:fixed; top:0; left:0; right:0; z-index:9999; background:linear-gradient(90deg,#6a1010,#8b2020,#6a1010); color:#f5edd8; text-align:center; padding:7px 16px; font-family:'Special Elite',cursive; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
+  #demo-banner { display:none; position:fixed; top:0; left:0; right:0; z-index:9999; background:linear-gradient(90deg,#6a1010,#8b2020,#6a1010); color:#f5edd8; text-align:center; padding:7px 16px; font-family:'Courier Prime',monospace; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
   #demo-banner.show { display:block; }
   #demo-banner a { color:#f5edd8; text-decoration:underline; cursor:pointer; margin-left:16px; opacity:0.85; font-style:italic; }
-  body.demo-mode header { margin-top:34px; }
+  body.demo-mode header { margin-top: var(--demo-banner-h, 34px); }
 
   /* ── Jarvis overlay ── */
-  #jarvis-btn{background:rgba(0,0,0,0.5);color:#f0e8d0;border:1px solid rgba(212,168,67,0.5);padding:5px 12px;font-family:'Special Elite',cursive;font-size:0.6rem;letter-spacing:0.1em;white-space:nowrap;cursor:pointer;border-radius:2px;transition:all 0.2s;margin-left:12px;}
+  #jarvis-btn{background:rgba(0,0,0,0.5);color:#f0e8d0;border:1px solid rgba(212,168,67,0.5);padding:5px 12px;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.08em;white-space:nowrap;cursor:pointer;border-radius:2px;transition:all 0.2s;margin-left:12px;}
   #jarvis-btn:hover{background:rgba(0,0,0,0.8);border-color:#d4a843;}
   #jarvis-overlay{display:none;position:fixed;inset:0;background:#b5975a;background-image:repeating-linear-gradient(92deg,transparent,transparent 60px,rgba(0,0,0,0.04) 60px,rgba(0,0,0,0.04) 61px),repeating-linear-gradient(180deg,transparent,transparent 3px,rgba(255,255,255,0.03) 3px,rgba(255,255,255,0.03) 4px),linear-gradient(135deg,#c4a265 0%,#a07840 25%,#b5975a 50%,#9a7035 75%,#b0904e 100%);z-index:600;overflow-y:auto;}
   #jarvis-overlay.open{display:block;}
-  #jarvis-close{position:fixed;top:16px;right:20px;z-index:700;background:linear-gradient(180deg,#2a1a08,#3d2a10);color:#f5edd8;border:2px solid #8a6530;padding:8px 18px;font-family:'Special Elite',cursive;font-size:0.7rem;letter-spacing:0.15em;cursor:pointer;box-shadow:2px 2px 0 rgba(0,0,0,0.4);}
+  #jarvis-close{position:fixed;top:16px;right:20px;z-index:700;background:linear-gradient(180deg,#2a1a08,#3d2a10);color:#f5edd8;border:2px solid #8a6530;padding:8px 18px;font-family:'Courier Prime',monospace;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;box-shadow:2px 2px 0 rgba(0,0,0,0.4);}
   #jarvis-close:hover{background:linear-gradient(180deg,#3d2a10,#5a3a18);border-color:#c9a96e;}
   /* Keep the Jarvis panel and its close button clear of the demo-mode banner */
   body.demo-mode #jarvis-overlay { padding-top: 40px; }
@@ -737,7 +748,7 @@
   .jv-stat-sub{font-size:0.52rem;color:#a07840;margin-top:4px;letter-spacing:0.08em;font-family:'Courier Prime',monospace;}
   .jv-grid{display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:16px;margin-bottom:16px;}
   .jv-panel{background:linear-gradient(135deg,#f5edd8,#ede0c4);border:2px solid #c4a060;border-top:3px solid #a07840;padding:16px;box-shadow:2px 2px 0 rgba(0,0,0,0.2);}
-  .jv-panel-head{font-family:'Special Elite',cursive;font-size:0.72rem;letter-spacing:0.18em;color:#3d2314;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid #c4a060;padding-bottom:6px;}
+  .jv-panel-head{font-family:'Courier Prime',monospace;font-size:0.72rem;letter-spacing:0.12em;color:#3d2314;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid #c4a060;padding-bottom:6px;}
   .jv-feed-list{overflow:hidden;position:relative;height:220px;}
   .feed-scroll-jv{animation:jvfeedScroll 30s linear infinite;}
   .feed-scroll-jv:hover{animation-play-state:paused;}
@@ -746,7 +757,7 @@
   .fi-owner{font-size:0.58rem;color:#7b4f2e;flex-shrink:0;font-family:'Courier Prime',monospace;letter-spacing:0.06em;}
   .jv-member-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(196,160,96,0.4);}
   .jv-member-row:last-child{border-bottom:none;}
-  .jv-member-name{font-size:0.78rem;letter-spacing:0.06em;color:#3d2314;font-family:'Special Elite',cursive;}
+  .jv-member-name{font-size:0.78rem;letter-spacing:0.02em;color:#3d2314;font-family:'Libre Baskerville',serif;}
   .jv-member-stats{display:flex;gap:14px;}
   .jv-member-stat{text-align:right;}
   .jv-member-stat-val{font-size:1rem;font-family:'Special Elite',cursive;color:#3d2314;display:block;}
@@ -788,26 +799,26 @@
     <div class="login-desc">Track every book your club reads. Explore picks, reviews & reading history together.</div>
     <div class="login-features">
       <div class="login-feature">
-        <span class="login-feature-icon">📚</span>
+        <span class="login-feature-icon">❧</span>
         <div class="login-feature-text"><strong>Club Shelves</strong>Browse every book the club has read</div>
       </div>
       <div class="login-feature">
-        <span class="login-feature-icon">⭐</span>
+        <span class="login-feature-icon">✦</span>
         <div class="login-feature-text"><strong>Ratings & Notes</strong>Personal reviews for every member</div>
       </div>
       <div class="login-feature">
-        <span class="login-feature-icon">👥</span>
+        <span class="login-feature-icon">☙</span>
         <div class="login-feature-text"><strong>Member Libraries</strong>See what everyone is reading</div>
       </div>
       <div class="login-feature">
-        <span class="login-feature-icon">☕</span>
+        <span class="login-feature-icon">❖</span>
         <div class="login-feature-text"><strong>Reading Goals</strong>Track your annual reading progress</div>
       </div>
     </div>
     <button class="google-btn" onclick="startDemo()" style="background:linear-gradient(180deg,#5a3a1a,#3d2314);border:2px solid #8a6530;font-size:1.05rem;padding:16px 28px;letter-spacing:0.08em;margin-bottom:10px;">
-      ☕ &nbsp;Try Demo — No Login Needed
+      ▶ &nbsp;Try Demo — No Login Needed
     </button>
-    <div class="login-divider"><div class="rule"></div><span>or sign in with your account</span><div class="rule"></div></div>
+    <div class="login-divider"><div class="rule"></div><span>or sign in to your club</span><div class="rule"></div></div>
     <button class="google-btn" onclick="signInWithGoogle()" style="background:rgba(61,35,20,0.08);color:var(--dark-brown);border:1px solid #c4a060;font-size:0.85rem;padding:11px 28px;">
       <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
       Sign in to Your Club
@@ -971,7 +982,7 @@
       <label for="inp-local" style="margin:0;cursor:pointer;font-size:0.8rem;text-transform:none;letter-spacing:normal;white-space:normal;">🍁 Local/Independent Author</label>
     </div>
     <div class="field wide" id="add-to-field" style="flex-basis:100%;"></div>
-    <button class="add-btn" onclick="addBook()">+ Add to Collection</button>
+    <button class="add-btn" onclick="addBook()">+ Add a Book</button>
   </div>
   <div class="stats-bar" id="stats-bar"></div>
   <div class="goal-bar" id="goal-bar"></div>
@@ -1384,6 +1395,10 @@ function addBook() {
   } else {
     fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null, localAuthor });
   }
+  resetAddForm();
+}
+
+function resetAddForm() {
   window._pendingCover = null;
   window._titleWasSelected = false;
   document.getElementById('inp-title').value  = '';
@@ -1391,6 +1406,8 @@ function addBook() {
   document.getElementById('inp-dewey').value  = '';
   document.getElementById('inp-year').value   = '';
   document.getElementById('inp-local').checked = false;
+  const suggestions = document.getElementById('book-suggestions');
+  if (suggestions) suggestions.innerHTML = '';
 }
 
 function deleteBook(key) {
@@ -2234,6 +2251,16 @@ document.addEventListener('click', e => {
   if (ts && !ts.contains(e.target)) document.getElementById('theme-menu').classList.remove('open');
 });
 
+// ── Demo banner height sync ──────────────────────────────────────────────────
+// The banner's text can wrap to two lines on a narrow phone, so the header's
+// offset below it is measured live rather than assumed to be a single line.
+window._syncDemoBannerHeight = function() {
+  const banner = document.getElementById('demo-banner');
+  if (!banner || !banner.classList.contains('show')) return;
+  document.documentElement.style.setProperty('--demo-banner-h', banner.offsetHeight + 'px');
+};
+window.addEventListener('resize', window._syncDemoBannerHeight);
+
 // ── Expose globals ────────────────────────────────────────────────────────────
 window.signInWithGoogle  = signInWithGoogle;
 window._setBooks = (b) => { books = b; window._spineBooks = b; };
@@ -2325,13 +2352,13 @@ if (!window._isDemoMode) document.getElementById('theme-switcher').style.display
 <!-- ── Theme Switcher ── -->
 <div id="theme-switcher">
   <div id="theme-menu">
-    <button class="theme-btn active" onclick="window.applyTheme('antique')" id="btn-antique">🟤 Antique Leather</button>
-    <button class="theme-btn" onclick="window.applyTheme('gothic')" id="btn-gothic">🖤 Gothic</button>
-    <button class="theme-btn" onclick="window.applyTheme('beatrix')" id="btn-beatrix">🌿 Beatrix Potter</button>
-    <button class="theme-btn" onclick="window.applyTheme('japanese')" id="btn-japanese">🎋 Japanese Woodblock</button>
+    <button class="theme-btn active" onclick="window.applyTheme('antique')" id="btn-antique"><span class="theme-swatch" style="background:#8a6530;"></span> Antique Leather</button>
+    <button class="theme-btn" onclick="window.applyTheme('gothic')" id="btn-gothic"><span class="theme-swatch" style="background:#111116;"></span> Gothic</button>
+    <button class="theme-btn" onclick="window.applyTheme('beatrix')" id="btn-beatrix"><span class="theme-swatch" style="background:#7a9a70;"></span> Beatrix Potter</button>
+    <button class="theme-btn" onclick="window.applyTheme('japanese')" id="btn-japanese"><span class="theme-swatch" style="background:#c04030;"></span> Japanese Woodblock</button>
   </div>
   <div style="font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.12em;color:rgba(255,255,255,0.5);text-align:right;margin-bottom:2px;" id="theme-hint"></div>
-  <button id="theme-toggle-btn" onclick="document.getElementById('theme-menu').classList.toggle('open')" title="Choose your personal theme">🎨 My Theme</button>
+  <button id="theme-toggle-btn" onclick="document.getElementById('theme-menu').classList.toggle('open')" title="Choose your personal theme">❖ My Theme</button>
 </div>
 
 
@@ -2364,14 +2391,14 @@ if (!window._isDemoMode) document.getElementById('theme-switcher').style.display
         <div id="jv-goal-rows" style="margin-top:8px;"></div>
       </div>
       <div class="jv-panel jv-log-panel">
-        <div class="jv-panel-head">System Log</div>
-        <div class="jv-log-line" id="jvl0">IndieShelf Library Intelligence</div>
-        <div class="jv-log-line" id="jvl1">Connecting to database...</div>
-        <div class="jv-log-line" id="jvl2">Authenticating member...</div>
-        <div class="jv-log-line" id="jvl3">Loading club catalogue...</div>
-        <div class="jv-log-line" id="jvl4">Indexing volumes...</div>
-        <div class="jv-log-line" id="jvl5">Rendering panels...</div>
-        <div class="jv-log-line" id="jvl6">All systems nominal.<span class="jv-log-cursor"></span></div>
+        <div class="jv-panel-head">Librarian's Log</div>
+        <div class="jv-log-line" id="jvl0">Opening the reading room...</div>
+        <div class="jv-log-line" id="jvl1">Pulling the card catalogue...</div>
+        <div class="jv-log-line" id="jvl2">Checking the membership roll...</div>
+        <div class="jv-log-line" id="jvl3">Dusting off the shelves...</div>
+        <div class="jv-log-line" id="jvl4">Indexing the volumes...</div>
+        <div class="jv-log-line" id="jvl5">Setting out the ledgers...</div>
+        <div class="jv-log-line" id="jvl6">Ready for you.<span class="jv-log-cursor"></span></div>
       </div>
     </div>
   </div>
@@ -2439,9 +2466,13 @@ window.startDemo = function() {
   window._demoBooks = DEMO_BOOKS;
   window._spineBooks = DEMO_BOOKS;
   if (window._setBooks) window._setBooks(DEMO_BOOKS);
+  resetAddForm(); // clear any test text left in New Entry from a prior demo visit
   document.getElementById('login-screen').classList.remove('show');
   document.getElementById('demo-banner').classList.add('show');
   document.body.classList.add('demo-mode');
+  // Measure the banner's real height once it's rendered (it can wrap to two
+  // lines on a narrow phone) so the header margin below it is always correct.
+  requestAnimationFrame(window._syncDemoBannerHeight);
   document.getElementById('user-bar').style.display = 'flex';
   document.getElementById('user-avatar').src = '';
   document.getElementById('sync-status').textContent = '☕ Demo Mode';
@@ -2505,6 +2536,7 @@ window.exitDemo = function() {
   window._spineBooks = [];
   currentUserEmail = '';
   if (window._setBooks) window._setBooks([]);
+  resetAddForm(); // don't leave demo test text sitting in New Entry
   document.getElementById('demo-banner').classList.remove('show');
   document.body.classList.remove('demo-mode');
   document.getElementById('login-screen').classList.add('show');
@@ -2668,7 +2700,7 @@ window.jarvisInit = function() {
     const read = bks.filter(b=>(b.addedBy===m.email||b.addedBy===m.key)&&b.status==='read'&&b.readDate&&new Date(b.readDate).getFullYear()===year).length;
     const pct = Math.min(100,Math.round((read/goal)*100));
     const done = read >= goal;
-    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="font-family:'Special Elite',cursive;font-size:0.78rem;color:#3d2314;min-width:72px;">${m.label}</span><div style="flex:1;background:rgba(196,160,96,0.25);height:10px;border-radius:4px;"><div style="width:${pct}%;height:100%;background:${done?'linear-gradient(90deg,#2d8a2d,#4aaa4a)':'linear-gradient(90deg,#a07840,#d4a843)'};border-radius:4px;transition:width 1s ease;"></div></div><span style="font-family:'Courier Prime',monospace;font-size:0.68rem;color:#7b4f2e;min-width:44px;text-align:right;">${read}/${goal}${done?' 🎉':''}</span></div>`;
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><span style="font-family:'Libre Baskerville',serif;font-size:0.78rem;color:#3d2314;min-width:72px;">${m.label}</span><div style="flex:1;background:rgba(196,160,96,0.25);height:10px;border-radius:4px;"><div style="width:${pct}%;height:100%;background:${done?'linear-gradient(90deg,#2d8a2d,#4aaa4a)':'linear-gradient(90deg,#a07840,#d4a843)'};border-radius:4px;transition:width 1s ease;"></div></div><span style="font-family:'Courier Prime',monospace;font-size:0.68rem;color:#7b4f2e;min-width:44px;text-align:right;">${read}/${goal}${done?' 🎉':''}</span></div>`;
   }).join('');
   // Boot log
   ['jvl0','jvl1','jvl2','jvl3','jvl4','jvl5','jvl6'].forEach((id,i)=>setTimeout(()=>{ const el=document.getElementById(id); if(el) el.classList.add('active'); },300+i*400));
