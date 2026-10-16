@@ -1030,6 +1030,24 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('user-bar').style.display = 'flex';
     document.getElementById('user-name').textContent = user.displayName || user.email;
     if (user.photoURL) document.getElementById('user-avatar').src = user.photoURL;
+    // If the signed-out preview swapped in demo members, restore the real
+    // club roster now that an actual member has signed in.
+    if (window._getMembersOverride) {
+      window._getMembersOverride = null;
+      const realTabsEl = document.querySelector('.owner-tabs');
+      if (realTabsEl) {
+        realTabsEl.innerHTML = `
+          <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> All Members</button>
+          <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
+          <button class="owner-tab" id="tab-betty" onclick="setOwnerFilter('betty')"><span class="tab-icon">❧</span> Betty's Library</button>
+          <button class="owner-tab" id="tab-nirmala" onclick="setOwnerFilter('nirmala')"><span class="tab-icon">❧</span> Nirmala's Library</button>
+          <button class="owner-tab" id="tab-lena" onclick="setOwnerFilter('lena')"><span class="tab-icon">❧</span> Lena's Library</button>
+          <button class="owner-tab" id="tab-janet" onclick="setOwnerFilter('janet')"><span class="tab-icon">❧</span> Janet's Library</button>
+          <button class="owner-tab" id="tab-ruth" onclick="setOwnerFilter('ruth')"><span class="tab-icon">❧</span> Ruth's Library</button>
+          <button class="owner-tab" id="tab-delphine" onclick="setOwnerFilter('delphine')"><span class="tab-icon">❧</span> Delphine's Library</button>
+          <button class="owner-tab" id="tab-lisa" onclick="setOwnerFilter('lisa')"><span class="tab-icon">❧</span> Lisa's Library</button>`;
+      }
+    }
     // Load saved theme for this user
     const themeKey = user.email.replace(/[.@]/g,'_');
     get(ref(db, `themes/${themeKey}`)).then(snap => {
@@ -1049,8 +1067,18 @@ onAuthStateChanged(auth, (user) => {
     if (dbUnsubscribe) { clearInterval(dbUnsubscribe); dbUnsubscribe = null; }
     // Show a sample-data preview behind the login card instead of leaving it
     // stuck on "Connecting..." with an empty shelf. Real data replaces this
-    // the moment someone signs in or clicks "Try Demo".
+    // the moment someone signs in or clicks "Try Demo". The preview must use
+    // the same member set as the sample books (Anne, Marie, Suki…) — not the
+    // real club roster — or names on the tabs won't match names on the books.
     books = (window.DEMO_BOOKS || []).slice();
+    window._getMembersOverride = () => (window.DEMO_MEMBERS || []);
+    const previewTabsEl = document.querySelector('.owner-tabs');
+    if (previewTabsEl && window.DEMO_MEMBERS) {
+      previewTabsEl.innerHTML = `
+        <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
+        <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
+        ` + window.DEMO_MEMBERS.map(m => `<button class="owner-tab" id="tab-${m.key}" onclick="setOwnerFilter('${m.key}')"><span class="tab-icon">❧</span> ${m.label}</button>`).join('');
+    }
     const syncEl = document.getElementById('sync-status');
     if (syncEl) { syncEl.textContent = '👁 Preview — sign in to sync'; syncEl.className = 'sync'; }
     renderAll();
@@ -1343,6 +1371,7 @@ function setOwnerFilter(f) {
       applyTheme('antique', false);
       document.getElementById('theme-switcher').style.display = 'none';
     }
+    renderGoal();
     renderClubReads();
     return;
   }
@@ -1463,8 +1492,11 @@ function renderGoal() {
   el.style.display = 'block';
   let totalRead = 0, totalGoal = 0;
   const _M = window._getMembersOverride ? window._getMembersOverride() : OWNERS;
-  const activeMembers = ownerFilter === 'all' ? _M : _M.filter(m => m.key === ownerFilter);
-  const label = ownerFilter === 'all' ? 'Club' : (activeMembers[0] ? activeMembers[0].label + "'s" : 'Club');
+  // Club Reads has no single member of its own — show the whole club's
+  // progress there too, same as the "All Members" view.
+  const isClubWide = ownerFilter === 'all' || ownerFilter === 'clubreads';
+  const activeMembers = isClubWide ? _M : _M.filter(m => m.key === ownerFilter);
+  const label = isClubWide ? 'Club' : (activeMembers[0] ? activeMembers[0].label + "'s" : 'Club');
   activeMembers.forEach(m => {
     const read = books.filter(b =>
       (b.addedBy === m.email) &&
@@ -2173,6 +2205,7 @@ const DEMO_MEMBERS = [
   {key:'jo',    email:'jo@demo.com',     label:'Jo'},
   {key:'diana', email:'diana@demo.com',  label:'Diana'},
 ];
+window.DEMO_MEMBERS = DEMO_MEMBERS; // exposed so the signed-out landing preview can borrow sample members
 
 const DEMO_BOOKS = [
   // 800s — Literature (the main club shelf)
