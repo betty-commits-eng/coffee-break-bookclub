@@ -1234,6 +1234,7 @@ function addBook() {
     fbAdd({ title, author, dewey, status, year: year ? parseInt(year) : null, addedBy, coverImage: window._pendingCover || null, localAuthor });
   }
   window._pendingCover = null;
+  window._titleWasSelected = false;
   document.getElementById('inp-title').value  = '';
   document.getElementById('inp-author').value = '';
   document.getElementById('inp-dewey').value  = '';
@@ -1686,6 +1687,16 @@ function setView(mode) {
 let searchTimer = null;
 function searchBooks(query) {
   clearTimeout(searchTimer);
+  // If the author/year/Dewey fields were auto-filled by a previous
+  // selection and the title has now changed, those fields are stale —
+  // clear them so an old pick doesn't linger under a new search.
+  if (window._titleWasSelected) {
+    document.getElementById('inp-author').value = '';
+    document.getElementById('inp-year').value = '';
+    document.getElementById('inp-dewey').value = '';
+    window._pendingCover = null;
+    window._titleWasSelected = false;
+  }
   const box = document.getElementById('book-suggestions');
   if (!query || query.length < 4) { box.innerHTML = ''; return; }
   box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">Searching…</div>';
@@ -1733,6 +1744,7 @@ function selectBook(i) {
   if (b.year) document.getElementById('inp-year').value = b.year;
   if (b.dewey) document.getElementById('inp-dewey').value = b.dewey;
   window._pendingCover = b.coverImage || null;
+  window._titleWasSelected = true;
   document.getElementById('book-suggestions').innerHTML = '';
 }
 function guessDewey(categories, title) {
