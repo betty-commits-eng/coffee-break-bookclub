@@ -134,6 +134,8 @@
   .lp-spine.dot-reading::after { background: #e6a020; }
   .lp-spine.dot-unread::after { background: #999; }
   .lp-spine.dot-wishlist::after { background: #6a4fcc; }
+  .lp-shelf-photo { padding: 0; display: block; }
+  .lp-shelf-photo img { display: block; width: 100%; height: auto; border-radius: 2px 2px 0 0; }
   .lp-goal { margin-top: 14px; background: #d4c090; border: 1px solid #8a6530; padding: 8px 12px; font-family: 'Courier Prime', monospace; font-size: 0.65rem; color: #3a2008; display: flex; justify-content: space-between; }
   .landing-about {
     max-width: 640px; margin: 0 auto; text-align: center;
@@ -830,14 +832,8 @@
         <div class="lp-tab">❧ Member</div>
         <div class="lp-tab">❧ Member</div>
       </div>
-      <div class="lp-shelf">
-        <div class="lp-spine dot-read" style="height:90px;background:linear-gradient(90deg,#4a2010,#7a3a1a,#4a2010);"></div>
-        <div class="lp-spine dot-reading" style="height:70px;background:linear-gradient(90deg,#1a3a4a,#2a6a8a,#1a3a4a);"></div>
-        <div class="lp-spine dot-read" style="height:100px;background:linear-gradient(90deg,#3a4a1a,#6a8a2a,#3a4a1a);"></div>
-        <div class="lp-spine dot-unread" style="height:60px;background:linear-gradient(90deg,#4a1a3a,#8a2a6a,#4a1a3a);"></div>
-        <div class="lp-spine dot-read" style="height:85px;background:linear-gradient(90deg,#4a3a10,#8a6a1a,#4a3a10);"></div>
-        <div class="lp-spine dot-wishlist" style="height:75px;background:linear-gradient(90deg,#2a2a4a,#4a4a8a,#2a2a4a);"></div>
-        <div class="lp-spine dot-read" style="height:95px;background:linear-gradient(90deg,#5a2a10,#9a4a1a,#5a2a10);"></div>
+      <div class="lp-shelf lp-shelf-photo">
+        <img src="shelf-preview.jpg" alt="A shelf of books from the club library" loading="lazy">
       </div>
       <div class="lp-goal"><span>📖 2026 CLUB READING GOAL</span><span>26 / 72 BOOKS</span></div>
     </div>
