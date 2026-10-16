@@ -78,6 +78,8 @@
   .user-name { font-family:'IM Fell English',serif; font-style:italic; color:var(--tan); font-size:0.85rem; }
   .sign-out-btn { background:transparent; border:1px solid var(--tan); color:var(--tan); padding:4px 10px; font-family:'Libre Baskerville',serif; font-size:0.7rem; letter-spacing:0.08em; cursor:pointer; transition:all 0.2s; }
   .sign-out-btn:hover { background:var(--tan); color:var(--dark-brown); }
+  .demo-member-picker { background:transparent; border:1px solid var(--tan); color:var(--tan); padding:4px 8px; font-family:'Libre Baskerville',serif; font-size:0.7rem; letter-spacing:0.04em; cursor:pointer; }
+  .demo-member-picker option { background:var(--dark-brown); color:var(--cream); }
   #login-screen {
     display: none;
     position: fixed;
@@ -294,6 +296,7 @@
   }
   button.add-btn:hover { background: linear-gradient(180deg, #7a5a3a, #5a3a1a); transform: translateY(-1px); box-shadow: 3px 4px 0 rgba(0,0,0,0.4); }
   button.add-btn:active { transform: translateY(1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.4); }
+  .add-to-static { font-family: 'Libre Baskerville', serif; font-size: 0.85rem; color: var(--dark-brown); padding: 6px 0; }
   .owner-tabs {
     display: flex;
     gap: 4px;
@@ -394,6 +397,7 @@
   .book-status-dot { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.8); flex-shrink: 0; position: relative; z-index: 4; margin-bottom: 3px; box-shadow: 0 2px 6px rgba(0,0,0,0.98), inset 0 1px 0 rgba(255,255,255,0.35), 0 0 0 2px rgba(0,0,0,0.6), 0 0 0 3px rgba(180,130,30,0.25); }
   .book-mid-groove { width: 100%; height: 5px; flex-shrink: 0; position: relative; z-index: 2; background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(255,255,255,0.04) 40%, rgba(0,0,0,0.6) 100%); border-top: 1px solid rgba(0,0,0,0.9); border-bottom: 1px solid rgba(0,0,0,0.9); }
   .book-author-tag { display: none; }
+  .book-tap-hint { position: absolute; top: -2px; right: -4px; width: 16px; height: 16px; border-radius: 50%; background: rgba(20,12,4,0.75); border: 1px solid rgba(212,168,67,0.6); color: #f0e4c4; font-size: 9px; line-height: 14px; text-align: center; z-index: 6; pointer-events: none; opacity: 0.6; }
   .book-card { display: none; position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: #f5edd8; border: 2px solid var(--brown); padding: 14px; width: 260px; z-index: 1000; box-shadow: 4px 4px 0 var(--dark-brown); text-align: left; isolation: isolate; }
   .book-card::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 12px; background: transparent; }
   .book-card::before { content: ''; position: absolute; bottom: -8px; left: 50%; width: 12px; height: 12px; background: var(--cream); border-right: 2px solid var(--brown); border-bottom: 2px solid var(--brown); transform: translateX(-50%) rotate(45deg); }
@@ -596,6 +600,10 @@
     .section-sub { font-size: 0.72rem; }
     .bli-author { display: none; }
     .bli-call { min-width: 44px; font-size: 0.85rem; }
+    /* Touch devices have no hover state to reveal a book's actions, so make
+       the "tap for details" hint clearer and bigger here than on desktop,
+       where the lift-and-glow on hover already implies interactivity. */
+    .book-tap-hint { opacity: 0.9; width: 20px; height: 20px; font-size: 11px; line-height: 18px; }
   }
 
   .spine-stars { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 7px; color: #f5d87a; text-shadow: 0 0 4px rgba(0,0,0,0.7); letter-spacing: 1px; flex-shrink: 0; z-index: 2; position: relative; padding: 2px 0; }
@@ -620,6 +628,7 @@
   .goal-edit button { padding: 3px 10px; font-family: 'Courier Prime', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--brown); background: var(--parchment); color: var(--brown); cursor: pointer; }
   .goal-edit button:hover { background: var(--brown); color: var(--cream); }
   .goal-congrats { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: #c8960c; margin-top: 6px; }
+  .goal-note { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.04em; opacity: 0.75; }
   .book-suggestions { position: absolute; top: 100%; left: 0; right: 0; background: #f5edd8; border: 1px solid #c4a060; border-top: none; z-index: 100; max-height: 280px; overflow-y: auto; box-shadow: 3px 3px 8px rgba(0,0,0,0.2); }
   .book-suggestion { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #e8d8b0; font-family: 'Libre Baskerville', serif; font-size: 0.82rem; }
   .book-suggestion:hover { background: #ede0c4; }
@@ -828,7 +837,7 @@
       <div class="landing-preview-label">A peek inside the club library</div>
       <div class="lp-toolbar">
         <div class="lp-tab active">⊞ Club Library</div>
-        <div class="lp-tab">☕ Club Reads</div>
+        <div class="lp-tab">☕ Shared Reads</div>
         <div class="lp-tab">❧ Member</div>
         <div class="lp-tab">❧ Member</div>
       </div>
@@ -899,7 +908,8 @@
     <div class="user-bar" id="user-bar" style="display:none;">
       <img class="user-avatar" id="user-avatar" src="" alt="">
       <span class="user-name" id="user-name"></span>
-      <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+      <select class="demo-member-picker" id="demo-member-picker" onchange="window._switchDemoMember(this.value)" style="display:none;" title="Browse the demo as a different member"></select>
+      <button class="sign-out-btn" id="sign-out-btn" onclick="signOut()">Sign out</button>
     </div>
   </div>
 </header>
@@ -950,6 +960,7 @@
       <input type="checkbox" id="inp-local" style="width:16px;height:16px;accent-color:#2d6e3a;cursor:pointer;flex-shrink:0;">
       <label for="inp-local" style="margin:0;cursor:pointer;font-size:0.8rem;text-transform:none;letter-spacing:normal;white-space:normal;">🍁 Local/Independent Author</label>
     </div>
+    <div class="field wide" id="add-to-field" style="flex-basis:100%;"></div>
     <button class="add-btn" onclick="addBook()">+ Add to Collection</button>
   </div>
   <div class="stats-bar" id="stats-bar"></div>
@@ -959,7 +970,7 @@
       <span class="tab-icon">⊞</span> All Members
     </button>
     <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);">
-      <span class="tab-icon">☕</span> Club Reads
+      <span class="tab-icon">☕</span> Shared Reads
     </button>
     <button class="owner-tab" id="tab-betty" onclick="setOwnerFilter('betty')">
       <span class="tab-icon">❧</span> Betty's Library
@@ -1135,6 +1146,7 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('user-bar').style.display = 'flex';
     document.getElementById('user-name').textContent = user.displayName || user.email;
     if (user.photoURL) document.getElementById('user-avatar').src = user.photoURL;
+    renderAddToField();
     // If the signed-out preview swapped in demo members, restore the real
     // club roster now that an actual member has signed in.
     if (window._getMembersOverride) {
@@ -1143,7 +1155,7 @@ onAuthStateChanged(auth, (user) => {
       if (realTabsEl) {
         realTabsEl.innerHTML = `
           <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> All Members</button>
-          <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
+          <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Shared Reads</button>
           <button class="owner-tab" id="tab-betty" onclick="setOwnerFilter('betty')"><span class="tab-icon">❧</span> Betty's Library</button>
           <button class="owner-tab" id="tab-nirmala" onclick="setOwnerFilter('nirmala')"><span class="tab-icon">❧</span> Nirmala's Library</button>
           <button class="owner-tab" id="tab-lena" onclick="setOwnerFilter('lena')"><span class="tab-icon">❧</span> Lena's Library</button>
@@ -1181,7 +1193,7 @@ onAuthStateChanged(auth, (user) => {
     if (previewTabsEl && window.DEMO_MEMBERS) {
       previewTabsEl.innerHTML = `
         <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
-        <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
+        <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Shared Reads</button>
         ` + window.DEMO_MEMBERS.map(m => `<button class="owner-tab" id="tab-${m.key}" onclick="setOwnerFilter('${m.key}')"><span class="tab-icon">❧</span> ${m.label}</button>`).join('');
     }
     const syncEl = document.getElementById('sync-status');
@@ -1293,6 +1305,15 @@ function postDiscussionNote() {
   const text = document.getElementById('discussion-new-note').value.trim();
   if (!text) return;
   if (!currentEditKey) return;
+  if (window._isDemoMode) {
+    const b = books.find(x => x._key === currentEditKey);
+    if (!b) return;
+    if (!b.discussion) b.discussion = {};
+    b.discussion['n' + Date.now()] = { text, author: currentUserEmail, timestamp: new Date().toISOString() };
+    document.getElementById('discussion-new-note').value = '';
+    renderDiscussionNotes(currentEditKey);
+    return;
+  }
   const noteRef = ref(db, `books/${currentEditKey}/discussion`);
   push(noteRef, {
     text,
@@ -1305,6 +1326,11 @@ function postDiscussionNote() {
 
 window._deleteNote = function(bookKey, noteKey) {
   if (!confirm('Delete this note?')) return;
+  if (window._isDemoMode) {
+    const b = books.find(x => x._key === bookKey);
+    if (b && b.discussion) { delete b.discussion[noteKey]; renderDiscussionNotes(bookKey); }
+    return;
+  }
   remove(ref(db, `books/${bookKey}/discussion/${noteKey}`));
 };
 
@@ -1322,6 +1348,17 @@ const DEWEY_CLASSES = [
   { num: '900', name: 'History',          sub: 'History, geography & biography',                 color: '#1a5c5c' },
 ];
 
+function renderAddToField() {
+  const el = document.getElementById('add-to-field');
+  if (!el) return;
+  if (window._isDemoMode) {
+    el.innerHTML = `<label>Adding to</label><select id="add-to-select" onchange="window._switchDemoMember(this.value)">${DEMO_MEMBERS.map(m => `<option value="${m.key}" ${m.email===currentUserEmail?'selected':''}>❧ ${m.label}'s shelf</option>`).join('')}</select>`;
+  } else {
+    const name = (auth.currentUser && (auth.currentUser.displayName || auth.currentUser.email)) || 'your';
+    el.innerHTML = `<label>Adding to</label><div class="add-to-static">❧ ${escapeHtml(name)}'s shelf</div>`;
+  }
+}
+
 function addBook() {
   const title  = document.getElementById('inp-title').value.trim();
   const author = document.getElementById('inp-author').value.trim();
@@ -1330,8 +1367,7 @@ function addBook() {
   const year   = document.getElementById('inp-year').value;
   const localAuthor = document.getElementById('inp-local').checked;
   if (!title || !dewey) { alert('Please enter a title and select a Dewey class.'); return; }
-  const currentUser = auth.currentUser;
-  const addedBy = currentUser ? currentUser.email : '';
+  const addedBy = window._isDemoMode ? currentUserEmail : (auth.currentUser ? auth.currentUser.email : '');
   if (window._isDemoMode) {
     const demoBook={_key:'d'+Date.now(),title,author,dewey,status,year:year?parseInt(year):null,notes:'',addedBy,coverImage:window._pendingCover||null,added:new Date().toISOString(),readDate:status==='read'?new Date().toISOString():null,rating:0,localAuthor};
     books.push(demoBook);window._spineBooks=books;renderAll();
@@ -1383,13 +1419,16 @@ function openEdit(key, viewOnly = false) {
   preview.innerHTML = b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="height:80px;border:1px solid #c8a96e;">` : '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover image</span>';
   const fields = ['edit-title','edit-author','edit-dewey','edit-status','edit-year','edit-readdate'];
   fields.forEach(id => { document.getElementById(id).disabled = viewOnly; });
-  document.querySelectorAll('#edit-stars .star').forEach(s => s.style.pointerEvents = viewOnly ? 'none' : '');
-  document.getElementById('find-cover-btn').style.display = viewOnly ? 'none' : '';
-  document.getElementById('modal-actions').style.display = viewOnly ? 'none' : '';
   // In read-only mode, offer an explicit "Edit this Book" action — but only
   // to whoever could actually save a change (its owner, or anyone in demo
   // mode). Everyone else just gets "Close".
   const canEdit = window._isDemoMode || b.addedBy === currentUserEmail;
+  // Rating is a lightweight gesture, not an edit — stars stay clickable
+  // (and save immediately) for anyone who could edit this book, even in
+  // the read-only Details view. Only non-owners in view mode are locked out.
+  document.querySelectorAll('#edit-stars .star').forEach(s => s.style.pointerEvents = canEdit ? '' : 'none');
+  document.getElementById('find-cover-btn').style.display = viewOnly ? 'none' : '';
+  document.getElementById('modal-actions').style.display = viewOnly ? 'none' : '';
   document.getElementById('view-actions').style.display = viewOnly ? 'flex' : 'none';
   document.getElementById('view-edit-btn').style.display = canEdit ? '' : 'none';
   document.getElementById('modal-title').textContent = viewOnly ? 'Book Details' : 'Edit Book';
@@ -1623,12 +1662,13 @@ function renderGoal() {
   const pct  = hasGoal ? Math.min(100, Math.round((totalRead / totalGoal) * 100)) : 0;
   const done = hasGoal && totalRead >= totalGoal;
   const activeMember = activeMembers[0];
-  const canEdit = ownerFilter !== 'all' && activeMember && activeMember.email === currentUserEmail;
+  const canEdit = ownerFilter !== 'all' && ownerFilter !== 'clubreads' && activeMember && (window._isDemoMode || activeMember.email === currentUserEmail);
   const editBtn = canEdit ? `<span onclick="window._editGoal('${activeMember.key}', ${totalGoal})" style="cursor:pointer;font-size:1.1rem;margin-left:8px;color:var(--dark-brown);font-weight:bold;" title="Edit goal">✎</span>` : '';
+  const memberNote = isClubWide && hasGoal ? ` <span class="goal-note" title="Each member's own goal, added together">· ${activeMembers.length} member${activeMembers.length!==1?'s':''}</span>` : '';
   document.getElementById('goal-bar').innerHTML = `
     <div class="goal-header">
       <span class="goal-label">📖 ${year} ${label} Reading Goal</span>
-      <span class="goal-fraction">${hasGoal ? `${totalRead} / ${totalGoal} books` : 'No goal set'}${editBtn}</span>
+      <span class="goal-fraction">${hasGoal ? `${totalRead} / ${totalGoal} books${memberNote}` : 'No goal set'}${editBtn}</span>
     </div>
     <div class="goal-track">
       <div class="goal-fill ${done ? 'complete' : ''}" style="width:${pct}%"></div>
@@ -1709,6 +1749,7 @@ function renderAll() {
       const noteCount = b.discussion ? Object.keys(b.discussion).length : 0;
       return `
       <div class="book" title="${b.title}">
+        <div class="book-tap-hint" aria-hidden="true">⋯</div>
         <div class="book-spine" style="background:${spineGrad}; height:${h}px;">
           <div class="book-band-top"></div>
           <div class="book-label"><span>${b.dewey}<br>${(b.author||'').split(' ').pop().substring(0,4).toUpperCase()||'—'}</span></div>
@@ -1923,6 +1964,16 @@ document.querySelectorAll('#edit-stars .star').forEach(star => {
     document.querySelectorAll('#edit-stars .star').forEach(s => {
       s.classList.toggle('lit', parseInt(s.dataset.val) <= newVal);
     });
+    // A star rating saves itself right away — it's a quick gesture, not
+    // part of the heavier "Save Changes" edit flow.
+    const key = document.getElementById('edit-id').value;
+    if (!key) return;
+    if (window._isDemoMode) {
+      const idx = books.findIndex(b => b._key === key);
+      if (idx >= 0) { books[idx] = { ...books[idx], rating: newVal }; window._spineBooks = books; renderAll(); }
+    } else {
+      fbUpdate(key, { rating: newVal });
+    }
   });
   star.addEventListener('mouseover', () => {
     const val = parseInt(star.dataset.val);
@@ -2383,17 +2434,30 @@ window.startDemo = function() {
   document.getElementById('demo-banner').classList.add('show');
   document.body.classList.add('demo-mode');
   document.getElementById('user-bar').style.display = 'flex';
-  document.getElementById('user-name').textContent = 'Anne (Demo)';
   document.getElementById('user-avatar').src = '';
   document.getElementById('sync-status').textContent = '☕ Demo Mode';
   document.getElementById('sync-status').className = 'sync connecting';
+
+  // Let the visitor choose which member they're browsing as, instead of
+  // silently assigning "Anne" — and make the exit path say what it does.
+  currentUserEmail = DEMO_MEMBERS[0].email;
+  const pickerEl = document.getElementById('demo-member-picker');
+  if (pickerEl) {
+    pickerEl.innerHTML = DEMO_MEMBERS.map(m => `<option value="${m.key}">${m.label}</option>`).join('');
+    pickerEl.value = DEMO_MEMBERS[0].key;
+    pickerEl.style.display = '';
+  }
+  document.getElementById('user-name').textContent = `Browsing as ${DEMO_MEMBERS[0].label} (demo)`;
+  const signOutBtn = document.getElementById('sign-out-btn');
+  if (signOutBtn) { signOutBtn.textContent = 'Exit demo'; signOutBtn.onclick = window.exitDemo; }
+  renderAddToField();
 
   // Rebuild tabs with demo member names
   const tabsEl = document.querySelector('.owner-tabs');
   if (tabsEl) {
     tabsEl.innerHTML = `
       <button class="owner-tab active" id="tab-all" onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
-      <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
+      <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Shared Reads</button>
       <button class="owner-tab" id="tab-anne"  onclick="setOwnerFilter('anne')"><span class="tab-icon">❧</span> Anne</button>
       <button class="owner-tab" id="tab-marie" onclick="setOwnerFilter('marie')"><span class="tab-icon">❧</span> Marie</button>
       <button class="owner-tab" id="tab-suki"  onclick="setOwnerFilter('suki')"><span class="tab-icon">❧</span> Suki</button>
@@ -2414,22 +2478,39 @@ window.startDemo = function() {
   window.setOwnerFilter('all');
 };
 
+window._switchDemoMember = function(key) {
+  const m = DEMO_MEMBERS.find(x => x.key === key);
+  if (!m) return;
+  currentUserEmail = m.email;
+  document.getElementById('user-name').textContent = `Browsing as ${m.label} (demo)`;
+  const pickerEl = document.getElementById('demo-member-picker');
+  if (pickerEl) pickerEl.value = key;
+  renderAddToField();
+  renderAll();
+};
+
 window.exitDemo = function() {
   window._isDemoMode = false;
   window._getMembersOverride = null;
   window._demoBooks = null;
   window._spineBooks = [];
+  currentUserEmail = '';
   if (window._setBooks) window._setBooks([]);
   document.getElementById('demo-banner').classList.remove('show');
   document.body.classList.remove('demo-mode');
   document.getElementById('login-screen').classList.add('show');
   document.getElementById('user-bar').style.display = 'none';
+  const pickerEl = document.getElementById('demo-member-picker');
+  if (pickerEl) pickerEl.style.display = 'none';
+  const signOutBtn = document.getElementById('sign-out-btn');
+  if (signOutBtn) { signOutBtn.textContent = 'Sign out'; signOutBtn.onclick = signOut; }
+  renderAddToField();
   // Restore real tabs
   const tabsEl = document.querySelector('.owner-tabs');
   if (tabsEl) {
     tabsEl.innerHTML = `
       <button class="owner-tab active" id="tab-all"      onclick="setOwnerFilter('all')"><span class="tab-icon">⊞</span> Club Library</button>
-      <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Club Reads</button>
+      <button class="owner-tab" id="tab-clubreads" onclick="setOwnerFilter('clubreads')" style="border-left:3px solid rgba(45,138,45,0.5);"><span class="tab-icon">☕</span> Shared Reads</button>
       <button class="owner-tab" id="tab-betty"    onclick="setOwnerFilter('betty')"><span class="tab-icon">❧</span> Betty</button>
       <button class="owner-tab" id="tab-nirmala"  onclick="setOwnerFilter('nirmala')"><span class="tab-icon">❧</span> Nirmala</button>
       <button class="owner-tab" id="tab-lena"     onclick="setOwnerFilter('lena')"><span class="tab-icon">❧</span> Lena</button>
