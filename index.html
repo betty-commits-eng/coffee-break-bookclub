@@ -386,6 +386,9 @@
   .book-spine { width: 46px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0; border-radius: 3px 1px 1px 3px; position: relative; overflow: hidden; box-shadow: -5px 0 10px rgba(0,0,0,0.95), inset 4px 0 8px rgba(255,255,255,0.06), inset -3px 0 10px rgba(0,0,0,0.8), 4px 0 0 rgba(0,0,0,0.9), inset 0 0 40px rgba(0,0,0,0.6); }
   .book-spine::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 3px), repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px), repeating-linear-gradient(160deg, transparent, transparent 8px, rgba(255,255,255,0.015) 8px, rgba(255,255,255,0.015) 9px); pointer-events: none; z-index: 1; }
   .book-spine::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0.08) 15%, transparent 35%, rgba(255,255,255,0.12) 50%, transparent 65%, rgba(0,0,0,0.3) 100%); pointer-events: none; z-index: 3; }
+  /* ── Keyboard focus ring in the vintage gold palette ── */
+  .book:focus, .book-list-item:focus, .section-header:focus { outline: none; }
+  .book:focus-visible, .book-list-item:focus-visible, .section-header:focus-visible { outline: 2px solid #d4a843; outline-offset: 3px; }
   .book-band-top { width: 100%; flex-shrink: 0; position: relative; z-index: 2; height: 18px; background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(255,255,255,0.14) 30%, rgba(0,0,0,0.12) 55%, rgba(255,255,255,0.1) 75%, rgba(0,0,0,0.75) 100%); border-bottom: 1px solid rgba(0,0,0,0.95); box-shadow: 0 3px 8px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.12); }
   .book-band-top::after { content: ''; position: absolute; top: 50%; left: 6%; right: 6%; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.4) 20%, rgba(255,220,90,0.98) 50%, rgba(212,168,67,0.4) 80%, transparent); transform: translateY(-50%); box-shadow: 0 0 4px rgba(255,200,60,0.4); }
   .book-band-bottom { width: 100%; flex-shrink: 0; position: relative; z-index: 2; height: 18px; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(255,255,255,0.14) 30%, rgba(0,0,0,0.12) 55%, rgba(255,255,255,0.1) 75%, rgba(0,0,0,0.75) 100%); border-top: 1px solid rgba(0,0,0,0.95); box-shadow: 0 -3px 8px rgba(0,0,0,0.8), inset 0 -1px 0 rgba(255,255,255,0.12); }
@@ -1775,7 +1778,7 @@ function renderAll() {
       const spineGrad = `linear-gradient(90deg, rgba(0,0,0,0.6) 0%, ${vc.base} 8%, ${vc.mid} 30%, ${vc.hi} 48%, ${vc.hi} 52%, ${vc.mid} 68%, ${vc.base} 88%, rgba(0,0,0,0.7) 100%)`;
       const noteCount = b.discussion ? Object.keys(b.discussion).length : 0;
       return `
-      <div class="book" title="${b.title}">
+      <div class="book" title="${b.title}" tabindex="0" role="button" aria-label="${b.title} by ${b.author || 'Unknown author'} — open book details">
         <div class="book-spine" style="background:${spineGrad}; height:${h}px;">
           <div class="book-band-top"></div>
           <div class="book-label"><span>${b.dewey}<br>${(b.author||'').split(' ').pop().substring(0,4).toUpperCase()||'—'}</span></div>
@@ -1821,7 +1824,7 @@ function renderAll() {
     const row1spines = row1Books.map((b, i) => makeSpine(b, i)).join('');
     const row2spines = row2Books.length > 0 ? row2Books.map((b, i) => makeSpine(b, mid + i)).join('') : null;
     const listRows = sectionBooks.map(b => `
-      <div class="book-list-item" onclick="window._openEdit('${b._key}', true)" style="border-left-color:${cls.color};">
+      <div class="book-list-item" onclick="window._openEdit('${b._key}', true)" tabindex="0" role="button" aria-label="${b.title} by ${b.author || 'Unknown author'} — view details" style="border-left-color:${cls.color};">
         <div class="bli-call">${b.dewey}</div>
         <div class="bli-title">${b.title}${b.localAuthor ? ' <span style="font-size:0.65rem;background:#2d6e3a;color:#e8f5e9;padding:1px 5px;border-radius:2px;vertical-align:middle;">🍁</span>' : ''}</div>
         <div class="bli-author">${b.author || '—'}</div>
@@ -1829,7 +1832,7 @@ function renderAll() {
       </div>`).join('');
     return `
       <div class="dewey-section ${collapsed?'collapsed':''}" id="section-${cls.num}">
-        <div class="section-header" onclick="window._toggleSection('${cls.num}')">
+        <div class="section-header" onclick="window._toggleSection('${cls.num}')" tabindex="0" role="button" aria-expanded="${!collapsed}" aria-label="${cls.name} section — toggle collapse">
           <div class="section-number" style="background:${cls.color};">${cls.num}</div>
           <div class="section-title-wrap">
             <div class="section-title">${cls.name}</div>
@@ -2339,6 +2342,15 @@ document.addEventListener('click', e => {
   const origLinks = card.querySelectorAll('a');
   const fcLinks = _fc.querySelectorAll('a');
   origLinks.forEach((ol, i) => { if (fcLinks[i]) { fcLinks[i].href = ol.href; fcLinks[i].target = '_blank'; }});
+});
+// ── Keyboard access: Enter/Space activates book spines, list rows, section headers ──
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const t = e.target;
+  if (t.classList && (t.classList.contains('book') || t.classList.contains('book-list-item') || t.classList.contains('section-header'))) {
+    e.preventDefault();
+    t.click();
+  }
 });
 document.getElementById('inp-title').addEventListener('keydown', e => {
   if (e.key === 'Enter') addBook();
