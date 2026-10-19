@@ -388,7 +388,7 @@
   .book-spine::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0.08) 15%, transparent 35%, rgba(255,255,255,0.12) 50%, transparent 65%, rgba(0,0,0,0.3) 100%); pointer-events: none; z-index: 3; }
   /* ── Keyboard focus ring in the vintage gold palette ── */
   .book:focus, .book-list-item:focus, .section-header:focus { outline: none; }
-  .book:focus-visible, .book-list-item:focus-visible, .section-header:focus-visible { outline: 2px solid #d4a843; outline-offset: 3px; }
+  .book:focus-visible, .book-list-item:focus-visible, .section-header:focus-visible { outline: 3px solid #d4a843; outline-offset: 3px; box-shadow: 0 0 0 6px rgba(212,168,67,0.30); }
   .book-band-top { width: 100%; flex-shrink: 0; position: relative; z-index: 2; height: 18px; background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(255,255,255,0.14) 30%, rgba(0,0,0,0.12) 55%, rgba(255,255,255,0.1) 75%, rgba(0,0,0,0.75) 100%); border-bottom: 1px solid rgba(0,0,0,0.95); box-shadow: 0 3px 8px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.12); }
   .book-band-top::after { content: ''; position: absolute; top: 50%; left: 6%; right: 6%; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.4) 20%, rgba(255,220,90,0.98) 50%, rgba(212,168,67,0.4) 80%, transparent); transform: translateY(-50%); box-shadow: 0 0 4px rgba(255,200,60,0.4); }
   .book-band-bottom { width: 100%; flex-shrink: 0; position: relative; z-index: 2; height: 18px; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(255,255,255,0.14) 30%, rgba(0,0,0,0.12) 55%, rgba(255,255,255,0.1) 75%, rgba(0,0,0,0.75) 100%); border-top: 1px solid rgba(0,0,0,0.95); box-shadow: 0 -3px 8px rgba(0,0,0,0.8), inset 0 -1px 0 rgba(255,255,255,0.12); }
@@ -1169,7 +1169,9 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('login-error').classList.remove('show');
     document.getElementById('user-bar').style.display = 'flex';
     document.getElementById('user-name').textContent = user.displayName || user.email;
-    if (user.photoURL) document.getElementById('user-avatar').src = user.photoURL;
+    const avatarEl = document.getElementById('user-avatar');
+    if (user.photoURL) { avatarEl.src = user.photoURL; avatarEl.style.display = ''; }
+    else { avatarEl.style.display = 'none'; }
     renderAddToField();
     // If the signed-out preview swapped in demo members, restore the real
     // club roster now that an actual member has signed in.
@@ -1814,9 +1816,6 @@ function renderAll() {
             <button class="library-btn" onclick="this.nextElementSibling.classList.toggle('open')">🏛️ Find at Library ▾</button>
             <div class="library-menu">
               <a href="https://ottawa.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Ottawa Public Library</a>
-              <a href="https://nelson.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Nelson Public Library</a>
-              <a href="https://fulcolibrary.bibliocommons.com/v2/search?query=${encodeURIComponent(b.title + ' ' + (b.author||''))}&searchType=keyword" target="_blank">Fulco Library</a>
-              <a href="https://www.londonlibrary.co.uk" target="_blank">London Library</a>
             </div>
           </div>
         </div>
@@ -1884,7 +1883,7 @@ function searchBooks(query) {
   box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">Searching…</div>';
   searchTimer = setTimeout(() => {
     const gbUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6&printType=books`;
-    const olUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=6&fields=key,title,author_name,first_publish_year,cover_i`;
+    const olUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=6&fields=key,title,author_name,first_publish_year,cover_i,subject`;
     fetch(gbUrl)
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(data => {
@@ -1926,7 +1925,7 @@ function normalizeOpenLibraryBook(doc) {
     title:      doc.title || '',
     author:     (doc.author_name || []).join(', '),
     year:       doc.first_publish_year || null,
-    dewey:      guessDewey([], doc.title || ''),
+    dewey:      guessDewey(doc.subject || [], doc.title || ''),
     coverImage: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg` : null
   };
 }
@@ -2505,7 +2504,6 @@ const DEMO_BOOKS = [
   // 700s — Arts
   {_key:'d30',title:'Big Magic',author:'Elizabeth Gilbert',dewey:'700',status:'read',year:2015,notes:'Great for creative block.',rating:4,addedBy:'diana@demo.com',added:'2023-06-01T10:00:00Z',readDate:'2026-06-18T00:00:00Z',coverImage:null},
   // Second copy of a book two members have both read, so Club Reads has something to show
-  {_key:'d31',title:'The Midnight Library',author:'Matt Haig',dewey:'823',status:'read',year:2020,notes:'',rating:5,addedBy:'marie@demo.com',added:'2024-09-10T10:00:00Z',readDate:'2026-09-29T00:00:00Z',coverImage:null},
 ];
 
 window.DEMO_BOOKS = DEMO_BOOKS; // exposed so the signed-out landing preview can borrow sample data
@@ -2523,7 +2521,7 @@ window.startDemo = function() {
   // lines on a narrow phone) so the header margin below it is always correct.
   requestAnimationFrame(window._syncDemoBannerHeight);
   document.getElementById('user-bar').style.display = 'flex';
-  document.getElementById('user-avatar').src = '';
+  document.getElementById('user-avatar').style.display = 'none'; // no photo in demo — hide instead of showing a broken image
   document.getElementById('sync-status').textContent = '☕ Demo Mode';
   document.getElementById('sync-status').className = 'sync connecting';
 
