@@ -1123,7 +1123,7 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, remove, onValue, update, set, get }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged }
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut as fbSignOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -1269,9 +1269,14 @@ function startListening() {
 }
 
 function signInWithGoogle() {
-  signInWithPopup(auth, provider).catch(() => {
-    document.getElementById('login-error').textContent = 'Sign-in failed. Please try again.';
-    document.getElementById('login-error').classList.add('show');
+  signInWithPopup(auth, provider).catch((e) => {
+    var code = (e && e.code) || '';
+    if (code === 'auth/popup-blocked' || code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+      signInWithRedirect(auth, provider);
+    } else {
+      document.getElementById('login-error').textContent = 'Sign-in failed. Please try again.';
+      document.getElementById('login-error').classList.add('show');
+    }
   });
 }
 function signOut() { fbSignOut(auth); }
