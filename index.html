@@ -1268,16 +1268,13 @@ function startListening() {
   dbUnsubscribe = setInterval(loadBooks, 3000);
 }
 
+function showLoginError() {
+  document.getElementById('login-error').textContent = 'Sign-in failed. Please try again.';
+  document.getElementById('login-error').classList.add('show');
+}
 function signInWithGoogle() {
-  signInWithPopup(auth, provider).catch((e) => {
-    var code = (e && e.code) || '';
-    if (code === 'auth/popup-blocked' || code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
-      signInWithRedirect(auth, provider);
-    } else {
-      document.getElementById('login-error').textContent = 'Sign-in failed. Please try again.';
-      document.getElementById('login-error').classList.add('show');
-    }
-  });
+  try { signInWithRedirect(auth, provider); }
+  catch (e) { showLoginError(); }
 }
 function signOut() { fbSignOut(auth); }
 
