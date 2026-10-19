@@ -1883,41 +1883,63 @@ function searchBooks(query) {
   if (!query || query.length < 3) { box.innerHTML = ''; return; }
   box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">Searching…</div>';
   searchTimer = setTimeout(() => {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6&printType=books`)
+    const gbUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=6&printType=books`;
+    const olUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=6&fields=key,title,author_name,first_publish_year,cover_i`;
+    fetch(gbUrl)
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(data => {
         if (data.error) throw new Error(data.error.message || 'API error');
-        if (!data.items) { box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">No results found.</div>'; return; }
-        box.innerHTML = `<div style="text-align:right;padding:4px 8px;border-bottom:1px solid #e8d8b0;">
-          <span onclick="document.getElementById('book-suggestions').innerHTML=''" style="cursor:pointer;font-size:0.8rem;color:var(--brown);font-family:'Courier Prime',monospace;letter-spacing:0.05em;">✕ close</span>
-        </div>` + data.items.map((item, i) => {
-          const info   = item.volumeInfo;
-          const title  = info.title || '';
-          const author = (info.authors || []).join(', ');
-          const year   = info.publishedDate ? info.publishedDate.substring(0,4) : '';
-          return `<div class="book-suggestion" onclick="window.selectBook(${i})">
-            <div class="sug-title">${title}</div>
-            <div class="sug-author">${author}</div>
-            <div class="sug-year">${year}</div>
-          </div>`;
-        }).join('');
-        window._bookResults = data.items.map(item => {
-          const info = item.volumeInfo;
-          const thumb = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || null) : null;
-          return {
-            title:      info.title || '',
-            author:     (info.authors || []).join(', '),
-            year:       info.publishedDate ? parseInt(info.publishedDate.substring(0,4)) : null,
-            dewey:      guessDewey(info.categories || [], info.title || ''),
-            coverImage: thumb ? thumb.replace('http://', 'https://') : null
-          };
-        });
+        if (!data.items || !data.items.length) throw new Error('no Google results');
+        renderBookSuggestions(box, data.items.map(normalizeGoogleBook));
       })
-      .catch(err => {
-        console.error('Book search failed:', err);
-        box.innerHTML = '<div class="book-suggestion" style="color:#a33;font-style:italic;">Search unavailable right now — you can still enter the details below manually.</div>';
+      .catch(() => {
+        // Google Books throttled or unreachable — fall back to Open Library (no key, generous limits)
+        fetch(olUrl)
+          .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+          .then(data => {
+            if (!data.docs || !data.docs.length) {
+              box.innerHTML = '<div class="book-suggestion" style="color:#888;font-style:italic;">No results found.</div>';
+              return;
+            }
+            renderBookSuggestions(box, data.docs.map(normalizeOpenLibraryBook));
+          })
+          .catch(err => {
+            console.error('Book search failed:', err);
+            box.innerHTML = '<div class="book-suggestion" style="color:#a33;font-style:italic;">Search unavailable right now — you can still enter the details below manually.</div>';
+          });
       });
   }, 500);
+}
+function normalizeGoogleBook(item) {
+  const info = item.volumeInfo || {};
+  const thumb = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || null) : null;
+  return {
+    title:      info.title || '',
+    author:     (info.authors || []).join(', '),
+    year:       info.publishedDate ? parseInt(info.publishedDate.substring(0,4)) : null,
+    dewey:      guessDewey(info.categories || [], info.title || ''),
+    coverImage: thumb ? thumb.replace('http://', 'https://') : null
+  };
+}
+function normalizeOpenLibraryBook(doc) {
+  return {
+    title:      doc.title || '',
+    author:     (doc.author_name || []).join(', '),
+    year:       doc.first_publish_year || null,
+    dewey:      guessDewey([], doc.title || ''),
+    coverImage: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg` : null
+  };
+}
+function renderBookSuggestions(box, books) {
+  box.innerHTML = `<div style="text-align:right;padding:4px 8px;border-bottom:1px solid #e8d8b0;">
+    <span onclick="document.getElementById('book-suggestions').innerHTML=''" style="cursor:pointer;font-size:0.8rem;color:var(--brown);font-family:'Courier Prime',monospace;letter-spacing:0.05em;">✕ close</span>
+  </div>` + books.map((b, i) => `
+    <div class="book-suggestion" onclick="window.selectBook(${i})">
+      <div class="sug-title">${b.title}</div>
+      <div class="sug-author">${b.author}</div>
+      <div class="sug-year">${b.year || ''}</div>
+    </div>`).join('');
+  window._bookResults = books;
 }
 function selectBook(i) {
   const b = window._bookResults[i];
@@ -1951,27 +1973,38 @@ window.findCover = function() {
   const btn = document.getElementById('find-cover-btn');
   const preview = document.getElementById('edit-cover-preview');
   const prevLabel = btn.textContent;
+  const noCoverMsg = '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover found — try a different title.</span>';
+  const showCover = (url) => {
+    document.getElementById('edit-cover').value = url;
+    preview.innerHTML = `<img src="${url}" alt="Cover" style="height:80px;border:1px solid #c8a96e;">`;
+  };
+  const done = () => { btn.textContent = prevLabel; btn.disabled = false; };
   btn.textContent = '🔍 Searching…';
   btn.disabled = true;
   fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title + ' ' + author)}&maxResults=1&printType=books`)
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
       if (data.error) throw new Error(data.error.message || 'API error');
-      if (!data.items) { preview.innerHTML = '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover found — try a different title.</span>'; return; }
-      const info  = data.items[0].volumeInfo;
-      const thumb = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || null) : null;
-      if (!thumb) { preview.innerHTML = '<span style="font-size:0.75rem;color:#888;font-style:italic;">No cover found — try a different title.</span>'; return; }
-      const url = thumb.replace('http://', 'https://');
-      document.getElementById('edit-cover').value = url;
-      preview.innerHTML = `<img src="${url}" alt="Cover" style="height:80px;border:1px solid #c8a96e;">`;
+      const info = data.items && data.items[0] && data.items[0].volumeInfo;
+      const thumb = info && info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || null) : null;
+      if (!thumb) throw new Error('no Google cover');
+      showCover(thumb.replace('http://', 'https://'));
+      done();
     })
-    .catch(err => {
-      console.error('Cover fetch failed:', err);
-      preview.innerHTML = '<span style="font-size:0.75rem;color:#a33;font-style:italic;">Could not fetch a cover right now — try again in a moment.</span>';
-    })
-    .finally(() => {
-      btn.textContent = prevLabel;
-      btn.disabled = false;
+    .catch(() => {
+      // Fallback: Open Library cover search
+      fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(title + ' ' + author)}&limit=1&fields=cover_i`)
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(data => {
+          const doc = data.docs && data.docs[0];
+          if (!doc || !doc.cover_i) { preview.innerHTML = noCoverMsg; return; }
+          showCover(`https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg`);
+        })
+        .catch(err => {
+          console.error('Cover fetch failed:', err);
+          preview.innerHTML = '<span style="font-size:0.75rem;color:#a33;font-style:italic;">Could not fetch a cover right now — try again in a moment.</span>';
+        })
+        .finally(done);
     });
 };
 window.toggleReadDate = function(status) {
