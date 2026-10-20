@@ -700,8 +700,8 @@
   @media(max-width:700px) { .cr-num { display:none; } .cr-title { font-size:0.88rem; } }
   /* ── Theme switcher button ── */
   #theme-switcher { position:fixed; bottom:20px; right:20px; z-index:400; display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
-  #theme-toggle-btn { background:linear-gradient(180deg, rgba(40,28,18,0.88), rgba(25,16,10,0.88)); color:#e8c860; border:1px solid #d4a843; outline:1px solid rgba(212,168,67,0.35); outline-offset:2px; padding:12px 20px; font-family:'Courier Prime',monospace; font-size:0.85rem; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; border-radius:2px; backdrop-filter:blur(4px); transition:all 0.25s; box-shadow:0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,168,67,0.2); }
-  #theme-toggle-btn:hover { background:linear-gradient(180deg, rgba(55,38,22,0.94), rgba(35,22,12,0.94)); border-color:#e8c860; color:#f5e0a0; box-shadow:0 2px 12px rgba(212,168,67,0.3), inset 0 1px 0 rgba(212,168,67,0.3); }
+  #theme-toggle-btn { padding:14px 24px; font-family:'Courier Prime',monospace; font-size:0.85rem; font-weight:bold; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; clip-path: polygon(8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 0 calc(100% - 4px), 0 4px, 8px 4px); transition:all 0.25s; box-shadow:0 3px 10px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.25); }
+  #theme-toggle-btn:hover { filter:brightness(1.12); box-shadow:0 3px 14px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.25); }
   #theme-menu { display:none; flex-direction:column; gap:4px; }
   #theme-menu.open { display:flex; }
   .theme-btn { background:rgba(0,0,0,0.7); color:#f0e8d0; border:1px solid rgba(255,255,255,0.15); padding:7px 14px; font-family:'Courier Prime',monospace; font-size:0.68rem; letter-spacing:0.1em; cursor:pointer; border-radius:3px; text-align:right; backdrop-filter:blur(4px); transition:all 0.2s; white-space:nowrap; }
@@ -2086,6 +2086,10 @@ const THEMES = {
     spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.5) 0%,rgba(255,255,255,0.08) 15%,transparent 35%,rgba(255,255,255,0.12) 50%,transparent 65%,rgba(0,0,0,0.3) 100%)',
     bookColors: [{base:'#280808',mid:'#4e1010',hi:'#782020'},{base:'#2c0808',mid:'#541212',hi:'#802828'},{base:'#0a180a',mid:'#182c16',hi:'#2a5228'},{base:'#0c1c0c',mid:'#1c3018',hi:'#306030'},{base:'#080e1a',mid:'#101c2e',hi:'#1e3450'},{base:'#0a1020',mid:'#141e30',hi:'#22345a'},{base:'#1c0e04',mid:'#341c08',hi:'#583010'},{base:'#180c04',mid:'#2e1806',hi:'#4e2c0e'},{base:'#280808',mid:'#4e1010',hi:'#782020'},{base:'#0a180a',mid:'#182c16',hi:'#2a5228'}],
     spineEdge: 'rgba(0,0,0,0.6)',
+    plaqueBg: 'linear-gradient(180deg, #f0d080 0%, #d4a843 30%, #c49838 60%, #a07830 100%)',
+    plaqueBorder: '#8a5a10',
+    plaqueText: '#3a2008',
+    plaqueShadow: '0 1px 0 rgba(255,240,200,0.6)',
   },
   gothic: {
     bodyBg: '#0d0d0f', bodyImg: 'url("theme-gothic-bookshelf.jpg")', bodySize: 'cover', bodyPos: 'center top',
@@ -2117,6 +2121,10 @@ const THEMES = {
     spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.65) 0%,rgba(60,50,80,0.04) 15%,transparent 35%,rgba(60,50,80,0.05) 50%,transparent 65%,rgba(0,0,0,0.45) 100%)',
     bookColors: [{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2c0a0a',mid:'#481212',hi:'#601818'},{base:'#081428',mid:'#102040',hi:'#182e58'},{base:'#0a1c0a',mid:'#142e14',hi:'#1c3e1c'},{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2a0808',mid:'#421010',hi:'#581818'},{base:'#081428',mid:'#102040',hi:'#182e58'},{base:'#1a1208',mid:'#2a1e0c',hi:'#382a10'},{base:'#1a0830',mid:'#2e1055',hi:'#3d1870'},{base:'#2c0a0a',mid:'#481212',hi:'#601818'}],
     spineEdge: 'rgba(0,0,0,0.6)',
+    plaqueBg: 'linear-gradient(180deg, #9a92a6 0%, #6a6478 30%, #4a4458 60%, #353142 100%)',
+    plaqueBorder: '#2a2836',
+    plaqueText: '#e8e4f0',
+    plaqueShadow: '0 1px 0 rgba(0,0,0,0.6)',
   },
   beatrix: {
     bodyBg: '#ede8dc', bodyImg: 'url("theme-beatrix-bookshelf.jpg")', bodySize: 'cover', bodyPos: 'center top',
@@ -2148,6 +2156,10 @@ const THEMES = {
     spineAfter: 'linear-gradient(90deg,rgba(80,50,10,0.2) 0%,rgba(255,255,255,0.15) 15%,transparent 35%,rgba(255,255,255,0.2) 50%,transparent 65%,rgba(80,50,10,0.1) 100%)',
     bookColors: [{base:'#8aaa80',mid:'#a0c090',hi:'#b0cc9e'},{base:'#c09098',mid:'#d4a8b0',hi:'#e0bcc4'},{base:'#7888b0',mid:'#8ea0c8',hi:'#a0b4d8'},{base:'#c0a870',mid:'#d4bc84',hi:'#e0cc98'},{base:'#9888b8',mid:'#b0a0cc',hi:'#c4b8dc'},{base:'#7a8858',mid:'#909c68',hi:'#a0ac78'},{base:'#c8a888',mid:'#dcc0a0',hi:'#e8d0b0'},{base:'#7aabb0',mid:'#8ec0c4',hi:'#a0d0d4'},{base:'#8aaa80',mid:'#a0c090',hi:'#b0cc9e'},{base:'#c09098',mid:'#d4a8b0',hi:'#e0bcc4'}],
     spineEdge: 'rgba(0,0,0,0.6)',
+    plaqueBg: 'linear-gradient(180deg, #e0aa76 0%, #c48858 30%, #a06840 60%, #7a4e2e 100%)',
+    plaqueBorder: '#5a3a20',
+    plaqueText: '#2a1808',
+    plaqueShadow: '0 1px 0 rgba(255,220,180,0.5)',
   },
   japanese: {
     bodyBg: '#f0e8d8', bodyImg: 'url("theme-japanese-bookshelf.jpg")', bodySize: 'cover', bodyPos: 'center top',
@@ -2179,6 +2191,10 @@ const THEMES = {
     spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.45) 0%,rgba(255,255,255,0.07) 15%,transparent 35%,rgba(255,255,255,0.1) 50%,transparent 65%,rgba(0,0,0,0.25) 100%)',
     bookColors: [{base:'#5a2818',mid:'#8a3820',hi:'#b04828'},{base:'#c8b890',mid:'#ddd0a8',hi:'#ede0be'},{base:'#c0b888',mid:'#d4cc9c',hi:'#e4dcb0'},{base:'#8a6030',mid:'#b08040',hi:'#c89850'},{base:'#4a6830',mid:'#6a9040',hi:'#88b050'},{base:'#8a9898',mid:'#a8b4b4',hi:'#c4cccc'},{base:'#6a4a28',mid:'#8a6838',hi:'#a88448'},{base:'#5a2818',mid:'#8a3820',hi:'#b04828'},{base:'#c8b890',mid:'#ddd0a8',hi:'#ede0be'},{base:'#4a6830',mid:'#6a9040',hi:'#88b050'}],
     spineEdge: 'rgba(0,0,0,0.6)',
+    plaqueBg: 'linear-gradient(180deg, #d49a60 0%, #b07848 30%, #8a5a34 60%, #6a4226 100%)',
+    plaqueBorder: '#4a2e18',
+    plaqueText: '#f0e0c0',
+    plaqueShadow: '0 1px 0 rgba(0,0,0,0.5)',
   },
   storybook: {
     bodyBg: '#f2e8d0', bodyImg: 'url("bookshelf-illustration.jpg")', bodySize: 'cover', bodyPos: 'center top',
@@ -2210,6 +2226,10 @@ const THEMES = {
     spineAfter: 'linear-gradient(90deg,rgba(0,0,0,0.5) 0%,rgba(255,255,255,0.08) 15%,transparent 35%,rgba(255,255,255,0.12) 50%,transparent 65%,rgba(0,0,0,0.3) 100%)',
     bookColors: [{base:'#803028',mid:'#93302a',hi:'#b05048'},{base:'#365a2c',mid:'#3f6b34',hi:'#5a8a48'},{base:'#283758',mid:'#2e3f66',hi:'#46587f'},{base:'#9b7c28',mid:'#b08d2e',hi:'#d4af37'},{base:'#6a3757',mid:'#7a3d63',hi:'#9a5a82'},{base:'#8d3329',mid:'#a03830',hi:'#c05a50'},{base:'#3e6434',mid:'#4a7639',hi:'#669a52'},{base:'#2c4068',mid:'#35497a',hi:'#4e6491'},{base:'#a88731',mid:'#bb9a38',hi:'#ddbb4d'},{base:'#753e62',mid:'#874a70',hi:'#a86690'}],
     spineEdge: 'rgba(90,60,35,0.35)',
+    plaqueBg: 'linear-gradient(180deg, #f5d888 0%, #e0b858 30%, #c89838 60%, #a07828 100%)',
+    plaqueBorder: '#7a5a18',
+    plaqueText: '#3a2408',
+    plaqueShadow: '0 1px 0 rgba(255,245,210,0.6)',
   },
 };
 
@@ -2222,7 +2242,8 @@ function applyTheme(name, save = true) {
   styleEl.textContent = `
     body { background-color: ${t.bodyBg} !important; background-image: ${t.bodyImg} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
     .main-wrap::before { background: ${t.mainOverlay} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
-    header { background: ${t.headerBg} !important; border-bottom: 6px solid ${t.headerBorder} !important; }
+    header { background: ${t.headerBg} !important;
+    #theme-toggle-btn { background: ${t.plaqueBg} !important; border: 2px solid ${t.plaqueBorder} !important; color: ${t.plaqueText} !important; text-shadow: ${t.plaqueShadow} !important; } border-bottom: 6px solid ${t.headerBorder} !important; }
     header h1 { color: ${t.headerH1} !important; text-shadow: ${t.headerH1Shadow} !important; }
     .header-label-strip { background: ${t.headerStrip} !important; border-top: 2px solid ${t.headerStripBorderTop} !important; border-bottom: 2px solid ${t.headerStripBorderBot} !important; color: ${t.headerStripText} !important; }
     .catalogue-plate { background: ${t.plateBg} !important; border: 2px solid ${t.plateBorder} !important; color: ${t.plateText} !important; }
