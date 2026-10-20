@@ -2060,6 +2060,7 @@ const THEMES = {
     bodyBg: '#b5975a', bodyImg: 'url("bookshelf-illustration.jpg")', bodySize: 'cover', bodyPos: 'center top',
     mainOverlay: 'linear-gradient(180deg, rgba(181,151,90,0.78) 0%, rgba(181,151,90,0.86) 100%)',
     headerBg: 'linear-gradient(180deg, rgba(20,10,4,0.25) 0%, rgba(20,10,4,0.45) 100%), url("theme-antique-header.jpg") center top / cover no-repeat', headerBorder: '#8a6530',
+    headerBgPhone: 'linear-gradient(180deg, rgba(20,10,4,0.25) 0%, rgba(20,10,4,0.45) 100%), url("theme-antique-header-phone.jpg") center top / cover no-repeat', headerBorder: '#8a6530',
     headerH1: '#f5edd8', headerH1Shadow: '2px 2px 0 rgba(0,0,0,0.6),0 0 20px rgba(212,168,67,0.2)',
     headerStrip: 'linear-gradient(180deg,#d4a843 0%,#c49030 50%,#b88020 100%)', headerStripBorderTop: '#e8c060', headerStripBorderBot: '#8a5a10', headerStripText: '#3a2008',
     plateBg: 'linear-gradient(135deg,#f5edd8,#e8d8b0)', plateBorder: '#8a6530', plateText: '#3a2008',
@@ -2244,6 +2245,7 @@ function applyTheme(name, save = true) {
     .main-wrap::before { background: ${t.mainOverlay} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
     header { background: ${t.headerBg} !important; border-bottom: 6px solid ${t.headerBorder} !important; }
     #theme-toggle-btn { background: ${t.plaqueBg} !important; border: 2px solid ${t.plaqueBorder} !important; color: ${t.plaqueText} !important; text-shadow: ${t.plaqueShadow} !important; }
+    ${t.headerBgPhone ? `@media (max-width: 768px) { header { background: ${t.headerBgPhone} !important; } }` : ''}
     header h1 { color: ${t.headerH1} !important; text-shadow: ${t.headerH1Shadow} !important; }
     .header-label-strip { background: ${t.headerStrip} !important; border-top: 2px solid ${t.headerStripBorderTop} !important; border-bottom: 2px solid ${t.headerStripBorderBot} !important; color: ${t.headerStripText} !important; }
     .catalogue-plate { background: ${t.plateBg} !important; border: 2px solid ${t.plateBorder} !important; color: ${t.plateText} !important; }
