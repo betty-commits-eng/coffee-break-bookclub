@@ -2242,8 +2242,8 @@ function applyTheme(name, save = true) {
   styleEl.textContent = `
     body { background-color: ${t.bodyBg} !important; background-image: ${t.bodyImg} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
     .main-wrap::before { background: ${t.mainOverlay} !important; background-size: ${t.bodySize} !important; background-position: ${t.bodyPos} !important; }
-    header { background: ${t.headerBg} !important;
-    #theme-toggle-btn { background: ${t.plaqueBg} !important; border: 2px solid ${t.plaqueBorder} !important; color: ${t.plaqueText} !important; text-shadow: ${t.plaqueShadow} !important; } border-bottom: 6px solid ${t.headerBorder} !important; }
+    header { background: ${t.headerBg} !important; border-bottom: 6px solid ${t.headerBorder} !important; }
+    #theme-toggle-btn { background: ${t.plaqueBg} !important; border: 2px solid ${t.plaqueBorder} !important; color: ${t.plaqueText} !important; text-shadow: ${t.plaqueShadow} !important; }
     header h1 { color: ${t.headerH1} !important; text-shadow: ${t.headerH1Shadow} !important; }
     .header-label-strip { background: ${t.headerStrip} !important; border-top: 2px solid ${t.headerStripBorderTop} !important; border-bottom: 2px solid ${t.headerStripBorderBot} !important; color: ${t.headerStripText} !important; }
     .catalogue-plate { background: ${t.plateBg} !important; border: 2px solid ${t.plateBorder} !important; color: ${t.plateText} !important; }
