@@ -2536,13 +2536,14 @@ if (!window._isDemoMode) document.getElementById('theme-switcher').style.display
 window._isDemoMode = false;
 
 const DEMO_MEMBERS = [
-  {key:'anne',  email:'anne@demo.com',   label:'Anne'},
-  {key:'marie', email:'marie@demo.com',  label:'Marie'},
-  {key:'suki',  email:'suki@demo.com',   label:'Suki'},
-  {key:'grace', email:'grace@demo.com',  label:'Grace'},
-  {key:'jo',    email:'jo@demo.com',     label:'Jo'},
-  {key:'diana', email:'diana@demo.com',  label:'Diana'},
+  {key:'anne',  email:'anne@demo.com',   label:'Anne',  theme:'antique'},
+  {key:'marie', email:'marie@demo.com',  label:'Marie', theme:'gothic'},
+  {key:'suki',  email:'suki@demo.com',   label:'Suki',  theme:'japanese'},
+  {key:'grace', email:'grace@demo.com',  label:'Grace', theme:'storybook'},
+  {key:'jo',    email:'jo@demo.com',     label:'Jo',    theme:'beatrix'},
+  {key:'diana', email:'diana@demo.com',  label:'Diana', theme:'antique'},
 ];
+const DEMO_THEME_LABELS = { antique:'Antique Leather', gothic:'Gothic', beatrix:'Beatrix Potter', japanese:'Japanese Woodblock', storybook:'Storybook Shelf' };
 window.DEMO_MEMBERS = DEMO_MEMBERS; // exposed so the signed-out landing preview can borrow sample members
 
 const DEMO_BOOKS = [
@@ -2638,7 +2639,7 @@ window.startDemo = function() {
   window._getMembersOverride = () => DEMO_MEMBERS;
 
   const th = document.getElementById('theme-hint');
-  if (th) th.textContent = '✦ Try a theme ✦';
+  if (th) th.textContent = '✦ ' + DEMO_MEMBERS[0].label + "'s theme: " + DEMO_THEME_LABELS[DEMO_MEMBERS[0].theme] + ' ✦';
   document.getElementById('theme-switcher').style.display = 'flex';
   window.applyTheme('antique', false);
   window.setOwnerFilter('all');
@@ -2648,6 +2649,12 @@ window._switchDemoMember = function(key) {
   const m = DEMO_MEMBERS.find(x => x.key === key);
   if (!m) return;
   if (window._setCurrentUserEmail) window._setCurrentUserEmail(m.email);
+  // Each demo member has their own theme — switching member restyles the
+  // whole shelf to show that every member gets their own look. Not saved,
+  // so a real member's own preference is never touched.
+  if (window.applyTheme && m.theme) window.applyTheme(m.theme, false);
+  const thSw = document.getElementById('theme-hint');
+  if (thSw) thSw.textContent = '✦ ' + m.label + "'s theme: " + (DEMO_THEME_LABELS[m.theme] || m.theme) + ' ✦';
   document.getElementById('user-name').textContent = `Browsing as ${m.label} (demo)`;
   const pickerEl = document.getElementById('demo-member-picker');
   if (pickerEl) pickerEl.value = key;
