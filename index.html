@@ -691,7 +691,7 @@
   .owner-tabs::-webkit-scrollbar { display: none; }
   .owner-tabs { -ms-overflow-style: none; scrollbar-width: none; }
   .local-badge { position:absolute; top:4px; right:2px; font-size:0.55rem; background:rgba(45,110,58,0.92); color:#e8f5e9; padding:1px 3px; border-radius:2px; letter-spacing:0.04em; font-family:'Courier Prime',monospace; z-index:5; writing-mode:horizontal-tb; transform:none; line-height:1.4; }
-  .staff-badge { position:absolute; top:4px; right:1px; font-size:0.4rem; white-space:nowrap; background:rgba(160,110,20,0.95); color:#fff8e1; padding:1px 2px; border-radius:2px; letter-spacing:0.02em; font-family:'Courier Prime',monospace; z-index:5; line-height:1.2; }
+  .staff-badge { position:absolute; bottom:34px; left:50%; transform:translateX(-50%); width:17px; height:17px; border-radius:50%; background:radial-gradient(circle at 35% 30%, #f5d67a, #c8960c 55%, #8c6b1f 100%); border:1px solid rgba(60,40,5,0.85); box-shadow:0 1px 3px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.55); color:#4a3205; font-size:10px; line-height:16px; text-align:center; z-index:5; }
   .owner-tab.partner-tab { border: 2px solid #b8860b; box-shadow: inset 0 0 0 1px rgba(255,215,130,0.5); }
   .bc-amazon.partner-link { border-color:#b8860b !important; color:#7a5200 !important; background:linear-gradient(180deg,#fdf3d0,#f5e3ac); font-weight:700; }
   .cr-local-tag { display:inline-block; background:#2d6e3a; color:#e8f5e9; font-size:0.6rem; font-family:'Courier Prime',monospace; padding:1px 6px; border-radius:2px; letter-spacing:0.06em; margin-left:6px; vertical-align:middle; }
@@ -1813,7 +1813,7 @@ function renderAll() {
           <div class="book-band-bottom"></div>
         </div>
         ${b.localAuthor ? '<div class="local-badge">🍁 LOCAL</div>' : ''}
-        ${b.staffPick ? '<div class="staff-badge">★ STAFF PICK</div>' : ''}
+        ${b.staffPick ? '<div class="staff-badge" title="Staff pick — Juniper Books">★</div>' : ''}
         <div class="book-author-tag">${(b.author||'').split(' ').pop().substring(0,4).toUpperCase()||'—'}</div>
         <div class="book-card">
           ${b.coverImage ? `<img src="${b.coverImage}" alt="Cover" style="width:80px;float:right;margin:0 0 8px 10px;border:1px solid #c8a96e;box-shadow:2px 2px 4px rgba(0,0,0,0.2);">` : ''}
